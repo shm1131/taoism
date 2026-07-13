@@ -1,0 +1,53 @@
+{
+  "attributes": {
+    "minecraft:gameplay/bed_rule": {
+      "can_set_spawn": "never",
+      "can_sleep": "never",
+      "explodes": true
+    },
+    "minecraft:gameplay/monsters_burn": false,
+    "minecraft:gameplay/respawn_anchor_works": true,
+    "minecraft:gameplay/snow_golem_melts": true,
+    "minecraft:visual/ambient_light_color": "#2a1018",
+    "minecraft:visual/ambient_particles": [
+      {
+        "particle": {
+          "type": "minecraft:soul_fire_flame"
+        },
+        "probability": 0.005
+      }
+    ],
+    "minecraft:visual/block_light_tint": "#6a2020",
+    "minecraft:visual/fog_color": "#3a1818",
+    "minecraft:visual/fog_end_distance": 96.0,
+    "minecraft:visual/fog_start_distance": 2.0,
+    "minecraft:visual/night_vision_color": "#3a1818",
+    "minecraft:visual/sky_color": "#1a0808",
+    "minecraft:visual/star_brightness": 0.05,
+    "minecraft:visual/sunrise_sunset_color": "#00601010",
+    "minecraft:visual/water_fog_color": "#400810"
+  },
+  "carvers": "minecraft:cave_extra_underground",
+  "downfall": 0.9,
+  "effects": {
+    "dry_foliage_color": "#4a2828",
+    "foliage_color": "#2a1018",
+    "grass_color": "#3a2020",
+    "grass_color_modifier": "swamp",
+    "water_color": "#6a1020"
+  },
+  "features": [],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": -0.5
+}

@@ -1,0 +1,48 @@
+{
+  "type": "taoism:empty_dimension",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "taoism:mercy_plains",
+          "parameters": {
+            "continentalness": -0.3,
+            "depth": 0.0,
+            "erosion": 0.0,
+            "humidity": 0.2,
+            "offset": 0.0,
+            "temperature": 0.0,
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "taoism:chaos_wasteland",
+          "parameters": {
+            "continentalness": 0.8,
+            "depth": 0.0,
+            "erosion": 0.0,
+            "humidity": -0.9,
+            "offset": 0.0,
+            "temperature": -0.8,
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "taoism:blood_swamp",
+          "parameters": {
+            "continentalness": -0.7,
+            "depth": 0.0,
+            "erosion": 0.0,
+            "humidity": 0.9,
+            "offset": 0.0,
+            "temperature": -0.4,
+            "weirdness": 0.0
+          }
+        }
+      ]
+    },
+    "settings": "minecraft:overworld"
+  }
+}

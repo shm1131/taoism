@@ -1,0 +1,13 @@
+{
+  "itemGroup.taoism": "Example Mod Tab",
+  "block.taoism.example_block": "Example Block",
+  "item.taoism.example_item": "Example Item",
+
+  "taoism.configuration.title": "Taoism Configs",
+  "taoism.configuration.section.taoism.common.toml": "Taoism Configs",
+  "taoism.configuration.section.taoism.common.toml.title": "Taoism Configs",
+  "taoism.configuration.items": "Item List",
+  "taoism.configuration.logDirtBlock": "Log Dirt Block",
+  "taoism.configuration.magicNumberIntroduction": "Magic Number Text",
+  "taoism.configuration.magicNumber": "Magic Number"
+}

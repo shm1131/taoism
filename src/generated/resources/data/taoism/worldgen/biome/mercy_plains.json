@@ -1,0 +1,42 @@
+{
+  "attributes": {
+    "minecraft:audio/background_music": {},
+    "minecraft:gameplay/bed_rule": {
+      "can_set_spawn": "always",
+      "can_sleep": "when_dark",
+      "error_message": {
+        "translate": "block.minecraft.bed.no_sleep"
+      }
+    },
+    "minecraft:gameplay/monsters_burn": false,
+    "minecraft:visual/ambient_light_color": "#f5efe0",
+    "minecraft:visual/block_light_tint": "#e8d8c0",
+    "minecraft:visual/cloud_height": 220.0,
+    "minecraft:visual/fog_color": "#e8e0d0",
+    "minecraft:visual/sky_color": "#f5efe0",
+    "minecraft:visual/star_brightness": 0.3,
+    "minecraft:visual/sunrise_sunset_color": "#ffe8d0b0",
+    "minecraft:visual/water_fog_color": "#6a9ab0"
+  },
+  "carvers": "minecraft:cave",
+  "downfall": 0.6,
+  "effects": {
+    "foliage_color": "#8aa870",
+    "grass_color": "#a8b890",
+    "water_color": "#88b4c8"
+  },
+  "features": [],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

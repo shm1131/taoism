@@ -1,0 +1,46 @@
+{
+  "attributes": {
+    "minecraft:gameplay/can_pillager_patrol_spawn": false,
+    "minecraft:gameplay/water_evaporates": true,
+    "minecraft:visual/ambient_light_color": "#6e6860",
+    "minecraft:visual/ambient_particles": [
+      {
+        "particle": {
+          "type": "minecraft:ash"
+        },
+        "probability": 0.003
+      }
+    ],
+    "minecraft:visual/block_light_tint": "#908070",
+    "minecraft:visual/cloud_color": "#ff6e6860",
+    "minecraft:visual/fog_color": "#8a8078",
+    "minecraft:visual/fog_end_distance": 128.0,
+    "minecraft:visual/fog_start_distance": 4.0,
+    "minecraft:visual/sky_color": "#6e6860",
+    "minecraft:visual/star_brightness": 0.0,
+    "minecraft:visual/sunrise_sunset_color": "#00806050",
+    "minecraft:visual/water_fog_color": "#3a3430"
+  },
+  "carvers": "minecraft:nether_cave",
+  "downfall": 0.2,
+  "effects": {
+    "dry_foliage_color": "#8a7a60",
+    "foliage_color": "#5e5648",
+    "grass_color": "#706858",
+    "water_color": "#5a5048"
+  },
+  "features": [],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.0
+}
