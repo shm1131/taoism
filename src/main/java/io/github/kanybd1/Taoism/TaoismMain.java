@@ -5,6 +5,7 @@ import io.github.kanybd1.Taoism.effect.EffectRegister;
 import io.github.kanybd1.Taoism.entity.EntityRegister;
 import io.github.kanybd1.Taoism.item.ItemRegister;
 import io.github.kanybd1.Taoism.level.ModWorldGenProvider;
+import io.github.kanybd1.Taoism.level.biomes.BiomeSourceRegister;
 import io.github.kanybd1.Taoism.player.data.attachment.TaoismAttachments;
 import io.github.kanybd1.Taoism.player.network.SyncTaoismDataPayload;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -32,12 +33,13 @@ public class TaoismMain {
         EffectRegister.EFFECTS.register(modEventBus);
         ItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
+        BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
 
         TaoismAttachments.register(modEventBus);
 
         modEventBus.addListener(this::registerPayloads);
-        modEventBus.addListener(this::onGatherData1);
-        modEventBus.addListener(this::onGatherData2);
+        modEventBus.addListener(this::onGatherData);
+
     }
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
@@ -45,15 +47,11 @@ public class TaoismMain {
         registrar.playToClient(SyncTaoismDataPayload.TYPE, SyncTaoismDataPayload.STREAM_CODEC, SyncTaoismDataPayload::handle);
     }
 
-    public void onGatherData1(GatherDataEvent.Server event) {
-        if (event instanceof GatherDataEvent.Server) {
-            event.createDatapackRegistryObjects(ModWorldGenProvider.BUILDER);
-        }
-    }
-
-    public void onGatherData2(GatherDataEvent.Client event) {
+    public void onGatherData(GatherDataEvent.Client event) {
         if (event instanceof GatherDataEvent.Client) {
             event.createDatapackRegistryObjects(ModWorldGenProvider.BUILDER);
         }
     }
+
+
 }
