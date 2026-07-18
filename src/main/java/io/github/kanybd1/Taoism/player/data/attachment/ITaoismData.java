@@ -7,20 +7,16 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
 public interface ITaoismData {
-    // === 承负 ===
     int getChengFu();
     boolean isChengFuInit();
 
-    // === 气 ===
     int getXianTianQi();
     int getHouTianQi();
 
-    // === 寿命 ===
     int getShouMing();
 
     boolean isInRealm();
 
-    // === 编解码器 ===
     StreamCodec<FriendlyByteBuf, ITaoismData> STREAM_CODEC = new StreamCodec<>() {
         @Override
         public ITaoismData decode(FriendlyByteBuf buf) {

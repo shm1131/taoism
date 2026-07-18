@@ -18,7 +18,7 @@ public class TaoismHelper {
         }
     }
 
-    // ==================== 承负 ====================
+
     public static int getChengFu(Player player) {
         return getData(player).getChengFu();
     }
@@ -32,7 +32,7 @@ public class TaoismHelper {
         ));
     }
 
-    // ==================== 气 ====================
+
     public static int getXianTianQi(Player player) { return getData(player).getXianTianQi(); }
     public static int getHouTianQi(Player player) { return getData(player).getHouTianQi(); }
 
@@ -54,7 +54,7 @@ public class TaoismHelper {
         ));
     }
 
-    // ==================== 寿命 ====================
+
     public static int getShouMing(Player player) { return getData(player).getShouMing(); }
 
     public static void addShouMing(Player player, int amount) {
@@ -66,7 +66,7 @@ public class TaoismHelper {
         ));
     }
 
-    // ==================== 维度状态 ====================
+
     public static void setInRealm(Player player, boolean inRealm) {
         ITaoismData d = getData(player);
         setData(player, new ITaoismData.TaoismData(
@@ -76,37 +76,33 @@ public class TaoismHelper {
         ));
     }
 
-    // ==================== 初始化 / 轮回重置 ====================
 
-    /** 首次进入世界时的阳间初始化 */
     public static void initYangWorld(Player player, int chengFu) {
         setData(player, new ITaoismData.TaoismData(
                 chengFu, true,
                 50, 0,
-                (50 + chengFu) * 20,  // 阳间初始寿命公式
-                false                    // 阳间
+                (50 + chengFu) * 20,
+                false
         ));
     }
 
-    /** 从阴间轮回回阳间：承负保留，寿命恢复阳间公式，isInRealm=false */
     public static void resetForYangWorld(Player player) {
         ITaoismData d = getData(player);
         setData(player, new ITaoismData.TaoismData(
                 d.getChengFu(), d.isChengFuInit(),
-                50, 0,                   // 先天之气重置，后天之气清零
-                (50 + d.getChengFu()) * 20, // 阳间寿命公式
-                false                    // ← 回到阳间
+                50, 0,
+                (50 + d.getChengFu()) * 20,
+                false
         ));
     }
 
-    /** 从阳间轮回到阴间：承负保留，寿命=承负*600，isInRealm=true */
     public static void resetForYinWorld(Player player, int chengFu) {
         ITaoismData d = getData(player);
         setData(player, new ITaoismData.TaoismData(
                 chengFu, d.isChengFuInit(),
-                0, 0,                    // 阴间无气概念（按需调整）
-                chengFu * 20,          // ✅ 阴间寿命 = 承负 × 600
-                true                     // ← 进入阴间
+                0, 0,
+                chengFu * 20,
+                true
         ));
     }
 }

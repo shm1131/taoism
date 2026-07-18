@@ -27,7 +27,6 @@ public class AfterlifeBiomes {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var carvers = context.lookup(Registries.CONFIGURED_CARVER);
 
-        // === 慈悲平原 ===
         context.register(MERCY_PLAINS, new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
                 .temperature(0.5F).downfall(0.6F)
@@ -50,9 +49,7 @@ public class AfterlifeBiomes {
                         .foliageColorOverride(0x8AA870)
                         .build())
                 .mobSpawnSettings(MobSpawnSettings.EMPTY)
-                // ⭐ 修正1: 使用 new Builder() 构造器
-                // ⭐ 修正2: addCarver 不再需要 GenerationStep.Carving 参数
-                // ⭐ 修正3: 测试阶段先用原版 CAVE，避免 ModCarvers 未注册导致崩溃
+
                 .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, carvers)
                         .addCarver(Carvers.CAVE)
                         .build())
@@ -86,7 +83,6 @@ public class AfterlifeBiomes {
                         .dryFoliageColorOverride(0x8A7A60)
                         .build())
                 .mobSpawnSettings(MobSpawnSettings.EMPTY)
-                // ⭐ 测试阶段暂时用原版 NETHER_CAVE 代替自定义雕刻器
                 .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, carvers)
                         .addCarver(Carvers.NETHER_CAVE)
                         .build())

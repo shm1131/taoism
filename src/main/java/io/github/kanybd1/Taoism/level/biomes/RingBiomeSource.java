@@ -22,11 +22,11 @@ public class RingBiomeSource extends BiomeSource {
             ).apply(instance, RingBiomeSource::new)
     );
 
-    private final Holder<Biome> innerBiome;   // 0 ~ innerRadius: 慈悲平原
-    private final Holder<Biome> middleBiome;  // innerRadius ~ middleRadius: 混沌荒原
-    private final Holder<Biome> outerBiome;   // > middleRadius: 血怨沼泽
-    private final float innerRadius;          // 100
-    private final float middleRadius;         // 200
+    private final Holder<Biome> innerBiome;
+    private final Holder<Biome> middleBiome;
+    private final Holder<Biome> outerBiome;
+    private final float innerRadius;
+    private final float middleRadius;
 
     public RingBiomeSource(Holder<Biome> inner, Holder<Biome> middle,
                            Holder<Biome> outer, float innerR, float middleR) {
@@ -53,14 +53,12 @@ public class RingBiomeSource extends BiomeSource {
         double z = quartZ * 4.0;
         double dist = Math.sqrt(x * x + z * z);
 
-        // ⭐ 硬编码绝对边界，优先级高于一切噪声计算
-        if (dist > 1100.0) return outerBiome;   // 1100格外强制沼泽
-        if (dist > 600.0 && dist < 1100.0)  return middleBiome;  // 600格外强制荒原
+        if (dist > 1100.0) return outerBiome;
+        if (dist > 600.0 && dist < 1100.0)  return middleBiome;
         if (dist < 600.0)  return innerBiome;
 
         Climate.TargetPoint point = sampler.sample(quartX, quartY, quartZ);
 
-        // 仅在绝对边界内才进行噪声扰动
         double innerOffset = point.temperature() * 8.0;
         double outerOffset = point.humidity() * 8.0;
 
