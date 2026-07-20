@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import static net.minecraft.network.chat.Component.literal;
 
 @EventBusSubscriber
-public class DataHandler {
+public class TaoismDataHandler {
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
