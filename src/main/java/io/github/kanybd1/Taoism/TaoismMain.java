@@ -7,6 +7,8 @@ import io.github.kanybd1.Taoism.item.ItemRegister;
 import io.github.kanybd1.Taoism.level.ModWorldGenProvider;
 import io.github.kanybd1.Taoism.level.biomes.BiomeSourceRegister;
 import io.github.kanybd1.Taoism.player.data.attachment.TaoismAttachments;
+import io.github.kanybd1.Taoism.player.data.cultivation.CultivationAttachment;
+import io.github.kanybd1.Taoism.player.network.SyncCultivationDataPayload;
 import io.github.kanybd1.Taoism.player.network.SyncTaoismDataPayload;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -35,7 +37,8 @@ public class TaoismMain {
         EntityRegister.ENTITIES.register(modEventBus);
         BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
 
-        TaoismAttachments.register(modEventBus);
+        TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
+        CultivationAttachment.ATTACHMENT_TYPES.register(modEventBus);
 
         modEventBus.addListener(this::registerPayloads);
         modEventBus.addListener(this::onGatherData);
@@ -45,6 +48,7 @@ public class TaoismMain {
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar(MODID);
         registrar.playToClient(SyncTaoismDataPayload.TYPE, SyncTaoismDataPayload.STREAM_CODEC, SyncTaoismDataPayload::handle);
+        registrar.playToClient(SyncCultivationDataPayload.TYPE, SyncCultivationDataPayload.STREAM_CODEC, SyncCultivationDataPayload::handle);
     }
 
     public void onGatherData(GatherDataEvent.Client event) {
