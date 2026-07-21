@@ -8,12 +8,12 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 @OnlyIn(Dist.CLIENT)
 @SuppressWarnings("unused")
 public class ClientPacketHandler {
-    public static void handleSyncTaoismDataPayload(
-        final SyncTaoismDataPayload payload,
-        final IPayloadContext context
-    ) {
-        // NOTE: If we have a work needed running on Main-Thread, call enqueueWork.
-        // Or let's do it on NetWork-Thread.
-        ClientTaoismCache.update(payload.data());
-    }
+  public static void handleSyncTaoismDataPayload(
+      final SyncTaoismDataPayload payload,
+      final IPayloadContext context
+  ) {
+    // NOTE: If we have a work needed running on Main-Thread, call enqueueWork.
+      // Or let's do it on NetWork-Thread.
+    ClientTaoismCache.update(payload.data());
+  }
 }
