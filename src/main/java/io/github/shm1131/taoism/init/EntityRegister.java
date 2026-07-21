@@ -1,14 +1,7 @@
 package io.github.shm1131.taoism.init;
 
-<<<<<<<< HEAD:src/main/java/io/github/shm1131/taoism/entity/EntityRegister.java
-package io.github.shm1131.taoism.entity;
-
 import io.github.shm1131.taoism.TaoismMain;
-========
-package io.github.kanybd1.taoism.init;
-
-import io.github.kanybd1.taoism.entity.TextZombie;
->>>>>>>> 15c76e4 (🐺📚):src/main/java/io/github/kanybd1/taoism/init/EntityRegister.java
+import io.github.shm1131.taoism.entity.TextZombie;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
