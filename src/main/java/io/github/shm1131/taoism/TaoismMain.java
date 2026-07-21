@@ -32,6 +32,7 @@ public class TaoismMain {
     public TaoismMain(IEventBus modEventBus, ModContainer modContainer) {
 
         BlockRegister.BLOCKS.register(modEventBus);
+        BlockRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
         ItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
