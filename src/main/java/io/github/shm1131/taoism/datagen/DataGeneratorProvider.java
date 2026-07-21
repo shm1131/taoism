@@ -15,13 +15,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class DataGeneratorProvider extends DatapackBuiltinEntriesProvider {
 
-  public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-      .add(Registries.DIMENSION_TYPE, ModDimensionTypes::bootstrap)
-      .add(Registries.BIOME, AfterlifeBiomes::bootstrap)
-      .add(Registries.NOISE_SETTINGS, ModNoiseGeneratorSettings::bootstrap)
-      .add(Registries.LEVEL_STEM, ModLevelStems::bootstrap);
+    public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+        .add(Registries.DIMENSION_TYPE, ModDimensionTypes::bootstrap)
+        .add(Registries.BIOME, AfterlifeBiomes::bootstrap)
+        .add(Registries.NOISE_SETTINGS, ModNoiseGeneratorSettings::bootstrap)
+        .add(Registries.LEVEL_STEM, ModLevelStems::bootstrap);
 
-  public DataGeneratorProvider(PackOutput output, CompletableFuture<net.minecraft.core.HolderLookup.Provider> registries) {
-    super(output, registries, BUILDER, Set.of(TaoismMain.MODID));
-  }
+    public DataGeneratorProvider(PackOutput output, CompletableFuture<net.minecraft.core.HolderLookup.Provider> registries) {
+        super(output, registries, BUILDER, Set.of(TaoismMain.MODID));
+    }
 }

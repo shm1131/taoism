@@ -19,21 +19,21 @@ import static io.github.shm1131.taoism.TaoismMain.MODID;
 @Mod(value = MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class TaoismClient {
-  public TaoismClient(ModContainer container) {
+    public TaoismClient(ModContainer container) {
 
-    container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-  }
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+    }
 
-  @SubscribeEvent
-  public static void onRegisterLayers(RegisterGuiLayersEvent event) {
-    event.registerAboveAll(
-        Identifier.fromNamespaceAndPath(MODID, "attachment_screen"),
-        new AttachmentScreen()
-    );
-  }
+    @SubscribeEvent
+    public static void onRegisterLayers(RegisterGuiLayersEvent event) {
+        event.registerAboveAll(
+            Identifier.fromNamespaceAndPath(MODID, "attachment_screen"),
+            new AttachmentScreen()
+        );
+    }
 
-  @SubscribeEvent
-  public static void registerClientPayloadEvent(final RegisterClientPayloadHandlersEvent event) {
-      event.register(SyncTaoismDataPayload.TYPE, ClientPacketHandler::handleSyncTaoismDataPayload);
-  }
+    @SubscribeEvent
+    public static void registerClientPayloadEvent(final RegisterClientPayloadHandlersEvent event) {
+        event.register(SyncTaoismDataPayload.TYPE, ClientPacketHandler::handleSyncTaoismDataPayload);
+    }
 }
