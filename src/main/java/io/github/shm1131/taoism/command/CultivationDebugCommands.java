@@ -1,9 +1,9 @@
 package io.github.shm1131.taoism.command;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import io.github.shm1131.taoism.player.data.cultivation.CultivationAttachment;
-import io.github.shm1131.taoism.player.data.cultivation.CultivationHelper;
-import io.github.shm1131.taoism.player.data.cultivation.ICultivationData;
+import io.github.shm1131.taoism.data.cultivation.CultivationAttachment;
+import io.github.shm1131.taoism.data.cultivation.CultivationHelper;
+import io.github.shm1131.taoism.data.cultivation.ICultivationData;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

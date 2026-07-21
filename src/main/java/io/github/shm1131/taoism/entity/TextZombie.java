@@ -1,5 +1,11 @@
 package io.github.shm1131.taoism.entity;
 
+<<<<<<<< HEAD:src/main/java/io/github/shm1131/taoism/entity/TextZombie.java
+package io.github.shm1131.taoism.entity;
+========
+package io.github.kanybd1.taoism.entity;
+>>>>>>>> 15c76e4 (🐺📚):src/main/java/io/github/kanybd1/taoism/entity/TextZombie.java
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
