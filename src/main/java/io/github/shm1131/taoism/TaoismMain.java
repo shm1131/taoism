@@ -1,5 +1,6 @@
 package io.github.shm1131.taoism;
 
+import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
 import io.github.shm1131.taoism.block.BlockRegister;
 import io.github.shm1131.taoism.effect.EffectRegister;
 import io.github.shm1131.taoism.entity.EntityRegister;
@@ -10,6 +11,7 @@ import io.github.shm1131.taoism.player.data.attachment.TaoismAttachments;
 import io.github.shm1131.taoism.player.data.cultivation.CultivationAttachment;
 import io.github.shm1131.taoism.player.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.player.network.SyncTaoismDataPayload;
+import net.minecraft.data.advancements.AdvancementProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
+
+import java.util.List;
 
 @Mod(TaoismMain.MODID)
 public class TaoismMain {
@@ -55,7 +59,15 @@ public class TaoismMain {
         if (event instanceof GatherDataEvent.Client) {
             event.createDatapackRegistryObjects(ModWorldGenProvider.BUILDER);
         }
+        event.createProvider((output, lookupProvider) ->
+                new AdvancementProvider(
+                        output,
+                        lookupProvider,
+                        List.of(new ModAdvancementSubProvider())
+                )
+        );
     }
+
 
 
 }

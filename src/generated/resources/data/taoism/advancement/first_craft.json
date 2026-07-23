@@ -1,0 +1,32 @@
+{
+  "parent": "taoism:root",
+  "criteria": {
+    "craft_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:crafting_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.modid.first_craft.desc"
+    },
+    "icon": {
+      "id": "minecraft:crafting_table"
+    },
+    "title": {
+      "translate": "advancements.modid.first_craft.title"
+    }
+  },
+  "requirements": [
+    [
+      "craft_table"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
