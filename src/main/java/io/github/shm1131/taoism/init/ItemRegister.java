@@ -1,6 +1,7 @@
 package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
+import io.github.shm1131.taoism.item.IconItem;
 import io.github.shm1131.taoism.item.herbs.DangGui;
 import io.github.shm1131.taoism.item.herbs.bean.Flavor;
 import io.github.shm1131.taoism.item.herbs.bean.HerbProperties;
@@ -23,6 +24,17 @@ public class ItemRegister {
               Nature.COLD,
               0.5f,
               0.5f
+          )
+      )
+  );
+
+  public static final DeferredHolder<Item, IconItem> ICON_ITEM = ITEMS.register("icon_item",
+      () -> new IconItem(new Item.Properties()
+          .setId(
+              ResourceKey.create(
+              Registries.ITEM,
+              Identifier.fromNamespaceAndPath(TaoismMain.MODID,"icon_item")
+              )
           )
       )
   );

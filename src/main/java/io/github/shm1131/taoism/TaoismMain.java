@@ -1,19 +1,21 @@
 package io.github.shm1131.taoism;
 
-import com.mojang.logging.LogUtils;
-import io.github.shm1131.taoism.datagen.DataGenProvider;
+
 import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
+
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
-import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
 import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
+import com.mojang.logging.LogUtils;
+import io.github.shm1131.taoism.datagen.DataGenProvider;
+import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
 
 @Mod(TaoismMain.MODID)
 public class TaoismMain {
@@ -32,6 +34,7 @@ public class TaoismMain {
         ItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
         BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
+        //CreativeTabRegister.TABS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
         CultivationAttachment.ATTACHMENT_TYPES.register(modEventBus);
