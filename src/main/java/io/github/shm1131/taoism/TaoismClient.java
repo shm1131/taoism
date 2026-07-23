@@ -33,6 +33,7 @@ public class TaoismClient {
         );
     }
 
+    @SubscribeEvent
     public static void registerClientPayload(final RegisterClientPayloadHandlersEvent event) {
         event.register(SyncTaoismDataPayload.TYPE, NetworkHandlerClient::handle);
         event.register(SyncCultivationDataPayload.TYPE, NetworkHandlerClient::handle);
