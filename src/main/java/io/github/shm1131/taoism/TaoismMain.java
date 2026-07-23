@@ -49,8 +49,7 @@ public class TaoismMain {
 
         registrar.playToClient(
             SyncCultivationDataPayload.TYPE,
-            SyncCultivationDataPayload.STREAM_CODEC,
-            NetworkHandlerClient::handle
+            SyncCultivationDataPayload.STREAM_CODEC
         );
     }
 
@@ -59,6 +58,4 @@ public class TaoismMain {
             event.createDatapackRegistryObjects(DataGenProvider.BUILDER);
         }
     }
-
-
 }
