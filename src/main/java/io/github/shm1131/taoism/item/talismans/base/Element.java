@@ -7,8 +7,8 @@ public enum Element {
     METAL,
     WATER;
 
-    public Element getGeneratingElement(Element element ) {
-        return switch ( element ) {
+    public Element getGeneratingElement(Element element) {
+        return switch (element) {
             case WOOD -> FIRE;
             case FIRE -> EARTH;
             case EARTH -> METAL;
@@ -17,8 +17,8 @@ public enum Element {
         };
     }
 
-    public Element getRestrictingElement(Element element ) {
-        return switch ( element ) {
+    public Element getRestrictingElement(Element element) {
+        return switch (element) {
             case WOOD -> EARTH;
             case FIRE -> METAL;
             case EARTH -> WATER;

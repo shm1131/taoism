@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "taoism:block/incubator" }
-  }
+    "variants": {
+        "": {
+            "model": "taoism:block/incubator"
+        }
+    }
 }
