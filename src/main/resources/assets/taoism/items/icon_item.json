@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "taoism:item/icon_item"
+    "model": {
+        "type": "minecraft:model",
+        "model": "taoism:item/icon_item"
     }
 }
