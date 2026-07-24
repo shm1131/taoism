@@ -1,5 +1,6 @@
 package io.github.shm1131.taoism.loot;
 
+import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
+import org.slf4j.Logger;
 
 import java.util.Optional;
 
@@ -30,6 +32,7 @@ public class HerbDropModifier extends LootModifier {
 
     private final Identifier herbId;
     private final int count;
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     protected HerbDropModifier(LootItemCondition[] conditions, int priority,
                                Identifier herbId, int count) {
@@ -41,6 +44,8 @@ public class HerbDropModifier extends LootModifier {
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot,
                                                  LootContext context) {
+
+        LOGGER.info(">>> [TAOISM] HerbDropModifier triggered! herb={}, count={}", this.herbId, this.count);
         Optional<Holder.Reference<Item>> holderOpt = BuiltInRegistries.ITEM.get(this.herbId);
         Item item = holderOpt.map(Holder.Reference::value).orElse(Items.AIR);
 
