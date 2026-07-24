@@ -1,0 +1,23 @@
+{
+    "entries": [
+        "taoism:herb_spruce_leaves_song_zhen",
+        "taoism:herb_spruce_leaves_song_zhi",
+        "taoism:herb_spruce_leaves_song_shi",
+        "taoism:herb_dandelion_ju_hua",
+        "taoism:herb_jungle_leaves_gou_qi",
+        "taoism:herb_oak_leaves_da_zao",
+        "taoism:herb_mycelium_fu_ling",
+        "taoism:herb_podzol_fu_ling",
+        "taoism:herb_meadow_grass_di_huang",
+        "taoism:herb_meadow_grass_huang_jing",
+        "taoism:herb_dark_oak_log_ling_zhi",
+        "taoism:herb_dead_bush_cang_shu",
+        "taoism:herb_dead_bush_bai_shu",
+        "taoism:herb_swamp_dirt_yuan_zhi",
+        "taoism:herb_swamp_clay_chang_pu",
+        "taoism:herb_acacia_leaves_huai_shi",
+        "taoism:herb_plains_grass_gan_cao",
+        "taoism:herb_sunflower_plains_grass_gan_cao"
+    ],
+    "replace": false
+}

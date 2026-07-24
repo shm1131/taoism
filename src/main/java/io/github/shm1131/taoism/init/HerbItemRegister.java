@@ -72,9 +72,9 @@ public class HerbItemRegister {
 
 
     public static final DeferredHolder<Item, DaZao> DA_ZAO = ITEMS.register(
-            "da_zao.json",
+            "da_zao",
             () -> new DaZao(
-                    herbProps("da_zao.json"),
+                    herbProps("da_zao"),
                     new HerbProperties(Flavor.SWEET, Nature.WARM, 0.0f, 0.3f)
             )
     );

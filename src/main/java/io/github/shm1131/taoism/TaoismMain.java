@@ -3,6 +3,7 @@ package io.github.shm1131.taoism;
 import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
 import io.github.shm1131.taoism.init.HerbItemRegister;
+import io.github.shm1131.taoism.item.herb.ModItemModelProvider;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -77,6 +78,7 @@ public class TaoismMain {
         if (event instanceof GatherDataEvent.Client) {
             event.createDatapackRegistryObjects(DataGenProvider.BUILDER);
         }
+
         event.createProvider((output, lookupProvider) ->
                 new AdvancementProvider(
                         output,
@@ -84,8 +86,6 @@ public class TaoismMain {
                         List.of(new ModAdvancementSubProvider())
                 )
         );
+        event.createProvider(output -> new ModItemModelProvider(output));
     }
-
-
-
 }

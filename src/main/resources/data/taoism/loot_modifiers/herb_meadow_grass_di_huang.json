@@ -1,0 +1,9 @@
+{
+    "type": "taoism:herb_drop",
+    "conditions": [
+        { "condition": "minecraft:block_state_property", "block": "minecraft:grass_block" },
+        { "condition": "minecraft:random_chance", "chance": 0.03 }
+    ],
+    "herb": "taoism:di_huang",
+    "count": 1
+}
