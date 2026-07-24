@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.item.herbs.base;
+package io.github.shm1131.taoism.item.herb.base;
 
 import net.minecraft.world.item.Item;
 

@@ -2,10 +2,6 @@ package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.item.IconItem;
-import io.github.shm1131.taoism.item.herbs.DangGui;
-import io.github.shm1131.taoism.item.herbs.base.Flavor;
-import io.github.shm1131.taoism.item.herbs.base.HerbProperties;
-import io.github.shm1131.taoism.item.herbs.base.Nature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -15,18 +11,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ItemRegister {
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, TaoismMain.MODID);
-  public static final DeferredHolder<Item, DangGui> DANG_GUI = ITEMS.register(
-      "dang_gui",
-      () -> new DangGui(
-          herbProps("dang_gui"),
-          new HerbProperties(
-              Flavor.BITTER,
-              Nature.COLD,
-              0.5f,
-              0.5f
-          )
-      )
-  );
 
   public static final DeferredHolder<Item, IconItem> ICON_ITEM = ITEMS.register("icon_item",
       () -> new IconItem(new Item.Properties()
@@ -38,13 +22,5 @@ public class ItemRegister {
           )
       )
   );
-
-  private static Item.Properties herbProps(String name) {
-    return new Item.Properties()
-        .setId(ResourceKey.create(
-            Registries.ITEM,
-            Identifier.fromNamespaceAndPath(TaoismMain.MODID, name)
-        ));
-  }
 
 }

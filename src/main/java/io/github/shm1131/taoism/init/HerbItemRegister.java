@@ -1,10 +1,10 @@
-package io.github.shm1131.taoism.item;
+package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.item.herbs.base.Flavor;
-import io.github.shm1131.taoism.item.herbs.base.HerbProperties;
-import io.github.shm1131.taoism.item.herbs.base.Nature;
-import io.github.shm1131.taoism.item.herbs.herbs.*;
+import io.github.shm1131.taoism.item.herb.base.Flavor;
+import io.github.shm1131.taoism.item.herb.base.HerbProperties;
+import io.github.shm1131.taoism.item.herb.base.Nature;
+import io.github.shm1131.taoism.item.herb.herbs.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class ItemRegister {
+public class HerbItemRegister {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, TaoismMain.MODID);
 
     private static Item.Properties herbProps(String name) {

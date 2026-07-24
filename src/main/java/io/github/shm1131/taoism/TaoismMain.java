@@ -2,7 +2,7 @@ package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
-import io.github.shm1131.taoism.item.ItemRegister;
+import io.github.shm1131.taoism.init.HerbItemRegister;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -44,7 +44,7 @@ public class TaoismMain {
         BlockRegister.BLOCKS.register(modEventBus);
         BlockRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
-        ItemRegister.ITEMS.register(modEventBus);
+        HerbItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
         BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
