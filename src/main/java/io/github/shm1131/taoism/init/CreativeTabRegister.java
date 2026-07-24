@@ -23,7 +23,6 @@ public class CreativeTabRegister {
                     ))
                     .displayItems((params,output)->{
                         output.accept(ItemRegister.ICON_ITEM.get());
-                        output.accept(ItemRegister.DANG_GUI.get());
                     })
                     .build()
             );
