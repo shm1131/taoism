@@ -4,7 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -22,7 +22,20 @@ public class CreativeTabRegister {
                         ItemRegister.ICON_ITEM.get()
                     ))
                     .displayItems((params,output)->{
-                        output.accept(ItemRegister.ICON_ITEM.get());
+                        ItemRegister.ITEMS.getEntries()
+                            .stream()
+                            .map(DeferredHolder::get)
+                            .forEach(output::accept);
+
+                        BlockRegister.ITEMS.getEntries()
+                            .stream()
+                            .map(DeferredHolder::get)
+                            .forEach(output::accept);
+
+                        HerbItemRegister.ITEMS.getEntries()
+                            .stream()
+                            .map(DeferredHolder::get)
+                            .forEach(output::accept);
                     })
                     .build()
             );

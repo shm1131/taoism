@@ -2,6 +2,7 @@ package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.item.IconItem;
+import io.github.shm1131.taoism.item.talismans.YellowPaper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -23,4 +24,14 @@ public class ItemRegister {
       )
   );
 
+    public static final DeferredHolder<Item, YellowPaper> YELLOW_PAPER = ITEMS.register("yellow_paper",
+        () -> new YellowPaper(new Item.Properties()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM,
+                    Identifier.fromNamespaceAndPath(TaoismMain.MODID,"yellow_paper")
+                )
+            )
+        )
+    );
 }
