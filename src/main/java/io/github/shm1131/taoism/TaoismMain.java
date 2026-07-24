@@ -15,6 +15,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import io.github.shm1131.taoism.datagen.DataGenProvider;
@@ -43,6 +44,7 @@ public class TaoismMain {
 
         BlockRegister.BLOCKS.register(modEventBus);
         BlockRegister.ITEMS.register(modEventBus);
+        ItemRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
         HerbItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
