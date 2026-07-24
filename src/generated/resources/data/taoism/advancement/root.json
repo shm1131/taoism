@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "tick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:compass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.modid.root.desc"
+    },
+    "icon": {
+      "id": "minecraft:compass"
+    },
+    "title": {
+      "translate": "advancements.modid.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
