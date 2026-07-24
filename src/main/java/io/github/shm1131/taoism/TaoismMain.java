@@ -2,23 +2,12 @@ package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
-import io.github.shm1131.taoism.block.BlockRegister;
-import io.github.shm1131.taoism.effect.EffectRegister;
-import io.github.shm1131.taoism.entity.EntityRegister;
 import io.github.shm1131.taoism.item.ItemRegister;
-import io.github.shm1131.taoism.level.ModWorldGenProvider;
-import io.github.shm1131.taoism.level.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
-import io.github.shm1131.taoism.player.data.attachment.TaoismAttachments;
-import io.github.shm1131.taoism.player.data.cultivation.CultivationAttachment;
-import io.github.shm1131.taoism.player.network.SyncCultivationDataPayload;
-import io.github.shm1131.taoism.player.network.SyncTaoismDataPayload;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-
 import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
-
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
 import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
@@ -29,7 +18,6 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import io.github.shm1131.taoism.datagen.DataGenProvider;
-import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
