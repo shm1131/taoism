@@ -34,7 +34,7 @@ public class TaoismMain {
         ItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
         BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
-        //CreativeTabRegister.TABS.register(modEventBus);
+        CreativeTabRegister.TABS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
         CultivationAttachment.ATTACHMENT_TYPES.register(modEventBus);

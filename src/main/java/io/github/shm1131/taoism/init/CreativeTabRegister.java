@@ -15,7 +15,7 @@ public class CreativeTabRegister {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
 
-    public static final Supplier<CreativeModeTab> TAOISM_TAB = TABS.register("Taoism",
+    public static final Supplier<CreativeModeTab> TAOISM_TAB = TABS.register("taoism",
             ()-> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup."+MODID))
                     .icon(()-> new ItemStack(

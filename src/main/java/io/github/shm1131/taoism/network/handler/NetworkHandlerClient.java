@@ -4,11 +4,8 @@ import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
 import io.github.shm1131.taoism.player.data.ClientCultivationCache;
 import io.github.shm1131.taoism.player.data.ClientTaoismCache;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-@OnlyIn(Dist.CLIENT)
 public class NetworkHandlerClient {
     public static void handle(SyncCultivationDataPayload payload, IPayloadContext context) {
         ClientCultivationCache.update(payload.data());
