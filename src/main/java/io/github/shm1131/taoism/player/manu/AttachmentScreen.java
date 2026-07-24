@@ -1,6 +1,6 @@
 package io.github.shm1131.taoism.player.manu;
 
-import io.github.shm1131.taoism.player.client.ClientTaoismCache;
+import io.github.shm1131.taoism.player.data.ClientTaoismCache;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -8,6 +8,24 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 
 public class AttachmentScreen implements GuiLayer {
+    private static String formatTickDuration(int ticks) {
+        if (ticks <= 0) return "0秒";
+
+        long totalSeconds = ticks / 20L;
+        long days = totalSeconds / 86400L;
+        long hours = (totalSeconds % 86400L) / 3600L;
+        long minutes = (totalSeconds % 3600L) / 60L;
+        long seconds = totalSeconds % 60L;
+
+        StringBuilder sb = new StringBuilder();
+        if (days > 0) sb.append(days).append("天");
+        if (hours > 0) sb.append(hours).append("时");
+        if (minutes > 0) sb.append(minutes).append("分");
+        if (seconds > 0 || sb.isEmpty()) sb.append(seconds).append("秒");
+
+        return sb.toString();
+    }
+
     @Override
     public void render(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
@@ -26,23 +44,5 @@ public class AttachmentScreen implements GuiLayer {
         int y = screenHeight - font.lineHeight - padding;
 
         guiGraphics.text(font, displayText, x, y, 0xFFFFFFFF, true);
-    }
-
-    private static String formatTickDuration(int ticks) {
-        if (ticks <= 0) return "0秒";
-
-        long totalSeconds = ticks / 20L;
-        long days = totalSeconds / 86400L;
-        long hours = (totalSeconds % 86400L) / 3600L;
-        long minutes = (totalSeconds % 3600L) / 60L;
-        long seconds = totalSeconds % 60L;
-
-        StringBuilder sb = new StringBuilder();
-        if (days > 0) sb.append(days).append("天");
-        if (hours > 0) sb.append(hours).append("时");
-        if (minutes > 0) sb.append(minutes).append("分");
-        if (seconds > 0 || sb.isEmpty()) sb.append(seconds).append("秒");
-
-        return sb.toString();
     }
 }

@@ -1,6 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "taoism:item/incubator"
+        "model": "taoism:item/icon_item"
     }
 }
