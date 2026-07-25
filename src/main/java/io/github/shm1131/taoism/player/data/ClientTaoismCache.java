@@ -2,7 +2,6 @@ package io.github.shm1131.taoism.player.data;
 
 import io.github.shm1131.taoism.player.attachment.api.ITaoismData;
 
-// TODO: 与 Lazy 有什么区别？
 public class ClientTaoismCache {
 
   private static ITaoismData cachedData = ITaoismData.EMPTY;

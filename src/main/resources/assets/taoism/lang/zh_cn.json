@@ -16,5 +16,21 @@
     "item.taoism.huai_shi": "槐实",
     "item.taoism.song_zhen": "松针",
     "item.taoism.song_zhi": "松脂",
-    "item.taoism.song_shi": "松子"
+    "item.taoism.song_shi": "松子",
+
+    "item.taoism.pill": "丹药",
+
+    "tooltip.taoism.pill.flavor": "药味: %s",
+    "tooltip.taoism.pill.nature": "药性: %s",
+    "tooltip.taoism.pill.toxicity": "毒性: %s",
+    "tooltip.taoism.pill.potency": "药效: %s",
+    "tooltip.taoism.pill.hold_shift": "按住 Shift 查看详细信息",
+
+    "taoism.flavor.neutral": "平淡",
+    "taoism.flavor.bitter": "苦",
+    "taoism.flavor.sweet": "甘",
+
+    "taoism.nature.neutral": "平",
+    "taoism.nature.cold": "寒",
+    "taoism.nature.hot": "热"
 }
