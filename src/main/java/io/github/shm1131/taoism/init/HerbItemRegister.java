@@ -107,7 +107,7 @@ public class HerbItemRegister {
             "cang_shu",
             () -> new CangShu(
                     herbProps("cang_shu"),
-                    new HerbProperties(Flavor.NEUTRAL, Nature.WARM, 0.0f, 0.7f)
+                    new HerbProperties(Flavor.SWEET, Nature.WARM, 0.0f, 0.7f)
             )
     );
 
@@ -132,7 +132,7 @@ public class HerbItemRegister {
             "chang_pu",
             () -> new ChangPu(
                     herbProps("chang_pu"),
-                    new HerbProperties(Flavor.NEUTRAL, Nature.WARM, 0.2f, 0.5f)
+                    new HerbProperties(Flavor.SWEET, Nature.WARM, 0.2f, 0.5f)
             )
     );
 

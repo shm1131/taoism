@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
 import io.github.shm1131.taoism.init.HerbItemRegister;
 import io.github.shm1131.taoism.item.herb.ModItemModelProvider;
-import io.github.shm1131.taoism.item.pill.ModDataComponents;
+import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;

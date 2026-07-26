@@ -9,9 +9,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 
 public enum Flavor implements StringRepresentable {
+    SOUR("sour"),
+    SPICY("spicy"),
+    SALTY("salty"),
     BITTER("bitter"),
-    SWEET("sweet"),
-    NEUTRAL("neutral");      //CHANGED:更改PUNGENT枚举为NEUTRAL
+    SWEET("sweet");
 
     private final String name;
 

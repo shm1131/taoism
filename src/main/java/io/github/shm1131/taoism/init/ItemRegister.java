@@ -2,7 +2,7 @@ package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.item.IconItem;
-import io.github.shm1131.taoism.item.pill.BasePillItem;
+import io.github.shm1131.taoism.item.herb.pill.PillItem;
 import io.github.shm1131.taoism.item.talismans.YellowPaper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -37,8 +37,8 @@ public class ItemRegister {
     );
 
     //ADDED:加入丹药物品的注册
-    public static final DeferredHolder<Item, BasePillItem> PILL = ITEMS.register("pill",
-          () -> new BasePillItem(new Item.Properties()
+    public static final DeferredHolder<Item, PillItem> FLORISTIC_PILL = ITEMS.register("pill",
+          () -> new PillItem(new Item.Properties()
               .setId(
                   ResourceKey.create(
                       Registries.ITEM,

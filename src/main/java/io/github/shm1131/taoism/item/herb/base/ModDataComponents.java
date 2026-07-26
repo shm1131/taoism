@@ -1,6 +1,6 @@
 //ADDED:新建类ModDataComponents
 
-package io.github.shm1131.taoism.item.pill;
+package io.github.shm1131.taoism.item.herb.base;
 
 import io.github.shm1131.taoism.TaoismMain;
 import net.minecraft.core.component.DataComponentType;
@@ -17,12 +17,12 @@ public class ModDataComponents {
             TaoismMain.MODID
         );
 
-    public static final Supplier<DataComponentType<PillProperties>> PILL_PROPERTIES =
+    public static final Supplier<DataComponentType<HerbProperties>> PILL_PROPERTIES =
         COMPONENTS.registerComponentType(
             "pill_properties",
             builder -> builder
-                .persistent(PillProperties.CODEC)
-                .networkSynchronized(PillProperties.STREAM_CODEC)
+                .persistent(HerbProperties.CODEC)
+                .networkSynchronized(HerbProperties.STREAM_CODEC)
         );
 
     public static void register(IEventBus bus) {

@@ -16,7 +16,8 @@
         "taoism:herb_swamp_dirt_yuan_zhi",
         "taoism:herb_swamp_clay_chang_pu",
         "taoism:herb_acacia_leaves_huai_shi",
-        "taoism:herb_plains_grass_gan_cao",
+        "taoism:herb_short_grass_gan_cao",
+        "taoism:herb_tall_grass_gan_cao",
         "taoism:herb_sunflower_plains_grass_gan_cao"
     ],
     "replace": false

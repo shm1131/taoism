@@ -1,4 +1,6 @@
 {
+    "block.taoism.incubator": "培养箱",
+
     "item.taoism.ren_shen": "人参",
     "item.taoism.ling_zhi": "灵芝",
     "item.taoism.huang_jing": "黄精",
@@ -32,5 +34,5 @@
 
     "taoism.nature.neutral": "平",
     "taoism.nature.cold": "寒",
-    "taoism.nature.hot": "热"
+    "taoism.nature.warm": "温"
 }
