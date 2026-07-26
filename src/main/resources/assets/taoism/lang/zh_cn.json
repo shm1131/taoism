@@ -1,6 +1,9 @@
 {
     "block.taoism.incubator": "培养箱",
 
+    "itemGroup.taoism": "道",
+    "item.taoism.icon_item": "图标",
+
     "item.taoism.ren_shen": "人参",
     "item.taoism.ling_zhi": "灵芝",
     "item.taoism.huang_jing": "黄精",
@@ -19,6 +22,12 @@
     "item.taoism.song_zhen": "松针",
     "item.taoism.song_zhi": "松脂",
     "item.taoism.song_shi": "松子",
+
+    "item.taoism.cinnabar": "朱砂",
+    "item.taoism.cinnabar_dust": "朱砂粉",
+    "block.taoism.cinnabar_ore": "朱砂矿石",
+
+    "item.taoism.yellow_paper": "黄纸",
 
     "item.taoism.pill": "丹药",
 

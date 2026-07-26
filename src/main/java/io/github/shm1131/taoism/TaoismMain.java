@@ -2,6 +2,7 @@ package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
+import io.github.shm1131.taoism.datagen.worldgen.WorldGenProvider;
 import io.github.shm1131.taoism.init.HerbItemRegister;
 import io.github.shm1131.taoism.item.herb.ModItemModelProvider;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
@@ -77,6 +78,9 @@ public class TaoismMain {
     }
 
     public void onGatherData(GatherDataEvent.Client event) {
+
+
+
         if (event instanceof GatherDataEvent.Client) {
             event.createDatapackRegistryObjects(DataGenProvider.BUILDER);
         }
@@ -88,6 +92,12 @@ public class TaoismMain {
                         List.of(new ModAdvancementSubProvider())
                 )
         );
+
+        //TODO 临时用重写getName()过的注册冲突，DataGenProvider与WorldGenProvider需要合并
+        event.createProvider(((output, lookupProvider) ->
+            new WorldGenProvider(output, lookupProvider)));
+
         event.createProvider(output -> new ModItemModelProvider(output));
     }
+
 }
