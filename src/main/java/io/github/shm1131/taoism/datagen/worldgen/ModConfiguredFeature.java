@@ -14,22 +14,33 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
+import java.util.List;
+
 public class ModConfiguredFeature {
+    //埋藏
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_CINNABAR_ORE_KEY = registerKey("overworld_cinnabar_ore");
+    //ADDED：裸漏
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EXPOSED_CINNABAR_ORE_KEY = registerKey("exposed_cinnabar_ore");
 
-    public static final ResourceKey<ConfiguredFeature<?,?>> OVERWORLD_CINNABAR_ORE_KEY = registerKey("overworld_cinnabar_ore");
-
-
-    public static void bootstrap(BootstrapContext<ConfiguredFeature<?,?>> context) {
-
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 
-        FeatureUtils.register(context, OVERWORLD_CINNABAR_ORE_KEY, Feature.ORE,new OreConfiguration(stoneReplaceables, BlockRegister.CINNABAR_ORE.get().defaultBlockState(),8));
+        //CHANGED：列表合并深板岩和石头条件
+        List<OreConfiguration.TargetBlockState> targets = List.of(
+            OreConfiguration.target(stoneReplaceables, BlockRegister.CINNABAR_ORE.get().defaultBlockState()),
+            OreConfiguration.target(deepslateReplaceables, BlockRegister.CINNABAR_ORE.get().defaultBlockState())
+        );
+
+        FeatureUtils.register(context, OVERWORLD_CINNABAR_ORE_KEY, Feature.ORE,
+            new OreConfiguration(targets, 8));
+
+        //ADDED：表面生成被丢弃概率0.0f，越高越不容易被发现
+        FeatureUtils.register(context, EXPOSED_CINNABAR_ORE_KEY, Feature.SCATTERED_ORE,
+            new OreConfiguration(targets, 4, 0.0f));
     }
 
-
-    private static ResourceKey<ConfiguredFeature<?,?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(TaoismMain.MODID,name));
+    private static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(TaoismMain.MODID, name));
     }
-
 }

@@ -21,7 +21,6 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
-import io.github.shm1131.taoism.datagen.DataGenProvider;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -78,13 +77,7 @@ public class TaoismMain {
     }
 
     public void onGatherData(GatherDataEvent.Client event) {
-
-
-
-        if (event instanceof GatherDataEvent.Client) {
-            event.createDatapackRegistryObjects(DataGenProvider.BUILDER);
-        }
-
+        //成就
         event.createProvider((output, lookupProvider) ->
                 new AdvancementProvider(
                         output,
@@ -93,10 +86,11 @@ public class TaoismMain {
                 )
         );
 
-        //TODO 临时用重写getName()过的注册冲突，DataGenProvider与WorldGenProvider需要合并
+        //世界生成
         event.createProvider(((output, lookupProvider) ->
             new WorldGenProvider(output, lookupProvider)));
 
+        //物品模型生成
         event.createProvider(output -> new ModItemModelProvider(output));
     }
 

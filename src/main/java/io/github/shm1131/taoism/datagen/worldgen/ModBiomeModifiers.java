@@ -25,8 +25,10 @@ public class ModBiomeModifiers {
 
         context.register(ADD_CINNABAR_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
             biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-            HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeature.OVERWORLD_CINNABAR_ORE_KEY)),
-            GenerationStep.Decoration.UNDERGROUND_ORES));
+            HolderSet.direct(
+                placedFeatures.getOrThrow(ModPlacedFeature.OVERWORLD_CINNABAR_ORE_KEY),
+                placedFeatures.getOrThrow(ModPlacedFeature.EXPOSED_CINNABAR_ORE_KEY)  // 新增
+            ), GenerationStep.Decoration.UNDERGROUND_ORES));
 
     }
 

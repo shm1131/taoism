@@ -90,7 +90,7 @@ public class TaoismHelper {
     setData(player, new ITaoismData.TaoismData(
         chengFu, true,
         50, 0,
-        (50 + chengFu) * 20,
+        (50 + chengFu) * 100,
         false
     ));
   }
@@ -100,7 +100,7 @@ public class TaoismHelper {
     setData(player, new ITaoismData.TaoismData(
         d.getChengFu(), d.isChengFuInit(),
         50, 0,
-        (50 + d.getChengFu()) * 20,
+        (50 + d.getChengFu()) * 100,
         false
     ));
   }
