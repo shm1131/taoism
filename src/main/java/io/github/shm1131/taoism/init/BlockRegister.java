@@ -1,7 +1,8 @@
 package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.block.CinnabarOre;
+import io.github.shm1131.taoism.block.DeepZhuShaOre;
+import io.github.shm1131.taoism.block.ZhuShaOre;
 import io.github.shm1131.taoism.block.Incubator;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Blocks;
@@ -23,14 +24,21 @@ public class BlockRegister {
   public static final DeferredItem<BlockItem> SPECIAL_BLOCK_ITEM =
       ITEMS.registerSimpleBlockItem(SPECIAL_BLOCK);
 
-  public static final DeferredBlock<CinnabarOre> CINNABAR_ORE = BLOCKS.registerBlock(
-      "cinnabar_ore",
-      CinnabarOre::new,
+  public static final DeferredBlock<ZhuShaOre> ZHU_SHA_ORE = BLOCKS.registerBlock(
+      "zhu_sha_ore",
+      ZhuShaOre::new,
       () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)
   );
 
-  public static final DeferredItem<BlockItem> CINNABAR_ORE_ITEM =
-      ITEMS.registerSimpleBlockItem(CINNABAR_ORE);
+  public static final DeferredItem<BlockItem> ZHU_SHA_ORE_ITEM =
+      ITEMS.registerSimpleBlockItem(ZHU_SHA_ORE);
 
+    public static final DeferredBlock<DeepZhuShaOre> DEEP_ZHU_SHA_ORE = BLOCKS.registerBlock(
+        "deep_zhu_sha_ore",
+        DeepZhuShaOre::new,
+        () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_IRON_ORE)
+    );
 
+    public static final DeferredItem<BlockItem> DEEP_ZHU_SHA_ORE_ITEM =
+        ITEMS.registerSimpleBlockItem(DEEP_ZHU_SHA_ORE);
 }

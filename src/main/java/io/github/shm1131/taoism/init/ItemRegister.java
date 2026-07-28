@@ -1,7 +1,7 @@
 package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.item.bar.Cinnabar;
+import io.github.shm1131.taoism.item.bar.ZhuSha;
 import io.github.shm1131.taoism.item.IconItem;
 import io.github.shm1131.taoism.item.herb.pill.PillItem;
 import io.github.shm1131.taoism.item.talismans.YellowPaper;
@@ -50,12 +50,12 @@ public class ItemRegister {
     );
 
 
-    public static final DeferredHolder<Item, Cinnabar> CINNABAR = ITEMS.register("cinnabar",
-        () -> new Cinnabar(new Item.Properties()
+    public static final DeferredHolder<Item, ZhuSha> ZHU_SHA = ITEMS.register("zhu_sha",
+        () -> new ZhuSha(new Item.Properties()
             .setId(
                 ResourceKey.create(
                     Registries.ITEM,
-                    Identifier.fromNamespaceAndPath(TaoismMain.MODID,"cinnabar")
+                    Identifier.fromNamespaceAndPath(TaoismMain.MODID,"zhu_sha")
                 )
             )
         )

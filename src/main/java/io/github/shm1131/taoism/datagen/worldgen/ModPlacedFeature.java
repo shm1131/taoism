@@ -15,18 +15,18 @@ import java.util.List;
 
 public class ModPlacedFeature {
 
-    public static final ResourceKey<PlacedFeature> OVERWORLD_CINNABAR_ORE_KEY = createKey("overworld_cinnabar_ore_placed");
+    public static final ResourceKey<PlacedFeature> UNI_ZHU_SHA_ORE_KEY = createKey("uni_zhu_sha_ore_placed");
     //ADDED：新增表面生成Key
-    public static final ResourceKey<PlacedFeature> EXPOSED_CINNABAR_ORE_KEY = createKey("exposed_cinnabar_ore_placed");
+    public static final ResourceKey<PlacedFeature> TRI_ZHU_SHA_ORE_KEY = createKey("tri_zhu_sha_ore_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?,?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        PlacementUtils.register(context,OVERWORLD_CINNABAR_ORE_KEY,configuredFeatures.getOrThrow(ModConfiguredFeature.OVERWORLD_CINNABAR_ORE_KEY),commonOrePlacement(9,
-            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(64))));
-        //ADDED：新增，count取埋藏数一半
-        PlacementUtils.register(context, EXPOSED_CINNABAR_ORE_KEY, configuredFeatures.getOrThrow(ModConfiguredFeature.EXPOSED_CINNABAR_ORE_KEY),
-            commonOrePlacement(4, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(112))));
+        PlacementUtils.register(context, UNI_ZHU_SHA_ORE_KEY,configuredFeatures.getOrThrow(ModConfiguredFeature.URI_ZHU_SHA_ORE_KEY),
+            commonOrePlacement(6, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(64))));
+
+        PlacementUtils.register(context, TRI_ZHU_SHA_ORE_KEY, configuredFeatures.getOrThrow(ModConfiguredFeature.TRI_ZHU_SHA_ORE_KEY),
+            commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(112))));
     }
 
     private static List<PlacementModifier> orePlacement(PlacementModifier pCountPlacement, PlacementModifier pHeightRange) {

@@ -1,20 +1,15 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
-import io.github.shm1131.taoism.datagen.worldgen.WorldGenProvider;
 import io.github.shm1131.taoism.init.HerbItemRegister;
-import io.github.shm1131.taoism.item.herb.ModItemModelProvider;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
-import net.minecraft.data.advancements.AdvancementProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
 import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -25,7 +20,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 @Mod(TaoismMain.MODID)
@@ -60,7 +54,7 @@ public class TaoismMain {
         ModDataComponents.COMPONENTS.register(modEventBus);   //ADDED:注册component
 
         modEventBus.addListener(this::registerPayloads);
-        modEventBus.addListener(this::onGatherData);
+
     }
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
@@ -74,24 +68,6 @@ public class TaoismMain {
             SyncCultivationDataPayload.TYPE,
             SyncCultivationDataPayload.STREAM_CODEC
         );
-    }
-
-    public void onGatherData(GatherDataEvent.Client event) {
-        //成就
-        event.createProvider((output, lookupProvider) ->
-                new AdvancementProvider(
-                        output,
-                        lookupProvider,
-                        List.of(new ModAdvancementSubProvider())
-                )
-        );
-
-        //世界生成
-        event.createProvider(((output, lookupProvider) ->
-            new WorldGenProvider(output, lookupProvider)));
-
-        //物品模型生成
-        event.createProvider(output -> new ModItemModelProvider(output));
     }
 
 }

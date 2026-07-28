@@ -260,10 +260,10 @@ public class HerbItemRegister {
         )
     );
 
-    public static final DeferredHolder<Item,CinnabarDust> CINNABAR_DUST = ITEMS.register(
-        "cinnabar_dust",
+    public static final DeferredHolder<Item,CinnabarDust> ZHU_SHA_FEN = ITEMS.register(
+        "zhu_sha_fen",
         () -> new CinnabarDust(
-            herbProps("cinnabar_dust"),
+            herbProps("zhu_sha_fen"),
             new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0.70f, 0.90f)
         )
     );
