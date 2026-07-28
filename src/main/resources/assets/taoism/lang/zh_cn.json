@@ -23,6 +23,18 @@
     "item.taoism.song_zhi": "松脂",
     "item.taoism.song_shi": "松子",
 
+    "item.taoism.shui_yin": "水银",
+    "item.taoism.ci_shi": "磁石",
+    "item.taoism.xiong_huang": "雄黄",
+    "item.taoism.ci_huang": "雌黄",
+    "item.taoism.yun_mu": "云母",
+    "item.taoism.zhu_sha": "朱砂",
+    "item.taoism.jin_fen": "金粉",
+    "item.taoism.yin_fen": "银粉",
+    "item.taoism.qian_fen": "铅粉",
+    "item.taoism.liu_huang": "硫磺",
+    "item.taoism.xiao_shi": "硝石",
+
     "item.taoism.cinnabar": "朱砂",
     "item.taoism.cinnabar_dust": "朱砂粉",
     "block.taoism.cinnabar_ore": "朱砂矿石",
@@ -40,6 +52,7 @@
     "taoism.flavor.neutral": "平淡",
     "taoism.flavor.bitter": "苦",
     "taoism.flavor.sweet": "甘",
+    "taoism.flavor.spicy": "辛",
 
     "taoism.nature.neutral": "平",
     "taoism.nature.cold": "寒",

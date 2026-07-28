@@ -175,4 +175,96 @@ public class HerbItemRegister {
                     new HerbProperties(Flavor.SWEET, Nature.WARM, 0.0f, 0.3f)
             )
     );
+
+
+
+    //____________________________________________________________________________________________
+
+    public static final DeferredHolder<Item, ShuiYin> SHUI_YIN = ITEMS.register(
+        "shui_yin",
+        () -> new ShuiYin(
+            herbProps("shui_yin"),
+            new HerbProperties(Flavor.SPICY, Nature.COLD, 0.95f, 0.80f)
+        )
+    );
+
+    public static final DeferredHolder<Item, CiShi> CI_SHI = ITEMS.register(
+        "ci_shi",
+        () -> new CiShi(
+            herbProps("ci_shi"),
+            new HerbProperties(Flavor.SALTY, Nature.WARM, 0.10f, 0.60f)
+        )
+    );
+
+    public static final DeferredHolder<Item, XiongHuang> XIONG_HUANG = ITEMS.register(
+        "xiong_huang",
+        () -> new XiongHuang(
+            herbProps("xiong_huang"),
+            new HerbProperties(Flavor.BITTER, Nature.WARM, 0.85f, 0.75f)
+        )
+    );
+
+    public static final DeferredHolder<Item, CiHuang> CI_HUANG = ITEMS.register(
+        "ci_huang",
+        () -> new CiHuang(
+            herbProps("ci_huang"),
+            new HerbProperties(Flavor.SPICY, Nature.NEUTRAL, 0.80f, 0.70f)
+        )
+    );
+
+    public static final DeferredHolder<Item, YunMu> YUN_MU = ITEMS.register(
+        "yun_mu",
+        () -> new YunMu(
+            herbProps("yun_mu"),
+            new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0.05f, 0.40f)
+        )
+    );
+
+    public static final DeferredHolder<Item, JinFen> JIN_FEN = ITEMS.register(
+        "jin_fen",
+        () -> new JinFen(
+            herbProps("jin_fen"),
+            new HerbProperties(Flavor.SPICY, Nature.NEUTRAL, 0.00f, 0.95f)
+        )
+    );
+
+    public static final DeferredHolder<Item, YinFen> YIN_FEN = ITEMS.register(
+        "yin_fen",
+        () -> new YinFen(
+            herbProps("yin_fen"),
+            new HerbProperties(Flavor.SWEET, Nature.COLD, 0.05f, 0.50f)
+        )
+    );
+
+    public static final DeferredHolder<Item, QianFen> QIAN_FEN = ITEMS.register(
+        "qian_fen",
+        () -> new QianFen(
+            herbProps("qian_fen"),
+            new HerbProperties(Flavor.SWEET, Nature.COLD, 0.75f, 0.30f)
+        )
+    );
+
+    public static final DeferredHolder<Item, LiuHuang> LIU_HUANG = ITEMS.register(
+        "liu_huang",
+        () -> new LiuHuang(
+            herbProps("liu_huang"),
+            new HerbProperties(Flavor.SPICY, Nature.WARM, 0.60f, 0.85f)
+        )
+    );
+
+    public static final DeferredHolder<Item, XiaoShi> XIAO_SHI = ITEMS.register(
+        "xiao_shi",
+        () -> new XiaoShi(
+            herbProps("xiao_shi"),
+            new HerbProperties(Flavor.BITTER, Nature.COLD, 0.40f, 0.65f)
+        )
+    );
+
+    public static final DeferredHolder<Item,CinnabarDust> CINNABAR_DUST = ITEMS.register(
+        "cinnabar_dust",
+        () -> new CinnabarDust(
+            herbProps("cinnabar_dust"),
+            new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0.70f, 0.90f)
+        )
+    );
 }
