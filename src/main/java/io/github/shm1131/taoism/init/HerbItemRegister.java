@@ -212,10 +212,10 @@ public class HerbItemRegister {
         )
     );
 
-    public static final DeferredHolder<Item, YunMu> YUN_MU = ITEMS.register(
-        "yun_mu",
+    public static final DeferredHolder<Item, YunMu> YUN_MU_FEN = ITEMS.register(
+        "yun_mu_fen",
         () -> new YunMu(
-            herbProps("yun_mu"),
+            herbProps("yun_mu_fen"),
             new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0.05f, 0.40f)
         )
     );

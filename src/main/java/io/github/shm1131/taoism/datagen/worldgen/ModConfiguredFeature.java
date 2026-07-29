@@ -19,10 +19,17 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class ModConfiguredFeature {
-    //埋藏
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> URI_ZHU_SHA_ORE_KEY = registerKey("uri_cinnabar_ore");
-    //ADDED：裸漏
     public static final ResourceKey<ConfiguredFeature<?, ?>> TRI_ZHU_SHA_ORE_KEY = registerKey("tri_cinnabar_ore");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TRI_YUN_MU_ORE_KEY = registerKey("tri_yun_mu_ore");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> URI_YIN_ORE_KEY = registerKey("uri_yin_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TRI_YIN_ORE_KEY = registerKey("tri_yin_ore");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> URI_QIAN_ORE_KEY = registerKey("uri_qian_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>>  TRI_QIAN_ORE_KEY = registerKey("tri_qian_ore");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -35,13 +42,27 @@ public class ModConfiguredFeature {
             );
 
         List<OreConfiguration.TargetBlockState> ZhuShaOreRule = overworldOreRule.apply(BlockRegister.ZHU_SHA_ORE,BlockRegister.DEEP_ZHU_SHA_ORE);
+        List<OreConfiguration.TargetBlockState> YinOreRule = overworldOreRule.apply(BlockRegister.SIMPLE_BLOCKS.get("yin_ore"),BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore"));
+        List<OreConfiguration.TargetBlockState> YunMuOreRule = overworldOreRule.apply(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore"),BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore"));
+        List<OreConfiguration.TargetBlockState> QianOreRule =  overworldOreRule.apply(BlockRegister.SIMPLE_BLOCKS.get("qian_ore"),BlockRegister.SIMPLE_BLOCKS.get("qian_ore"));
 
         FeatureUtils.register(context, URI_ZHU_SHA_ORE_KEY, Feature.ORE,
             new OreConfiguration(ZhuShaOreRule, 6,0.0f));
-
-        //ADDED：表面生成被丢弃概率0.0f，越高越不容易被发现
-        FeatureUtils.register(context, TRI_ZHU_SHA_ORE_KEY, Feature.SCATTERED_ORE,
+        FeatureUtils.register(context, TRI_ZHU_SHA_ORE_KEY, Feature.ORE,
             new OreConfiguration(ZhuShaOreRule, 8, 0.0f));
+
+        FeatureUtils.register(context, TRI_YUN_MU_ORE_KEY,Feature.ORE,
+            new OreConfiguration(YunMuOreRule,13,0.1f));
+
+        FeatureUtils.register(context, URI_YIN_ORE_KEY,Feature.ORE,
+            new OreConfiguration(YinOreRule,7,0.0f));
+        FeatureUtils.register(context, TRI_YIN_ORE_KEY,Feature.ORE,
+            new OreConfiguration(YinOreRule,8,0.1f));
+
+        FeatureUtils.register(context, URI_QIAN_ORE_KEY,Feature.ORE,
+            new OreConfiguration(QianOreRule,6,0.0f));
+        FeatureUtils.register(context, TRI_QIAN_ORE_KEY,Feature.ORE,
+            new OreConfiguration(QianOreRule,8,0.0f));
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

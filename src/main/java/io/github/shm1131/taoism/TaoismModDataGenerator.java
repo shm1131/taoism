@@ -3,7 +3,6 @@ package io.github.shm1131.taoism;
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
 import io.github.shm1131.taoism.datagen.*;
 import io.github.shm1131.taoism.datagen.worldgen.WorldGenProvider;
-import io.github.shm1131.taoism.item.herb.ModItemModelProvider;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -52,8 +51,5 @@ public class TaoismModDataGenerator {
         event.createProvider(((output, lookupProvider) ->
             new WorldGenProvider(output, lookupProvider)));
 
-        //物品模型生成 弃用：已合并
-        //TODO 特供草药的模型生成器已弃用
-        //event.createProvider(output -> new ModItemModelProvider(output));
     }
 }

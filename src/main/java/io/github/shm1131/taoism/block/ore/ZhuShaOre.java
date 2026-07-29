@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.block;
+package io.github.shm1131.taoism.block.ore;
 
 import net.minecraft.world.level.block.Block;
 
