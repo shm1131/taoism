@@ -35,6 +35,10 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
 
         add(BlockRegister.SIMPLE_BLOCKS.get("yin_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("yin_ore").get(),ItemRegister.SIMPLE_ITEMS.get("cu_yin").get(), 2.0f,4.0f));
         add(BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore").get(),ItemRegister.SIMPLE_ITEMS.get("cu_yin").get(), 2.0f,4.0f));
+
+        add(BlockRegister.SIMPLE_BLOCKS.get("qian_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("qian_ore").get(),ItemRegister.SIMPLE_ITEMS.get("qian_pian").get(), 2.0f,4.0f));
+        add(BlockRegister.SIMPLE_BLOCKS.get("deep_qian_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("deep_qian_ore").get(),ItemRegister.SIMPLE_ITEMS.get("qian_pian").get(), 2.0f,4.0f));
+
     }
 
 

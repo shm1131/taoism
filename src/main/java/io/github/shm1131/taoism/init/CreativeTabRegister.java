@@ -32,10 +32,6 @@ public class CreativeTabRegister {
                             .map(DeferredHolder::get)
                             .forEach(output::accept);
 
-                        HerbItemRegister.ITEMS.getEntries()
-                            .stream()
-                            .map(DeferredHolder::get)
-                            .forEach(output::accept);
                     })
                     .build()
             );

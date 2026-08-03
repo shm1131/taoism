@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "taoism:uni_qian_ore_placed",
+    "taoism:tri_qian_ore_placed"
+  ],
+  "step": "underground_ores"
+}

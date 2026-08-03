@@ -2,7 +2,6 @@ package io.github.shm1131.taoism.datagen;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.init.BlockRegister;
-import io.github.shm1131.taoism.init.HerbItemRegister;
 import io.github.shm1131.taoism.init.ItemRegister;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -56,11 +55,9 @@ public class ModModelsProvider extends ModelProvider {
     protected Stream<? extends Holder<Item>> getKnownItems() {
         return Stream.of(
             ItemRegister.ITEMS.getEntries().stream(),
-            BlockRegister.ITEMS.getEntries().stream(),
-            HerbItemRegister.ITEMS.getEntries().stream()
+            BlockRegister.ITEMS.getEntries().stream()
         ).flatMap(Function.identity())
             .filter(holder -> ! ITEM_BLACKLIST.contains(holder.getId().getPath()));
-        //找时间把这些物品注册表合并了吧
     }
 
     @Override

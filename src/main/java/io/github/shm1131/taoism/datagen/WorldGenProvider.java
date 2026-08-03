@@ -1,10 +1,13 @@
-package io.github.shm1131.taoism.datagen.worldgen;
+package io.github.shm1131.taoism.datagen;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.datagen.biomes.AfterlifeBiomes;
 import io.github.shm1131.taoism.datagen.dim.ModDimensionTypes;
 import io.github.shm1131.taoism.datagen.dim.ModLevelStems;
 import io.github.shm1131.taoism.datagen.dim.ModNoiseGeneratorSettings;
+import io.github.shm1131.taoism.datagen.worldgen.ModBiomeModifiers;
+import io.github.shm1131.taoism.datagen.worldgen.ModConfiguredFeature;
+import io.github.shm1131.taoism.datagen.worldgen.ModPlacedFeature;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;

@@ -2,7 +2,6 @@ package io.github.shm1131.taoism;
 
 import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
 import io.github.shm1131.taoism.datagen.*;
-import io.github.shm1131.taoism.datagen.worldgen.WorldGenProvider;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;

@@ -22,7 +22,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             .add(BlockRegister.DEEP_ZHU_SHA_ORE.get())
             .add(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore").get())
             .add(BlockRegister.SIMPLE_BLOCKS.get("yin_ore").get())
-            .add(BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore").get());
+            .add(BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore").get())
+            .add(BlockRegister.SIMPLE_BLOCKS.get("qian_ore").get())
+            .add(BlockRegister.SIMPLE_BLOCKS.get("deep_qian_ore").get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
             .add(BlockRegister.ZHU_SHA_ORE.get())
@@ -30,6 +32,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.NEEDS_IRON_TOOL)
             .add(BlockRegister.SIMPLE_BLOCKS.get("yin_ore").get())
-            .add(BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore").get());
+            .add(BlockRegister.SIMPLE_BLOCKS.get("deep_yin_ore").get())
+            .add(BlockRegister.SIMPLE_BLOCKS.get("qian_ore").get())
+            .add(BlockRegister.SIMPLE_BLOCKS.get("deep_qian_ore").get());
     }
 }
