@@ -8,7 +8,6 @@ import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -46,7 +45,6 @@ public class TaoismMain {
         CreativeTabRegister.TABS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
-        CultivationAttachment.ATTACHMENT_TYPES.register(modEventBus);
 
         GLM_SERIALIZERS.register(modEventBus);
         ModDataComponents.COMPONENTS.register(modEventBus);   //ADDED:注册component

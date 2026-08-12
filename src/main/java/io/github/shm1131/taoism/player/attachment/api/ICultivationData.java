@@ -1,8 +1,9 @@
-package io.github.shm1131.taoism.player.attachment.cultivation;
+package io.github.shm1131.taoism.player.attachment.api;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.shm1131.taoism.player.attachment.cultivation.CultivationRealm;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

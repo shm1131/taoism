@@ -3,7 +3,7 @@ package io.github.shm1131.taoism;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
 import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
-import io.github.shm1131.taoism.player.manu.AttachmentScreen;
+import io.github.shm1131.taoism.player.screen.AttachmentScreen;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

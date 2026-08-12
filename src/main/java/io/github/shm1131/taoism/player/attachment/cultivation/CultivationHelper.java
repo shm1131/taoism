@@ -2,19 +2,22 @@ package io.github.shm1131.taoism.player.attachment.cultivation;
 
 import io.github.shm1131.taoism.init.TaoismAttachments;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
+import io.github.shm1131.taoism.player.attachment.api.ICultivationData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import static io.github.shm1131.taoism.init.TaoismAttachments.CULTIVATION_DATA;
+
 public class CultivationHelper {
 
   private static ICultivationData getData(Player player) {
-    ICultivationData data = player.getData(CultivationAttachment.TAOISM_DATA);
+    ICultivationData data = player.getData(CULTIVATION_DATA);
     return data != null ? data : ICultivationData.EMPTY;
   }
 
   private static void setData(Player player, ICultivationData data) {
-    player.setData(CultivationAttachment.TAOISM_DATA, data);
+    player.setData(CULTIVATION_DATA, data);
     if (!player.level().isClientSide() && player instanceof ServerPlayer sp) {
       PacketDistributor.sendToPlayer(sp, new SyncCultivationDataPayload(data));
     }

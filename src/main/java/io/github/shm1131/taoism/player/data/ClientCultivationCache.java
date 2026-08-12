@@ -1,6 +1,6 @@
 package io.github.shm1131.taoism.player.data;
 
-import io.github.shm1131.taoism.player.attachment.cultivation.ICultivationData;
+import io.github.shm1131.taoism.player.attachment.api.ICultivationData;
 
 public class ClientCultivationCache {
 

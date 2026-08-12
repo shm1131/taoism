@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.player.manu;
+package io.github.shm1131.taoism.player.screen;
 
 import io.github.shm1131.taoism.player.data.ClientTaoismCache;
 import net.minecraft.client.DeltaTracker;
