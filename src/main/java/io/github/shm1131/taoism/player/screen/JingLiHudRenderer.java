@@ -66,6 +66,7 @@ public class JingLiHudRenderer {
 
     private static void drawIcon(GuiGraphicsExtractor g, Identifier tex, int startX, int y, int slotIndex) {
         int x = startX - slotIndex * 8 - ICON_SIZE;
-        g.blit(RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, ICON_SIZE - 1, ICON_SIZE - 1, 256, 256);
+        g.blit(RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, ICON_SIZE, ICON_SIZE, 256, 256);
+
     }
 }
