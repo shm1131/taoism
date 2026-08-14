@@ -12,12 +12,14 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 
+import java.awt.*;
+
 public class JingLiHudRenderer {
     private static final String NS = TaoismMain.MODID;
 
-    private static final Identifier FULL   = Identifier.fromNamespaceAndPath(NS, "gui/sprite/hud/full_energy.png");
-    private static final Identifier HALF   = Identifier.fromNamespaceAndPath(NS, "gui/sprite/hud/half_energy.png");
-    private static final Identifier EMPTY   = Identifier.fromNamespaceAndPath(NS,"gui/sprite/hud/empty_energy.png");
+    private static final Identifier FULL   = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/full_energy.png");
+    private static final Identifier HALF   = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/half_energy.png");
+    private static final Identifier EMPTY   = Identifier.fromNamespaceAndPath(NS,"textures/gui/sprite/hud/empty_energy.png");
 
 
     private static final int ICON_SIZE = 9;
@@ -64,6 +66,6 @@ public class JingLiHudRenderer {
 
     private static void drawIcon(GuiGraphicsExtractor g, Identifier tex, int startX, int y, int slotIndex) {
         int x = startX - slotIndex * 8 - ICON_SIZE;
-        g.blitSprite(RenderPipelines.GUI_TEXTURED,tex, x, y, ICON_SIZE, ICON_SIZE);
+        g.blit(RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, ICON_SIZE - 1, ICON_SIZE - 1, 256, 256);
     }
 }
