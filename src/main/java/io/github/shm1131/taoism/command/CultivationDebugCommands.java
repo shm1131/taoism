@@ -1,7 +1,7 @@
 package io.github.shm1131.taoism.command;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationHelper;
+import io.github.shm1131.taoism.player.attachment.helper.CultivationHelper;
 import io.github.shm1131.taoism.player.attachment.api.ICultivationData;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;

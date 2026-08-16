@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.player.attachment.cultivation;
+package io.github.shm1131.taoism.player.attachment.helper;
 
 import io.github.shm1131.taoism.init.TaoismAttachments;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;

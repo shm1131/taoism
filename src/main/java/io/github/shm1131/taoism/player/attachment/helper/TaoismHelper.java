@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.player.attachment;
+package io.github.shm1131.taoism.player.attachment.helper;
 
 import io.github.shm1131.taoism.init.TaoismAttachments;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
@@ -24,50 +24,38 @@ public class TaoismHelper {
                                     int chengFu, boolean chengFuInit,
                                     int xianTianQi, int houTianQi,
                                     int shouMing,
-                                    boolean isInRealm,
-                                    int JingLiEat, int jingLiSleep) {
+                                    boolean isInRealm) {
         return new ITaoismData.TaoismData(
             chengFu, chengFuInit,
             xianTianQi, houTianQi,
             shouMing,
-            isInRealm,
-            JingLiEat, jingLiSleep
+            isInRealm
         );
     }
 
     private static ITaoismData withChengFu(ITaoismData d, int chengFu) {
         return copy(d, chengFu, d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            d.getShouMing(), d.isInRealm(), d.getJingLiEat(), d.getJingLiSleep());
+            d.getShouMing(), d.isInRealm());
     }
 
     private static ITaoismData withXianTianQi(ITaoismData d, int xianTianQi) {
         return copy(d, d.getChengFu(), d.isChengFuInit(), xianTianQi, d.getHouTianQi(),
-            d.getShouMing(), d.isInRealm(), d.getJingLiEat(), d.getJingLiSleep());
+            d.getShouMing(), d.isInRealm());
     }
 
     private static ITaoismData withHouTianQi(ITaoismData d, int houTianQi) {
         return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), houTianQi,
-            d.getShouMing(), d.isInRealm(), d.getJingLiEat(), d.getJingLiSleep());
+            d.getShouMing(), d.isInRealm());
     }
 
     private static ITaoismData withShouMing(ITaoismData d, int shouMing) {
         return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            shouMing, d.isInRealm(), d.getJingLiEat(), d.getJingLiSleep());
+            shouMing, d.isInRealm());
     }
 
     private static ITaoismData withInRealm(ITaoismData d, boolean inRealm) {
         return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            d.getShouMing(), inRealm, d.getJingLiEat(), d.getJingLiSleep());
-    }
-
-    private static ITaoismData withJingLiSleep(ITaoismData d, int jingLiSleep) {
-        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            d.getShouMing(), d.isInRealm(), d.getJingLiEat(), jingLiSleep);
-    }
-
-    private static ITaoismData withJingLiEat(ITaoismData d, int JingLiEat) {
-        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            d.getShouMing(), d.isInRealm(), JingLiEat, d.getJingLiSleep());
+            d.getShouMing(), inRealm);
     }
 
     // ======================== ChengFu ========================
@@ -121,28 +109,6 @@ public class TaoismHelper {
         setData(player, withInRealm(d, inRealm));
     }
 
-
-    // ======================== JingLi ========================
-
-    public static int getJingLiEat(Player p) { return getData(p).getJingLiEat(); }
-    public static int getJingLiSleep(Player p) { return getData(p).getJingLiSleep(); }
-
-    public static int getTotalJingLi(Player p) {
-        ITaoismData d = getData(p);
-        return d.getJingLiEat() + d.getJingLiSleep();
-    }
-
-    public static void addJingLiEat(Player p, int amount) {
-        ITaoismData d = getData(p);
-        int newVal = Math.clamp(d.getJingLiEat() + amount, 0, ITaoismData.MAX_JING_LI_EAT);
-        setData(p, withJingLiEat(d, newVal));
-    }
-
-    public static void addJingLiSleep(Player p, int amount) {
-        ITaoismData d = getData(p);
-        int newVal = Math.clamp(d.getJingLiSleep() + amount, 0, ITaoismData.MAX_JING_LI_SLEEP);
-        setData(p, withJingLiSleep(d, newVal));
-    }
     // ======================== 初始化 / 重置 ========================
 
     public static void initYangWorld(Player player, int chengFu) {
@@ -150,8 +116,7 @@ public class TaoismHelper {
             chengFu, true,
             50, 0,
             (50 + chengFu) * 100,
-            false,
-            10, 10
+            false
         ));
     }
 
@@ -161,8 +126,7 @@ public class TaoismHelper {
             d.getChengFu(), d.isChengFuInit(),
             50, 0,
             (50 + d.getChengFu()) * 100,
-            false,
-            10, 10
+            false
         ));
     }
 
@@ -172,8 +136,7 @@ public class TaoismHelper {
             chengFu, d.isChengFuInit(),
             0, 0,
             chengFu * 20,
-            true,
-            10, 10
+            true
         ));
     }
 }

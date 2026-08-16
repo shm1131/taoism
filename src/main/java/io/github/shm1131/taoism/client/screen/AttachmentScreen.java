@@ -1,6 +1,6 @@
-package io.github.shm1131.taoism.player.screen;
+package io.github.shm1131.taoism.client.screen;
 
-import io.github.shm1131.taoism.player.data.ClientTaoismCache;
+import io.github.shm1131.taoism.client.data.ClientTaoismCache;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

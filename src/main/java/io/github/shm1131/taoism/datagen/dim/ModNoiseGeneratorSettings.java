@@ -20,52 +20,46 @@ public class ModNoiseGeneratorSettings {
   public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> context) {
     var noises = context.lookup(Registries.NOISE);
 
-    // === 1. 构建平坦地形密度函数（无河流）===
-    // ⭐ add/mul/squeeze 全部使用 DensityFunctions 静态方法
     DensityFunction baseNoise = DensityFunctions.noise(
         noises.getOrThrow(Noises.CONTINENTALNESS), 0.5, 0.5
     );
     DensityFunction flatFactor = DensityFunctions.constant(0.3);
     DensityFunction baseTerrain = DensityFunctions.mul(baseNoise, flatFactor);
 
-    // Y轴梯度：y=63时值为0，上方为负（空气），下方为正（固体）
     DensityFunction yGradient = DensityFunctions.yClampedGradient(-64, 256, 1.5, -1.5);
 
-    // 最终密度 = Y梯度 + 平坦地形扰动，再 squeeze 平滑
     DensityFunction finalDensity = DensityFunctions.add(yGradient, baseTerrain).squeeze();
 
-    // === 2. 构建 NoiseRouter ===
     NoiseRouter router = new NoiseRouter(
-        DensityFunctions.zero(), // barrier
-        DensityFunctions.zero(), // fluidLevelFloodedness
-        DensityFunctions.zero(), // fluidLevelSpread
-        DensityFunctions.zero(), // lava
-        baseTerrain,             // temperature
-        DensityFunctions.zero(), // vegetation
-        DensityFunctions.zero(), // continents
-        DensityFunctions.zero(), // erosion
-        DensityFunctions.zero(), // depth
-        DensityFunctions.zero(), // ridges
-        DensityFunctions.zero(), // initialDensityWithoutJaggedness
-        finalDensity,            // ⭐ 最终密度
-        DensityFunctions.zero(), // veinToggle
-        DensityFunctions.zero(), // veinRidged
-        DensityFunctions.zero()  // veinGap
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        baseTerrain,
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        finalDensity,
+        DensityFunctions.zero(),
+        DensityFunctions.zero(),
+        DensityFunctions.zero()
     );
 
-    // === 3. 注册 NoiseGeneratorSettings（11个参数，精确对齐源码）===
     context.register(FLAT_RIVER_TERRAIN, new NoiseGeneratorSettings(
-        NoiseSettings.create(-64, 384, 1, 2), // noiseSettings
-        Blocks.STONE.defaultBlockState(),      // defaultBlock
-        Blocks.WATER.defaultBlockState(),      // defaultFluid
-        router,                                // noiseRouter
-        makeSurfaceRules(),                    // surfaceRule
-        List.of(),                             // spawnTarget
-        63,                                    // seaLevel
-        false,                                 // disableMobGeneration
-        false,                                 // aquifersEnabled
-        false,                                 // oreVeinsEnabled
-        false                                  // useLegacyRandomSource
+        NoiseSettings.create(-64, 384, 1, 2),
+        Blocks.STONE.defaultBlockState(),
+        Blocks.WATER.defaultBlockState(),
+        router,
+        makeSurfaceRules(),
+        List.of(),
+        63,
+        false,
+        false,
+        false,
+        false
     ), Lifecycle.stable());
   }
 

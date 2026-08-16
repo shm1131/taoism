@@ -30,7 +30,6 @@ public class ModDimensionTypes {
     HolderGetter<Timeline> timelines = context.lookup(Registries.TIMELINE);
     HolderGetter<WorldClock> clocks = context.lookup(Registries.WORLD_CLOCK);
 
-    // 最小化环境属性 - 空维度不需要花哨的效果
     EnvironmentAttributeMap emptyAttributes = EnvironmentAttributeMap.builder()
         .set(EnvironmentAttributes.FOG_COLOR, 0x000000)       // 黑色雾
         .set(EnvironmentAttributes.SKY_COLOR, 0x000000)      // 黑色天空

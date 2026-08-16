@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "io.github.shm1131.taoism.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "SlotMixin"
+    ],
+    "refmap": "taoism.refmap.json",
+    "client": [],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

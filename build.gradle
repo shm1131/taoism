@@ -110,9 +110,12 @@ neoForge {
 // "optional", meaning it will not be pulled by dependents of this mod.
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    annotationProcessor.extendsFrom compileClasspath
 }
 
 dependencies {
+
+    annotationProcessor("org.spongepowered:mixin:0.8.7")
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"

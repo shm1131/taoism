@@ -55,7 +55,6 @@ public class AfterlifeBiomes {
             .build())
         .build());
 
-    // === 混沌荒原 ===
     context.register(CHAOS_WASTELAND, new Biome.BiomeBuilder()
         .hasPrecipitation(false)
         .temperature(0.0F).downfall(0.2F)
@@ -88,7 +87,6 @@ public class AfterlifeBiomes {
             .build())
         .build());
 
-    // === 血怨沼泽 ===
     context.register(BLOOD_SWAMP, new Biome.BiomeBuilder()
         .hasPrecipitation(false)
         .temperature(-0.5F).downfall(0.9F)

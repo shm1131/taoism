@@ -3,6 +3,7 @@ package io.github.shm1131.taoism;
 import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
+import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
@@ -64,6 +65,13 @@ public class TaoismMain {
             SyncCultivationDataPayload.TYPE,
             SyncCultivationDataPayload.STREAM_CODEC
         );
+
+        registrar.playToClient(
+            SyncJingLiDataPayload.TYPE,
+            SyncJingLiDataPayload.STREAM_CODEC
+        );
+
+
     }
 
 }

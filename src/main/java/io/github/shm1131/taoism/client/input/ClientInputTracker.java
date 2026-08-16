@@ -1,6 +1,6 @@
 //ADDED:新建ClientInputTracker类来获取键盘动作
 
-package io.github.shm1131.taoism.client;
+package io.github.shm1131.taoism.client.input;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

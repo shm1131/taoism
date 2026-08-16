@@ -1,6 +1,6 @@
 package io.github.shm1131.taoism.item.herb.base;
 
-import io.github.shm1131.taoism.client.ClientInputTracker;
+import io.github.shm1131.taoism.client.input.ClientInputTracker;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;

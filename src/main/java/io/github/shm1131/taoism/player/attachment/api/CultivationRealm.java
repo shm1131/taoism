@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.player.attachment.cultivation;
+package io.github.shm1131.taoism.player.attachment.api;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum CultivationRealm {
-  // ID使用标准拼音，避免中文直接作为序列化键
+
   ZHU_JI("zhu_ji", "筑基", 0, 500),
   LIAN_JING("lian_jing_hua_qi", "炼精化气", 1, 2000),
   LIAN_QI("lian_qi_hua_shen", "炼气化神", 2, 8000),

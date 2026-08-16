@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.player.data;
+package io.github.shm1131.taoism.client.data;
 
 import io.github.shm1131.taoism.player.attachment.api.ITaoismData;
 

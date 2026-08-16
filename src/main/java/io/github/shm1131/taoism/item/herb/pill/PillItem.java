@@ -2,7 +2,7 @@
 
 package io.github.shm1131.taoism.item.herb.pill;
 
-import io.github.shm1131.taoism.client.ClientInputTracker;
+import io.github.shm1131.taoism.client.input.ClientInputTracker;
 import io.github.shm1131.taoism.item.herb.base.HerbProperties;
 import io.github.shm1131.taoism.item.herb.PropertiesHelper;
 import net.minecraft.ChatFormatting;

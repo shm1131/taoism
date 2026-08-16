@@ -1,10 +1,12 @@
-package io.github.shm1131.taoism.player.attachment;
+package io.github.shm1131.taoism.handler;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.datagen.dim.ModLevelStems;
 import io.github.shm1131.taoism.init.TaoismAttachments;
-import io.github.shm1131.taoism.player.attachment.api.IDeathInventoryData; // ✅ 新增导入
+import io.github.shm1131.taoism.player.attachment.api.IDeathInventoryData;
 import io.github.shm1131.taoism.player.attachment.api.ITaoismData;
+import io.github.shm1131.taoism.player.attachment.helper.JingLiHelper;
+import io.github.shm1131.taoism.player.attachment.helper.TaoismHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -156,6 +158,7 @@ public class TaoismDataHandler {
             });
         } else {
             TaoismHelper.resetForYangWorld(player);
+            JingLiHelper.init(player);
 
             IDeathInventoryData deathData = player.getData(TaoismAttachments.DEATH_INVENTORY);
             List<ItemStack> savedItems = deathData.getItems();
