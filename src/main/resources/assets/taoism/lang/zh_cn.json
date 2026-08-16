@@ -1,0 +1,61 @@
+{
+    "block.taoism.incubator": "培养箱",
+
+    "itemGroup.taoism": "道",
+    "item.taoism.icon_item": "图标",
+
+    "item.taoism.ren_shen": "人参",
+    "item.taoism.ling_zhi": "灵芝",
+    "item.taoism.huang_jing": "黄精",
+    "item.taoism.di_huang": "地黄",
+    "item.taoism.gan_cao": "甘草",
+    "item.taoism.da_zao": "大枣",
+    "item.taoism.gou_qi": "枸杞",
+    "item.taoism.hei_zhi_ma": "黑芝麻",
+    "item.taoism.bai_shu": "白术",
+    "item.taoism.cang_shu": "苍术",
+    "item.taoism.fu_ling": "茯苓",
+    "item.taoism.yuan_zhi": "远志",
+    "item.taoism.chang_pu": "菖蒲",
+    "item.taoism.ju_hua": "菊花",
+    "item.taoism.huai_shi": "槐实",
+    "item.taoism.song_zhen": "松针",
+    "item.taoism.song_zhi": "松脂",
+    "item.taoism.song_shi": "松子",
+
+    "item.taoism.shui_yin": "水银",
+    "item.taoism.ci_shi": "磁石",
+    "item.taoism.xiong_huang": "雄黄",
+    "item.taoism.ci_huang": "雌黄",
+    "item.taoism.yun_mu": "云母",
+    "item.taoism.zhu_sha": "朱砂",
+    "item.taoism.jin_fen": "金粉",
+    "item.taoism.yin_fen": "银粉",
+    "item.taoism.qian_fen": "铅粉",
+    "item.taoism.liu_huang": "硫磺",
+    "item.taoism.xiao_shi": "硝石",
+
+    "item.taoism.cinnabar": "朱砂",
+    "item.taoism.cinnabar_dust": "朱砂粉",
+    "block.taoism.cinnabar_ore": "朱砂矿石",
+
+    "item.taoism.yellow_paper": "黄纸",
+
+    "item.taoism.pill": "丹药",
+
+    "tooltip.taoism.pill.flavor": "药味: %s",
+    "tooltip.taoism.pill.nature": "药性: %s",
+    "tooltip.taoism.pill.toxicity": "毒性: %s",
+    "tooltip.taoism.pill.potency": "药效: %s",
+    "tooltip.taoism.pill.hold_shift": "按住 Shift 查看详细信息",
+
+    "taoism.flavor.neutral": "平淡",
+    "taoism.flavor.bitter": "苦",
+    "taoism.flavor.sweet": "甘",
+    "taoism.flavor.spicy": "辛",
+
+
+    "taoism.nature.neutral": "平",
+    "taoism.nature.cold": "寒",
+    "taoism.nature.warm": "温"
+}

@@ -1,28 +1,24 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
-import io.github.shm1131.taoism.init.HerbItemRegister;
+import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
-import net.minecraft.data.advancements.AdvancementProvider;
+import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
-import io.github.shm1131.taoism.datagen.DataGenProvider;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 @Mod(TaoismMain.MODID)
@@ -43,19 +39,19 @@ public class TaoismMain {
 
         BlockRegister.BLOCKS.register(modEventBus);
         BlockRegister.ITEMS.register(modEventBus);
+        ItemRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
-        HerbItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
         BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
-        CultivationAttachment.ATTACHMENT_TYPES.register(modEventBus);
 
         GLM_SERIALIZERS.register(modEventBus);
+        ModDataComponents.COMPONENTS.register(modEventBus);   //ADDED:注册component
 
         modEventBus.addListener(this::registerPayloads);
-        modEventBus.addListener(this::onGatherData);
+
     }
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
@@ -69,21 +65,13 @@ public class TaoismMain {
             SyncCultivationDataPayload.TYPE,
             SyncCultivationDataPayload.STREAM_CODEC
         );
-    }
 
-    public void onGatherData(GatherDataEvent.Client event) {
-        if (event instanceof GatherDataEvent.Client) {
-            event.createDatapackRegistryObjects(DataGenProvider.BUILDER);
-        }
-        event.createProvider((output, lookupProvider) ->
-                new AdvancementProvider(
-                        output,
-                        lookupProvider,
-                        List.of(new ModAdvancementSubProvider())
-                )
+        registrar.playToClient(
+            SyncJingLiDataPayload.TYPE,
+            SyncJingLiDataPayload.STREAM_CODEC
         );
+
+
     }
-
-
 
 }

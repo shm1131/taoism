@@ -1,15 +1,16 @@
 package io.github.shm1131.taoism.command;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationHelper;
-import io.github.shm1131.taoism.player.attachment.cultivation.ICultivationData;
+import io.github.shm1131.taoism.player.attachment.helper.CultivationHelper;
+import io.github.shm1131.taoism.player.attachment.api.ICultivationData;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+
+import static io.github.shm1131.taoism.init.TaoismAttachments.CULTIVATION_DATA;
 
 @EventBusSubscriber
 public class CultivationDebugCommands {
@@ -29,7 +30,7 @@ public class CultivationDebugCommands {
             .then(Commands.literal("info")
                 .executes(ctx -> {
                     ServerPlayer player = ctx.getSource().getPlayerOrException();
-                    ICultivationData data = player.getData(CultivationAttachment.TAOISM_DATA);
+                    ICultivationData data = player.getData(CULTIVATION_DATA);
                     if (data == null) data = ICultivationData.EMPTY;
 
                     ICultivationData finalData = data;

@@ -1,0 +1,9 @@
+{
+    "type": "taoism:herb_drop",
+    "conditions": [
+        { "condition": "minecraft:block_state_property", "block": "minecraft:dead_bush" },
+        { "condition": "minecraft:random_chance", "chance": 0.04 }
+    ],
+    "herb": "taoism:bai_shu",
+    "count": 1
+}

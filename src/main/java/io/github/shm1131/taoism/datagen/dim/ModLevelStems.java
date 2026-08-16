@@ -37,7 +37,6 @@ public class ModLevelStems {
     var dimType = dimensionTypes.getOrThrow(ModDimensionTypes.EMPTY_DIMENSION_KEY);
     var customNoise = noiseSettings.getOrThrow(ModNoiseGeneratorSettings.FLAT_RIVER_TERRAIN);
 
-    // ⭐ 替换 MultiNoiseBiomeSource 为 RingBiomeSource
     RingBiomeSource biomeSource = new RingBiomeSource(
         biomes.getOrThrow(AfterlifeBiomes.MERCY_PLAINS),     // 内圈：慈悲平原
         biomes.getOrThrow(AfterlifeBiomes.CHAOS_WASTELAND),  // 中圈：混沌荒原
@@ -54,17 +53,14 @@ public class ModLevelStems {
 
   private static MultiNoiseBiomeSource createAfterlifeBiomeSource(HolderGetter<Biome> biomes) {
     List<Pair<Climate.ParameterPoint, Holder<Biome>>> entries = List.of(
-        // 慈悲平原：温暖、中等湿度、低大陆性
         Pair.of(
             Climate.parameters(0.5F, 0.3F, -0.5F, 0.0F, 0.0F, 0.0F, 0.0F),
             biomes.getOrThrow(AfterlifeBiomes.MERCY_PLAINS)
         ),
-        // 混沌荒原：寒冷、干燥、高大陆性
         Pair.of(
             Climate.parameters(-0.5F, -0.5F, 0.5F, 0.0F, 0.0F, 0.0F, 0.0F),
             biomes.getOrThrow(AfterlifeBiomes.CHAOS_WASTELAND)
         ),
-        // 血怨沼泽：中等温度、极湿、中等大陆性
         Pair.of(
             Climate.parameters(0.0F, 0.8F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
             biomes.getOrThrow(AfterlifeBiomes.BLOOD_SWAMP)
