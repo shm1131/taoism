@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
 import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
+import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
@@ -58,17 +59,20 @@ public class TaoismMain {
         var registrar = event.registrar(MODID);
         registrar.playToClient(
             SyncTaoismDataPayload.TYPE,
-            SyncTaoismDataPayload.STREAM_CODEC
+            SyncTaoismDataPayload.STREAM_CODEC,
+            NetworkHandlerClient::handle
         );
 
         registrar.playToClient(
             SyncCultivationDataPayload.TYPE,
-            SyncCultivationDataPayload.STREAM_CODEC
+            SyncCultivationDataPayload.STREAM_CODEC,
+            NetworkHandlerClient::handle
         );
 
         registrar.playToClient(
             SyncJingLiDataPayload.TYPE,
-            SyncJingLiDataPayload.STREAM_CODEC
+            SyncJingLiDataPayload.STREAM_CODEC,
+            NetworkHandlerClient::handle
         );
 
 

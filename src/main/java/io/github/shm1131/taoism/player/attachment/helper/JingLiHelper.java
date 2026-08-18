@@ -20,7 +20,8 @@ public class JingLiHelper {
         SPRINT_JUMP(0.4f),
         ATTACK(0.05f),
         BREAK_BLOCK(0.005f),
-        HURT(0.1f);
+        HURT(0.1f),
+        STAY_UP_LATE(0.5f);
 
         private final float exhaustion;
         JingLiAction(float exhaustion) { this.exhaustion = exhaustion; }
@@ -126,17 +127,35 @@ public class JingLiHelper {
         }
     }
 
+    public static void restoreJingLiEat(Player player, float amount) {
+        if (amount <= 0 || player.level().isClientSide()) return;
+        if (player.level().dimension().equals(ModLevelStems.TAOISM_REALM_KEY)) return;
+
+
+        IJingLiData d = getData(player);
+        float newEat = Math.min(d.getJingLiEat() + amount, IJingLiData.MAX_JING_LI_EAT);
+
+        if (newEat != d.getJingLiEat()) {
+            setData(player, withJingLiEat(d, newEat));
+        }
+    }
+
+    public static void restoreJingLiSleep(Player player, float amount) {
+        if (amount <= 0 || player.level().isClientSide()) return;
+        if (player.level().dimension().equals(ModLevelStems.TAOISM_REALM_KEY)) return;
+
+
+        IJingLiData d = getData(player);
+        float newSleep = Math.min(d.getJingLiSleep() + amount, IJingLiData.MAX_JING_LI_SLEEP);
+
+        if (newSleep != d.getJingLiSleep()) {
+            setData(player, withJingLiSleep(d, newSleep));
+        }
+    }
+
     // ======================== 初始化 / 重置 ========================
 
     public static void init(Player player) {
         setData(player, IJingLiData.EMPTY);
-    }
-
-    public static void resetForYangWorld(Player player) {
-        setData(player, new IJingLiData.JingLiData(10.0f, 10.0f, 0.0f));
-    }
-
-    public static void resetForYinWorld(Player player) {
-        setData(player, new IJingLiData.JingLiData(10.0f, 10.0f, 0.0f));
     }
 }

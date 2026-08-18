@@ -4,7 +4,7 @@ import io.github.shm1131.taoism.player.attachment.api.IJingLiData;
 
 public class ClientJingLiCache {
 
-    private static IJingLiData cachedData = IJingLiData.EMPTY;
+    private static IJingLiData cachedData = IJingLiData.ZERO;
 
     public static void update(IJingLiData data) {
         cachedData = data;
@@ -15,6 +15,6 @@ public class ClientJingLiCache {
     }
 
     public static void clear() {
-        cachedData = IJingLiData.EMPTY;
+        cachedData = IJingLiData.ZERO;
     }
 }

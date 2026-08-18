@@ -38,6 +38,7 @@ public interface IJingLiData {
     ).apply(instance, JingLiData::new));
 
     IJingLiData EMPTY = new JingLiData(MAX_JING_LI_EAT, MAX_JING_LI_SLEEP, 0);
+    IJingLiData ZERO = new JingLiData(0f, 0f, 0f);
 
     float getJingLiEat();
     float getJingLiSleep();

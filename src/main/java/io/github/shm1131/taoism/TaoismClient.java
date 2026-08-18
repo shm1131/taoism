@@ -41,11 +41,4 @@ public class TaoismClient {
             JingLiHudRenderer::render
         );
     }
-
-    @SubscribeEvent
-    public static void registerClientPayload(final RegisterClientPayloadHandlersEvent event) {
-        event.register(SyncTaoismDataPayload.TYPE, NetworkHandlerClient::handle);
-        event.register(SyncCultivationDataPayload.TYPE, NetworkHandlerClient::handle);
-        event.register(SyncJingLiDataPayload.TYPE, NetworkHandlerClient::handle);
-    }
 }

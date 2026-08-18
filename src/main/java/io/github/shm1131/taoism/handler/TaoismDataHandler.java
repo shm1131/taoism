@@ -3,7 +3,9 @@ package io.github.shm1131.taoism.handler;
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.datagen.dim.ModLevelStems;
 import io.github.shm1131.taoism.init.TaoismAttachments;
+import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
 import io.github.shm1131.taoism.player.attachment.api.IDeathInventoryData;
+import io.github.shm1131.taoism.player.attachment.api.IJingLiData;
 import io.github.shm1131.taoism.player.attachment.api.ITaoismData;
 import io.github.shm1131.taoism.player.attachment.helper.JingLiHelper;
 import io.github.shm1131.taoism.player.attachment.helper.TaoismHelper;
@@ -17,6 +19,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,9 @@ public class TaoismDataHandler {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity().level().isClientSide()) return;
         var player = event.getEntity();
+
+        IJingLiData data1 = player.getData(TaoismAttachments.JINGLI_DATA.get());
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new SyncJingLiDataPayload(data1));
 
         ITaoismData data = player.getData(TaoismAttachments.TAOISM_DATA);
         if (!data.isChengFuInit()) {
@@ -69,7 +75,6 @@ public class TaoismDataHandler {
             .equals(ModLevelStems.TAOISM_REALM_KEY);
         TaoismHelper.setInRealm(player, actuallyInRealm);
 
-        //ADDED：仅在阳间死亡时保存物品并清空背包
         if (!actuallyInRealm) {
             List<ItemStack> snapshot = new ArrayList<>();
 
@@ -79,9 +84,11 @@ public class TaoismDataHandler {
                 }
             }
 
-
             for (EquipmentSlot slot : EquipmentSlot.VALUES) {
+                if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) continue;
+
                 ItemStack stack = player.getItemBySlot(slot);
+
                 if (!stack.isEmpty()) {
                     snapshot.add(stack.copy());
                 }
@@ -90,34 +97,38 @@ public class TaoismDataHandler {
             player.setData(TaoismAttachments.DEATH_INVENTORY,
                 new IDeathInventoryData.DeathInventoryData(snapshot));
             player.getInventory().clearContent();
-
-            TaoismMain.LOGGER.debug("Player {} died in Yang world, saved {} items (inventory + equipment)",
-                player.getName().getString(), snapshot.size());
         }
-
-        TaoismMain.LOGGER.debug("Player {} died in dimension {}, isInRealm set to {}",
-            player.getName().getString(),
-            player.level().dimension(),
-            actuallyInRealm);
     }
 
-    /**
-     * Clone 事件：死亡时在旧玩家数据上标记"下一次重生应去的维度"
-     */
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
         if (event.getEntity().level().isClientSide()) return;
 
-        ITaoismData oldData = event.getOriginal().getData(TaoismAttachments.TAOISM_DATA);
-        TaoismHelper.setInRealm(event.getEntity(), oldData.isInRealm());
+        ServerPlayer oldPlayer = (ServerPlayer) event.getOriginal();
+        ServerPlayer newPlayer = (ServerPlayer) event.getEntity();
+
+        // 手动深拷贝死亡物品快照
+        IDeathInventoryData deathData = oldPlayer.getData(TaoismAttachments.DEATH_INVENTORY);
+        if (!deathData.getItems().isEmpty()) {
+            List<ItemStack> safeCopy = deathData.getItems().stream()
+                .map(ItemStack::copy)
+                .collect(Collectors.toList());
+
+            newPlayer.setData(TaoismAttachments.DEATH_INVENTORY,
+                new IDeathInventoryData.DeathInventoryData(safeCopy));
+
+            TaoismMain.LOGGER.debug("Clone: manually copied {} death items for player {}",
+                safeCopy.size(), newPlayer.getName().getString());
+        }
+
+        // 复制 isInRealm 状态
+        ITaoismData oldData = oldPlayer.getData(TaoismAttachments.TAOISM_DATA);
+        TaoismHelper.setInRealm(newPlayer, oldData.isInRealm());
 
         TaoismMain.LOGGER.debug("Clone: copied isInRealm={} from dead player", oldData.isInRealm());
     }
 
-    /**
-     * Respawn 事件：新玩家已创建完毕，根据预设的 isInRealm 执行延迟传送 + 数据重置
-     */
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (event.getEntity().level().isClientSide()) return;
@@ -129,15 +140,13 @@ public class TaoismDataHandler {
         boolean targetIsYin = !data.isInRealm();
 
         if (targetIsYin) {
-            // --- 阴间重生逻辑（保持不变）---
             ServerLevel yinLevel = player.level().getServer().getLevel(ModLevelStems.TAOISM_REALM_KEY);
 
             if (yinLevel == null) {
                 player.sendSystemMessage(literal("§c✦ 道境未加载，无法轮回！"));
-                TaoismMain.LOGGER.error("TAOISM_REALM_KEY not found! Registered dimensions: {}",
                     player.level().getServer().levelKeys().stream()
                         .map(ResourceKey::toString)
-                        .collect(Collectors.joining(", ")));
+                        .collect(Collectors.joining(", "));
                 return;
             }
 
@@ -162,19 +171,22 @@ public class TaoismDataHandler {
 
             IDeathInventoryData deathData = player.getData(TaoismAttachments.DEATH_INVENTORY);
             List<ItemStack> savedItems = deathData.getItems();
+
             if (!savedItems.isEmpty()) {
                 for (ItemStack stack : savedItems) {
                     if (!player.getInventory().add(stack.copy())) {
                         player.drop(stack.copy(), false, true);
                     }
                 }
+
                 player.sendSystemMessage(literal("§6✦ 重入人间，承负：" + chengFu
                     + "，已归还 " + savedItems.size() + " 件遗物"));
 
-                player.setData(TaoismAttachments.DEATH_INVENTORY, IDeathInventoryData.EMPTY);
+                player.setData(TaoismAttachments.DEATH_INVENTORY,
+                    new IDeathInventoryData.DeathInventoryData(List.of()));
 
-                TaoismMain.LOGGER.debug("Player {} respawned in Yang world, restored {} items",
-                    player.getName().getString(), savedItems.size());
+                TaoismMain.LOGGER.debug("Player {} respawned in Yang world, restored and cleared death inventory",
+                    player.getName().getString());
             } else {
                 player.sendSystemMessage(literal("§6✦ 重入人间，承负：" + chengFu));
             }
