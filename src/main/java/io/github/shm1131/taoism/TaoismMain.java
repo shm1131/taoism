@@ -1,6 +1,7 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
+import io.github.shm1131.taoism.entity.text.TextEntity;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
 import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
@@ -10,6 +11,7 @@ import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -52,6 +54,7 @@ public class TaoismMain {
         ModDataComponents.COMPONENTS.register(modEventBus);   //ADDED:注册component
 
         modEventBus.addListener(this::registerPayloads);
+        modEventBus.addListener(this::createDefaultAttributes);
 
     }
 
@@ -74,8 +77,12 @@ public class TaoismMain {
             SyncJingLiDataPayload.STREAM_CODEC,
             NetworkHandlerClient::handle
         );
-
-
     }
 
+    public void createDefaultAttributes(EntityAttributeCreationEvent event) {
+        event.put(
+            EntityRegister.TEXT_ENTITY.get(),
+            TextEntity.createAttributes().build()
+        );
+    }
 }

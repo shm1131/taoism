@@ -77,7 +77,7 @@ public class TaoismHelper {
 
     public static void addXianTianQi(Player player, int amount) {
         ITaoismData d = getData(player);
-        setData(player, withXianTianQi(d, d.getXianTianQi() + amount));
+        setData(player, withXianTianQi(d, Math.max(0,d.getXianTianQi() + amount)));
     }
 
     // ======================== HouTianQi ========================
@@ -88,7 +88,7 @@ public class TaoismHelper {
 
     public static void addHouTianQi(Player player, int amount) {
         ITaoismData d = getData(player);
-        setData(player, withHouTianQi(d, d.getHouTianQi() + amount));
+        setData(player, withHouTianQi(d, Math.max(0, d.getHouTianQi() + amount)));
     }
 
     // ======================== ShouMing ========================
@@ -115,7 +115,7 @@ public class TaoismHelper {
         setData(player, new ITaoismData.TaoismData(
             chengFu, true,
             50, 0,
-            (50 + chengFu) * 100,
+            (100 - chengFu) * 100,
             false
         ));
     }
@@ -125,7 +125,7 @@ public class TaoismHelper {
         setData(player, new ITaoismData.TaoismData(
             d.getChengFu(), d.isChengFuInit(),
             50, 0,
-            (50 + d.getChengFu()) * 100,
+            (100 - d.getChengFu()) * 100,
             false
         ));
     }
@@ -135,7 +135,7 @@ public class TaoismHelper {
         setData(player, new ITaoismData.TaoismData(
             chengFu, d.isChengFuInit(),
             0, 0,
-            chengFu * 20,
+            (100-chengFu) * 20,
             true
         ));
     }

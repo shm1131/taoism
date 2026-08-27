@@ -21,7 +21,6 @@ import net.minecraft.world.timeline.Timeline;
 import java.util.Optional;
 
 public class ModDimensionTypes {
-  // 定义你的维度 ResourceKey
   public static final ResourceKey<DimensionType> EMPTY_DIMENSION_KEY =
       ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath(TaoismMain.MODID, "empty_dimension"));
 

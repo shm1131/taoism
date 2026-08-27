@@ -1,4 +1,4 @@
-package io.github.shm1131.taoism.entity;
+package io.github.shm1131.taoism.entity.text;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -6,9 +6,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
-public class TextZombie extends Monster {
+public class TextEntity extends Monster {
 
-    public TextZombie(EntityType<? extends Monster> entityType, Level level) {
+    public TextEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
 

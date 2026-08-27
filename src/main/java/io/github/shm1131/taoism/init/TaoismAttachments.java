@@ -1,6 +1,5 @@
 package io.github.shm1131.taoism.init;
 
-import com.mojang.serialization.Codec;
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.player.attachment.api.*;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -46,6 +45,12 @@ public class TaoismAttachments {
     public static final Supplier<AttachmentType<ISleepData>> SLEEP_DATA =
         ATTACHMENT_TYPES.register("sleep_data", () -> AttachmentType.builder(() -> ISleepData.EMPTY)
             .serialize(ISleepData.MAP_CODEC)
-            .build());
+            .build()
+        );
 
+    public static final Supplier<AttachmentType<ICoolDownData>> COOL_DOWN_DATA =
+        ATTACHMENT_TYPES.register("drop_cool_down",() -> AttachmentType.builder(() -> ICoolDownData.EMPTY)
+            .serialize(ICoolDownData.MAP_CODEC)
+            .build()
+        );
 }

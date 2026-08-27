@@ -26,8 +26,6 @@ public class EnergyHandler {
     private static final long SLEEP_START_TIME = 16000L;
     private static int cooldown = 0;
 
-    // ==================== 工具方法：安全读写 SleepData ====================
-
     private static ISleepData getSleepData(Player player) {
         return player.getData(TaoismAttachments.SLEEP_DATA);
     }
@@ -36,7 +34,6 @@ public class EnergyHandler {
         player.setData(TaoismAttachments.SLEEP_DATA, data);
     }
 
-    // ==================== 玩家 Tick：警告消息 + 熬夜惩罚 ====================
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Pre event) {
@@ -55,25 +52,20 @@ public class EnergyHandler {
         float totalJingLi = jingLi.getTotalJingLi();
         float eatJingLi = jingLi.getJingLiEat();
 
-        // --- 精力低警告（基于总精力，阈值5触发，阈值10清除）---
         if (!lowWarning && totalJingLi <= 5 && totalJingLi > 0) {
             lowWarning = true;
             player.sendSystemMessage(literal("疲惫感袭来"));
         } else if (lowWarning && totalJingLi > 10) {
-            // ✅ 使用同一数据源 + 滞后区间，避免边界震荡
             lowWarning = false;
         }
 
-        // --- 精力耗尽警告（基于总精力，0触发，>5清除）---
         if (!lastWarning && totalJingLi == 0) {
             lastWarning = true;
             player.sendSystemMessage(literal("精力透支，尽快休息"));
         } else if (lastWarning && totalJingLi > 5) {
-            // ✅ 使用同一数据源 + 滞后区间
             lastWarning = false;
         }
 
-        // --- 熬夜警告（仅触发一次）---
         if (sleep.isStayUpLate()) {
             if (!stayUpLateWarning) {
                 stayUpLateWarning = true;
@@ -82,7 +74,6 @@ public class EnergyHandler {
             JingLiHelper.exhaustJingLi(player, JingLiHelper.JingLiAction.STAY_UP_LATE);
         }
 
-        // --- 写回 Attachment（仅在状态变化时写入）---
         if (lowWarning != sleep.isLowWarning()
 
             || lastWarning != sleep.isLastWarning()
@@ -92,7 +83,6 @@ public class EnergyHandler {
         }
     }
 
-    // ==================== 合成事件 ====================
 
     @SubscribeEvent
     public static void onCraft(PlayerEvent.ItemCraftedEvent event) {
@@ -106,7 +96,6 @@ public class EnergyHandler {
         }
     }
 
-    // ==================== 破坏方块事件 ====================
 
     @SubscribeEvent
     public static void onBlockBreak(BreakBlockEvent event) {
@@ -120,20 +109,18 @@ public class EnergyHandler {
         }
     }
 
-    // ==================== 进食事件 ====================
 
     @SubscribeEvent
     public static void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
-        if (!(event.getEntity() instanceof Player player)) return; // ⚠️ 修复：原代码逻辑取反了
+        if (!(event.getEntity() instanceof Player player)) return;
         if (player.level().isClientSide()) return;
 
         ItemStack stack = event.getItem();
-        if (!stack.has(DataComponents.FOOD)) return; // ⚠️ 修复：原代码逻辑取反了
+        if (!stack.has(DataComponents.FOOD)) return;
 
         JingLiHelper.restoreJingLiEat(player, 4);
     }
 
-    // ==================== 世界 Tick：熬夜状态切换 ====================
 
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {

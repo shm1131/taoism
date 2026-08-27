@@ -1,7 +1,7 @@
 package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.entity.TextZombie;
+import io.github.shm1131.taoism.entity.text.TextEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -15,11 +15,11 @@ import java.util.function.Supplier;
 public class EntityRegister {
   public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, TaoismMain.MODID);
 
-  public static final Supplier<EntityType<TextZombie>> TEXT_ZOMBIE =
-      ENTITIES.register("text_zombie",
-          () -> EntityType.Builder.of(TextZombie::new, MobCategory.MONSTER)
-              .sized(1.8f, 0.9f)
-              .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(TaoismMain.MODID, "text_zombie")))
+  public static final Supplier<EntityType<TextEntity>> TEXT_ENTITY =
+      ENTITIES.register("text_entity",
+          () -> EntityType.Builder.of(TextEntity::new, MobCategory.MONSTER)
+              .sized(0.9f, 1.8f)
+              .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(TaoismMain.MODID, "text_entity")))
       );
 }
 
