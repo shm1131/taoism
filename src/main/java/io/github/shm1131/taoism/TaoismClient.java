@@ -2,10 +2,9 @@ package io.github.shm1131.taoism;
 
 import io.github.shm1131.taoism.entity.text.TextEntityModel;
 import io.github.shm1131.taoism.entity.text.TextEntityRenderer;
-import io.github.shm1131.taoism.init.EntityRegister;
+import io.github.shm1131.taoism.entity.text.EntityRegister;
 import io.github.shm1131.taoism.client.screen.AttachmentScreen;
 import io.github.shm1131.taoism.client.screen.JingLiHudRenderer;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

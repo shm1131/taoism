@@ -1,6 +1,7 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
+import io.github.shm1131.taoism.entity.text.EntityRegister;
 import io.github.shm1131.taoism.entity.text.TextEntity;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
