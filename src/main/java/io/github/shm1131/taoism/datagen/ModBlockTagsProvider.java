@@ -17,7 +17,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     @Override
     public void addTags(HolderLookup.Provider registries){
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .add(BlockRegister.SPECIAL_BLOCK.get())
+            .add(BlockRegister.INCUBATOR.get())
             .add(BlockRegister.ZHU_SHA_ORE.get())
             .add(BlockRegister.DEEP_ZHU_SHA_ORE.get())
             .add(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore").get())

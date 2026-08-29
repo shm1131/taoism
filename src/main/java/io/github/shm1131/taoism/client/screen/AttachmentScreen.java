@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 
 public class AttachmentScreen implements GuiLayer {
+
     private static String formatTickDuration(int ticks) {
         if (ticks <= 0) return "0秒";
 
@@ -36,13 +37,22 @@ public class AttachmentScreen implements GuiLayer {
         int screenWidth = guiGraphics.guiWidth();
         int screenHeight = guiGraphics.guiHeight();
 
+        // 读取数据
         int shouMing = ClientTaoismCache.get().getShouMing();
-        String displayText = "寿命：" + formatTickDuration(shouMing);
+        int chengFu = ClientTaoismCache.get().getChengFu();
 
-        int textWidth = font.width(displayText);
+        String shouMingText = "寿命：" + formatTickDuration(shouMing);
+        String chengFuText = "承负：" + chengFu;
+
+        int textWidth = Math.max(font.width(shouMingText), font.width(chengFuText));
         int x = screenWidth - textWidth - padding;
-        int y = screenHeight - font.lineHeight - padding;
 
-        guiGraphics.text(font, displayText, x, y, 0xFFFFFFFF, true);
+        // ⭐ 承负在上，寿命在下，两行间距为 font.lineHeight + 2
+        int yShouMing = screenHeight - font.lineHeight - padding;
+        int yChengFu = yShouMing - font.lineHeight - 2;
+
+        // 承负使用淡红色(0xFFFFAAAA)以作警示，寿命保持白色
+        guiGraphics.text(font, chengFuText, x, yChengFu, 0xFFFFAAAA, true);
+        guiGraphics.text(font, shouMingText, x, yShouMing, 0xFFFFFFFF, true);
     }
 }

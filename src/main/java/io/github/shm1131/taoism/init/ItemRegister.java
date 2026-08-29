@@ -23,7 +23,6 @@ import java.util.Map;
 public class ItemRegister {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, TaoismMain.MODID);
 
-
     private static Item.Properties props(String name) {
         return new Item.Properties()
             .setId(ResourceKey.create(
@@ -32,12 +31,11 @@ public class ItemRegister {
             ));
     }
 
-
-    /** 草药定义记录 */
+    /** 药材定义记录 */
     private record HerbDef(String name, Flavor flavor, Nature nature, float toxicity, float efficacy) {}
 
+    // ==================== 植物草药 ====================
     private static final List<HerbDef> HERB_DEFS = List.of(
-        // 基础草药
         new HerbDef("ren_shen",   Flavor.SWEET,  Nature.WARM,   0.0f,  1.0f),
         new HerbDef("ling_zhi",   Flavor.SWEET,  Nature.NEUTRAL,0.0f,  0.8f),
         new HerbDef("huang_jing", Flavor.SWEET,  Nature.NEUTRAL,0.0f,  0.5f),
@@ -55,21 +53,25 @@ public class ItemRegister {
         new HerbDef("huai_shi",   Flavor.BITTER, Nature.COLD,   0.15f, 0.5f),
         new HerbDef("song_zhen",  Flavor.BITTER, Nature.WARM,   0.1f,  0.3f),
         new HerbDef("song_zhi",   Flavor.BITTER, Nature.WARM,   0.25f, 0.4f),
-        new HerbDef("song_shi",   Flavor.SWEET,  Nature.WARM,   0.0f,  0.3f),
-        // 矿物/特殊草药
-        new HerbDef("shui_yin",   Flavor.SPICY,  Nature.COLD,   0.95f, 0.80f),
-        new HerbDef("ci_shi",     Flavor.SALTY,  Nature.WARM,   0.10f, 0.60f),
-        new HerbDef("xiong_huang",Flavor.BITTER, Nature.WARM,   0.85f, 0.75f),
-        new HerbDef("ci_huang",   Flavor.SPICY,  Nature.NEUTRAL,0.80f, 0.70f),
-        new HerbDef("yun_mu_fen", Flavor.SWEET,  Nature.NEUTRAL,0.05f, 0.40f),
-        new HerbDef("jin_fen",    Flavor.SPICY,  Nature.NEUTRAL,0.00f, 0.95f),
-        new HerbDef("yin_fen",    Flavor.SWEET,  Nature.COLD,   0.05f, 0.50f),
-        new HerbDef("qian_fen",   Flavor.SWEET,  Nature.COLD,   0.75f, 0.30f),
-        new HerbDef("liu_huang",  Flavor.SPICY,  Nature.WARM,   0.60f, 0.85f),
-        new HerbDef("xiao_shi",   Flavor.BITTER, Nature.COLD,   0.40f, 0.65f),
-        new HerbDef("zhu_sha_fen",Flavor.SWEET,  Nature.NEUTRAL,0.70f, 0.90f)
+        new HerbDef("song_shi",   Flavor.SWEET,  Nature.WARM,   0.0f,  0.3f)
     );
 
+    // ==================== 矿物/特殊药材 ====================
+    private static final List<HerbDef> MINERAL_HERB_DEFS = List.of(
+        new HerbDef("shui_yin",    Flavor.SPICY,  Nature.COLD,   0.95f, 0.80f),
+        new HerbDef("ci_shi",      Flavor.SALTY,  Nature.WARM,   0.10f, 0.60f),
+        new HerbDef("xiong_huang", Flavor.BITTER, Nature.WARM,   0.85f, 0.75f),
+        new HerbDef("ci_huang",    Flavor.SPICY,  Nature.NEUTRAL,0.80f, 0.70f),
+        new HerbDef("yun_mu_fen",  Flavor.SWEET,  Nature.NEUTRAL,0.05f, 0.40f),
+        new HerbDef("jin_fen",     Flavor.SPICY,  Nature.NEUTRAL,0.00f, 0.95f),
+        new HerbDef("yin_fen",     Flavor.SWEET,  Nature.COLD,   0.05f, 0.50f),
+        new HerbDef("qian_fen",    Flavor.SWEET,  Nature.COLD,   0.75f, 0.30f),
+        new HerbDef("liu_huang",   Flavor.SPICY,  Nature.WARM,   0.60f, 0.85f),
+        new HerbDef("xiao_shi",    Flavor.BITTER, Nature.COLD,   0.40f, 0.65f),
+        new HerbDef("zhu_sha_fen", Flavor.SWEET,  Nature.NEUTRAL,0.70f, 0.90f)
+    );
+
+    // ==================== 普通物品 ====================
     private static final List<String> SIMPLE_ITEM_NAMES = List.of(
         "yellow_paper",
         "yun_mu",
@@ -78,33 +80,58 @@ public class ItemRegister {
         "qian_pian"
     );
 
-    /** 所有批量注册的平凡物品（草药 + 简单物品），key 为注册名 */
+    /** 植物草药注册表 */
+    public static final Map<String, DeferredHolder<Item, ? extends Item>> HERBS;
+
+    /** 矿物/特殊药材注册表 */
+    public static final Map<String, DeferredHolder<Item, ? extends Item>> MINERAL_HERBS;
+
+    /** 所有批量注册的平凡物品（草药 + 矿物 + 简单物品），key 为注册名 */
     public static final Map<String, DeferredHolder<Item, ? extends Item>> SIMPLE_ITEMS;
 
     static {
-        Map<String, DeferredHolder<Item, ? extends Item>> map = new HashMap<>();
+        Map<String, DeferredHolder<Item, ? extends Item>> herbsMap = new HashMap<>();
+        Map<String, DeferredHolder<Item, ? extends Item>> mineralMap = new HashMap<>();
+        Map<String, DeferredHolder<Item, ? extends Item>> allSimpleMap = new HashMap<>();
 
-        // 注册草药
+        // 注册植物草药
         for (HerbDef def : HERB_DEFS) {
-            map.put(def.name(), ITEMS.register(def.name(),
+            DeferredHolder<Item, ? extends Item> holder = ITEMS.register(def.name(),
                 () -> new BaseHerbItem(
                     props(def.name()),
                     new HerbProperties(def.flavor(), def.nature(), def.toxicity(), def.efficacy())
                 )
-            ));
+            );
+            herbsMap.put(def.name(), holder);
+            allSimpleMap.put(def.name(), holder);
+        }
+
+        // 注册矿物药材
+        for (HerbDef def : MINERAL_HERB_DEFS) {
+            DeferredHolder<Item, ? extends Item> holder = ITEMS.register(def.name(),
+                () -> new BaseHerbItem(
+                    props(def.name()),
+                    new HerbProperties(def.flavor(), def.nature(), def.toxicity(), def.efficacy())
+                )
+            );
+            mineralMap.put(def.name(), holder);
+            allSimpleMap.put(def.name(), holder);
         }
 
         // 注册简单物品
         for (String name : SIMPLE_ITEM_NAMES) {
-            map.put(name, ITEMS.register(name,
+            DeferredHolder<Item, ? extends Item> holder = ITEMS.register(name,
                 () -> new Item(props(name))
-            ));
+            );
+            allSimpleMap.put(name, holder);
         }
 
-        SIMPLE_ITEMS = Collections.unmodifiableMap(map);
+        HERBS = Collections.unmodifiableMap(herbsMap);
+        MINERAL_HERBS = Collections.unmodifiableMap(mineralMap);
+        SIMPLE_ITEMS = Collections.unmodifiableMap(allSimpleMap);
     }
 
-
+    // ==================== 独立注册物品 ====================
     public static final DeferredHolder<Item, PillItem> PILL = ITEMS.register("pill",
         () -> new PillItem(props("pill"))
     );

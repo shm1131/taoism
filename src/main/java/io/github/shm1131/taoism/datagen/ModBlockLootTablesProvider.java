@@ -28,7 +28,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
 
     @Override
     public void generate(){
-        dropSelf(BlockRegister.SPECIAL_BLOCK.get());
+        dropSelf(BlockRegister.INCUBATOR.get());
         add(BlockRegister.ZHU_SHA_ORE.get(),createOreDrops(BlockRegister.ZHU_SHA_ORE.get(), ItemRegister.ZHU_SHA.get(),1.0f,4.0f));
         add(BlockRegister.DEEP_ZHU_SHA_ORE.get(),createOreDrops(BlockRegister.DEEP_ZHU_SHA_ORE.get(), ItemRegister.ZHU_SHA.get(),1.0f,4.0f));
         add(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore").get(), ItemRegister.SIMPLE_ITEMS.get("yun_mu").get(), 2.0f,4.0f));

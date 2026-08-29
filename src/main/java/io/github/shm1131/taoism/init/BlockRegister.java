@@ -50,13 +50,14 @@ public class BlockRegister {
     }
 
 
-    public static final DeferredBlock<Incubator> SPECIAL_BLOCK = BLOCKS.registerBlock(
+    public static final DeferredBlock<Incubator> INCUBATOR = BLOCKS.registerBlock(
         "incubator",
         Incubator::new,
         () -> BlockBehaviour.Properties.of().strength(4.0f)
+            .noOcclusion()
     );
     public static final DeferredItem<BlockItem> SPECIAL_BLOCK_ITEM =
-        ITEMS.registerSimpleBlockItem(SPECIAL_BLOCK);
+        ITEMS.registerSimpleBlockItem(INCUBATOR);
 
     public static final DeferredBlock<ZhuShaOre> ZHU_SHA_ORE = BLOCKS.registerBlock(
         "zhu_sha_ore",

@@ -1,5 +1,7 @@
 package io.github.shm1131.taoism;
 
+import io.github.shm1131.taoism.block.incubator.IncubatorScreen;
+import io.github.shm1131.taoism.block.incubator.recipe.ModMenuTypes;
 import io.github.shm1131.taoism.entity.text.TextEntityModel;
 import io.github.shm1131.taoism.entity.text.TextEntityRenderer;
 import io.github.shm1131.taoism.entity.text.EntityRegister;
@@ -13,6 +15,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -49,5 +52,10 @@ public class TaoismClient {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(TextEntityModel.LAYER_LOCATION, TextEntityModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenuTypes.INCUBATOR_MENU.get(), IncubatorScreen::new);
     }
 }

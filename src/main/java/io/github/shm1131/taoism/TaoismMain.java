@@ -1,6 +1,10 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
+import io.github.shm1131.taoism.block.incubator.ModBlockEntities;
+import io.github.shm1131.taoism.block.incubator.ModRecipeTypes;
+import io.github.shm1131.taoism.block.incubator.recipe.ModMenuTypes;
+import io.github.shm1131.taoism.block.incubator.recipe.ModRecipeSerializers;
 import io.github.shm1131.taoism.entity.text.EntityRegister;
 import io.github.shm1131.taoism.entity.text.TextEntity;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
@@ -46,6 +50,10 @@ public class TaoismMain {
         ItemRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
+        ModMenuTypes.MENUS.register(modEventBus);
+        ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
 

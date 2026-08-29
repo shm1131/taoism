@@ -2,6 +2,7 @@ package io.github.shm1131.taoism.player.attachment.helper;
 
 import io.github.shm1131.taoism.init.TaoismAttachments;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
+import io.github.shm1131.taoism.player.attachment.api.ICoolDownData;
 import io.github.shm1131.taoism.player.attachment.api.ITaoismData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -138,5 +139,21 @@ public class TaoismHelper {
             (100-chengFu) * 20,
             true
         ));
+    }
+
+    public static long getChengFuCoolDown(Player player) {
+        return player.getData(TaoismAttachments.COOL_DOWN_DATA).getChengFuCoolDown();
+    }
+
+    public static void setChengFuCoolDown(Player player, long timestamp) {
+        ICoolDownData d = player.getData(TaoismAttachments.COOL_DOWN_DATA);
+        ICoolDownData newData = new ICoolDownData.CoolDownData(d.getDropCoolDown(), timestamp);
+        player.setData(TaoismAttachments.COOL_DOWN_DATA, newData);
+    }
+
+
+    public static boolean isChengFuReady(Player player, long cooldownMs) {
+        long last = getChengFuCoolDown(player);
+        return System.currentTimeMillis() - last >= cooldownMs;
     }
 }

@@ -65,7 +65,7 @@ public class ProximityDropEventHandler {
 
         ICoolDownData coolDownData = event.getEntity().getData(TaoismAttachments.COOL_DOWN_DATA);
         if (coolDownData == null) {
-            coolDownData = new ICoolDownData.CoolDownData(0L);
+            coolDownData = new ICoolDownData.CoolDownData(0L,player.getData(TaoismAttachments.COOL_DOWN_DATA).getChengFuCoolDown());
             event.getEntity().setData(TaoismAttachments.COOL_DOWN_DATA, coolDownData);
         }
 
@@ -83,7 +83,7 @@ public class ProximityDropEventHandler {
 
         event.getEntity().setData(
             TaoismAttachments.COOL_DOWN_DATA,
-            new ICoolDownData.CoolDownData(currentTick)
+            new ICoolDownData.CoolDownData(currentTick,player.getData(TaoismAttachments.COOL_DOWN_DATA).getChengFuCoolDown())
         );
 
         Entity nearest = nearbyMobs.stream()
