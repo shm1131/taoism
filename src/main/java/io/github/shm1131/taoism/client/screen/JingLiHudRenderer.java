@@ -2,7 +2,6 @@ package io.github.shm1131.taoism.client.screen;
 
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.client.data.ClientJingLiCache;
-import io.github.shm1131.taoism.datagen.dim.ModLevelStems;
 import io.github.shm1131.taoism.player.attachment.api.IJingLiData;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -29,7 +28,6 @@ public class JingLiHudRenderer {
             : mc.player.gameMode();
         if (gameType == GameType.CREATIVE || gameType == GameType.SPECTATOR) return;
 
-        if (mc.player.level().dimension().equals(ModLevelStems.TAOISM_REALM_KEY)) return;
 
         IJingLiData data = ClientJingLiCache.get();
         float totalValue = data.getJingLiEat() + data.getJingLiSleep();

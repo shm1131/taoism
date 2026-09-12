@@ -1,6 +1,7 @@
 package io.github.shm1131.taoism.block.incubator;
 
 import com.mojang.serialization.MapCodec;
+import io.github.shm1131.taoism.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;

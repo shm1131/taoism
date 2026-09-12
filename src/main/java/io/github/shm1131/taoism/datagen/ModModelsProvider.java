@@ -28,7 +28,8 @@ public class ModModelsProvider extends ModelProvider {
     );//黑名单，使用路径名，名单里的物品不会进行自动生成
 
     protected static final Set<String> BLOCK_BLACKLIST =Set.of(
-        "incubator"
+        "incubator",
+        "alchemy_furnace"
     );//黑名单，使用路径名，名单里的方块不会进行自动生成
 
 

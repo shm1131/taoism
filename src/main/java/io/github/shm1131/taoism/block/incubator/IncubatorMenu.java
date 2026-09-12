@@ -1,7 +1,7 @@
-package io.github.shm1131.taoism.block.incubator.recipe;
+package io.github.shm1131.taoism.block.incubator;
 
-import io.github.shm1131.taoism.block.incubator.IncubatorBlockEntity;
 import io.github.shm1131.taoism.init.BlockRegister;
+import io.github.shm1131.taoism.init.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

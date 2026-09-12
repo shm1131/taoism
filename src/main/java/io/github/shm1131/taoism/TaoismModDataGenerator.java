@@ -46,9 +46,5 @@ public class TaoismModDataGenerator {
         event.createProvider(ModZhCnLangProvider::new);
 
 
-        //世界生成
-        event.createProvider(((output, lookupProvider) ->
-            new WorldGenProvider(output, lookupProvider)));
-
     }
 }

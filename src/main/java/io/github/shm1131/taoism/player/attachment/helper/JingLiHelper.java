@@ -1,6 +1,5 @@
 package io.github.shm1131.taoism.player.attachment.helper;
 
-import io.github.shm1131.taoism.datagen.dim.ModLevelStems;
 import io.github.shm1131.taoism.init.TaoismAttachments;
 import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
 import io.github.shm1131.taoism.player.attachment.api.IJingLiData;
@@ -96,7 +95,6 @@ public class JingLiHelper {
     public static void exhaustJingLi(Player player, float amount) {
         if (player.level().isClientSide()) return;
         if (player.isCreative() || player.isSpectator()) return;
-        if (player.level().dimension().equals(ModLevelStems.TAOISM_REALM_KEY)) return;
 
         IJingLiData d = getData(player);
         float currentExhaust = d.getExhaustion();
@@ -129,7 +127,6 @@ public class JingLiHelper {
 
     public static void restoreJingLiEat(Player player, float amount) {
         if (amount <= 0 || player.level().isClientSide()) return;
-        if (player.level().dimension().equals(ModLevelStems.TAOISM_REALM_KEY)) return;
 
 
         IJingLiData d = getData(player);
@@ -142,7 +139,6 @@ public class JingLiHelper {
 
     public static void restoreJingLiSleep(Player player, float amount) {
         if (amount <= 0 || player.level().isClientSide()) return;
-        if (player.level().dimension().equals(ModLevelStems.TAOISM_REALM_KEY)) return;
 
 
         IJingLiData d = getData(player);

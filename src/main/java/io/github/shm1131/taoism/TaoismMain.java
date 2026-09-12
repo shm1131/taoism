@@ -1,10 +1,10 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.block.incubator.ModBlockEntities;
-import io.github.shm1131.taoism.block.incubator.ModRecipeTypes;
-import io.github.shm1131.taoism.block.incubator.recipe.ModMenuTypes;
-import io.github.shm1131.taoism.block.incubator.recipe.ModRecipeSerializers;
+import io.github.shm1131.taoism.init.ModBlockEntities;
+import io.github.shm1131.taoism.init.ModRecipeTypes;
+import io.github.shm1131.taoism.init.ModMenuTypes;
+import io.github.shm1131.taoism.init.ModRecipeSerializers;
 import io.github.shm1131.taoism.entity.text.EntityRegister;
 import io.github.shm1131.taoism.entity.text.TextEntity;
 import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
@@ -12,7 +12,6 @@ import io.github.shm1131.taoism.loot.HerbDropModifier;
 import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
 import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
@@ -54,7 +53,6 @@ public class TaoismMain {
         ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
         ModMenuTypes.MENUS.register(modEventBus);
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
-        BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);

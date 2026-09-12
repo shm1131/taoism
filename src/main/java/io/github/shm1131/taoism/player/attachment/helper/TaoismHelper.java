@@ -24,39 +24,28 @@ public class TaoismHelper {
     private static ITaoismData copy(ITaoismData d,
                                     int chengFu, boolean chengFuInit,
                                     int xianTianQi, int houTianQi,
-                                    int shouMing,
-                                    boolean isInRealm) {
+                                    int shouMing) {
         return new ITaoismData.TaoismData(
             chengFu, chengFuInit,
             xianTianQi, houTianQi,
-            shouMing,
-            isInRealm
+            shouMing
         );
     }
 
     private static ITaoismData withChengFu(ITaoismData d, int chengFu) {
-        return copy(d, chengFu, d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            d.getShouMing(), d.isInRealm());
+        return copy(d, chengFu, d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(), d.getShouMing());
     }
 
     private static ITaoismData withXianTianQi(ITaoismData d, int xianTianQi) {
-        return copy(d, d.getChengFu(), d.isChengFuInit(), xianTianQi, d.getHouTianQi(),
-            d.getShouMing(), d.isInRealm());
+        return copy(d, d.getChengFu(), d.isChengFuInit(), xianTianQi, d.getHouTianQi(), d.getShouMing());
     }
 
     private static ITaoismData withHouTianQi(ITaoismData d, int houTianQi) {
-        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), houTianQi,
-            d.getShouMing(), d.isInRealm());
+        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), houTianQi, d.getShouMing());
     }
 
     private static ITaoismData withShouMing(ITaoismData d, int shouMing) {
-        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            shouMing, d.isInRealm());
-    }
-
-    private static ITaoismData withInRealm(ITaoismData d, boolean inRealm) {
-        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(),
-            d.getShouMing(), inRealm);
+        return copy(d, d.getChengFu(), d.isChengFuInit(), d.getXianTianQi(), d.getHouTianQi(), shouMing);
     }
 
     // ======================== ChengFu ========================
@@ -78,7 +67,7 @@ public class TaoismHelper {
 
     public static void addXianTianQi(Player player, int amount) {
         ITaoismData d = getData(player);
-        setData(player, withXianTianQi(d, Math.max(0,d.getXianTianQi() + amount)));
+        setData(player, withXianTianQi(d, Math.max(0, d.getXianTianQi() + amount)));
     }
 
     // ======================== HouTianQi ========================
@@ -103,41 +92,25 @@ public class TaoismHelper {
         setData(player, withShouMing(d, d.getShouMing() + amount));
     }
 
-    // ======================== InRealm ========================
-
-    public static void setInRealm(Player player, boolean inRealm) {
-        ITaoismData d = getData(player);
-        setData(player, withInRealm(d, inRealm));
-    }
-
     // ======================== 初始化 / 重置 ========================
 
     public static void initYangWorld(Player player, int chengFu) {
         setData(player, new ITaoismData.TaoismData(
             chengFu, true,
             50, 0,
-            (100 - chengFu) * 100,
-            false
+            (100 - chengFu) * 100
         ));
     }
 
-    public static void resetForYangWorld(Player player) {
+    /**
+     * 重置数据（原 resetForYangWorld），不再区分阴阳界
+     */
+    public static void resetData(Player player) {
         ITaoismData d = getData(player);
         setData(player, new ITaoismData.TaoismData(
             d.getChengFu(), d.isChengFuInit(),
             50, 0,
-            (100 - d.getChengFu()) * 100,
-            false
-        ));
-    }
-
-    public static void resetForYinWorld(Player player, int chengFu) {
-        ITaoismData d = getData(player);
-        setData(player, new ITaoismData.TaoismData(
-            chengFu, d.isChengFuInit(),
-            0, 0,
-            (100-chengFu) * 20,
-            true
+            (100 - d.getChengFu()) * 100
         ));
     }
 
@@ -150,7 +123,6 @@ public class TaoismHelper {
         ICoolDownData newData = new ICoolDownData.CoolDownData(d.getDropCoolDown(), timestamp);
         player.setData(TaoismAttachments.COOL_DOWN_DATA, newData);
     }
-
 
     public static boolean isChengFuReady(Player player, long cooldownMs) {
         long last = getChengFuCoolDown(player);

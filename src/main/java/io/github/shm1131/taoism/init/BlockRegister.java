@@ -1,6 +1,7 @@
 package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
+import io.github.shm1131.taoism.block.alchemy.AlchemyFurnaceBlock;
 import io.github.shm1131.taoism.block.ore.DeepZhuShaOre;
 import io.github.shm1131.taoism.block.ore.ZhuShaOre;
 import io.github.shm1131.taoism.block.incubator.Incubator;
@@ -24,7 +25,6 @@ public class BlockRegister {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(TaoismMain.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TaoismMain.MODID);
-    //通过Map来查找批量注册的Block与BlockItem
     public static Map<String, DeferredBlock<?>> SIMPLE_BLOCKS = new HashMap<>();
     public static Map<String, DeferredItem<?>> SIMPLE_ITEMS = new HashMap<>();
     //用来快速批量注册
@@ -56,8 +56,17 @@ public class BlockRegister {
         () -> BlockBehaviour.Properties.of().strength(4.0f)
             .noOcclusion()
     );
-    public static final DeferredItem<BlockItem> SPECIAL_BLOCK_ITEM =
+    public static final DeferredItem<BlockItem> INCUBATOR_ITEM =
         ITEMS.registerSimpleBlockItem(INCUBATOR);
+
+    public static final DeferredBlock<AlchemyFurnaceBlock> ALCHEMY_FURNACE_BLOCK = BLOCKS.registerBlock(
+        "alchemy_furnace",
+        AlchemyFurnaceBlock::new,
+        () -> BlockBehaviour.Properties.of().strength(4.0f)
+        .noOcclusion()
+    );
+    public static final DeferredItem<BlockItem> ALCHEMY_FURNACE_BLOCK_ITEM =
+        ITEMS.registerSimpleBlockItem(ALCHEMY_FURNACE_BLOCK);
 
     public static final DeferredBlock<ZhuShaOre> ZHU_SHA_ORE = BLOCKS.registerBlock(
         "zhu_sha_ore",

@@ -28,12 +28,6 @@ public class TaoismAttachments {
             .build()
         );
 
-    public static final Supplier<AttachmentType<IDeathInventoryData>> DEATH_INVENTORY =
-        ATTACHMENT_TYPES.register("death_inventory", () -> AttachmentType.builder(() -> IDeathInventoryData.EMPTY)
-            .serialize(IDeathInventoryData.MAP_CODEC)
-            .build()
-        );
-
     public static final Supplier<AttachmentType<IJingLiData>> JINGLI_DATA =
         ATTACHMENT_TYPES.register("jing_li_data", () -> AttachmentType.builder(() -> IJingLiData.EMPTY)
             .serialize(IJingLiData.MAP_CODEC)

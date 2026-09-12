@@ -1,7 +1,8 @@
 package io.github.shm1131.taoism.block.incubator;
 
-import io.github.shm1131.taoism.block.incubator.recipe.IncubatorMenu;
 import io.github.shm1131.taoism.block.incubator.recipe.IncubatorRecipe;
+import io.github.shm1131.taoism.init.ModBlockEntities;
+import io.github.shm1131.taoism.init.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -214,9 +215,6 @@ public class IncubatorBlockEntity extends BlockEntity implements MenuProvider, C
             }
         }
     }
-
-
-
 
     private static boolean checkForWaterSource(Level level, BlockPos pos) {
         for (Direction dir : Direction.values()) {

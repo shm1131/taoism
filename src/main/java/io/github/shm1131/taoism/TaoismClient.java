@@ -1,7 +1,8 @@
 package io.github.shm1131.taoism;
 
+import io.github.shm1131.taoism.block.alchemy.AlchemyFurnaceScreen;
 import io.github.shm1131.taoism.block.incubator.IncubatorScreen;
-import io.github.shm1131.taoism.block.incubator.recipe.ModMenuTypes;
+import io.github.shm1131.taoism.init.ModMenuTypes;
 import io.github.shm1131.taoism.entity.text.TextEntityModel;
 import io.github.shm1131.taoism.entity.text.TextEntityRenderer;
 import io.github.shm1131.taoism.entity.text.EntityRegister;
@@ -57,5 +58,6 @@ public class TaoismClient {
     @SubscribeEvent
     public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenuTypes.INCUBATOR_MENU.get(), IncubatorScreen::new);
+        event.register(ModMenuTypes.ALCHEMY_FURNACE.get(), AlchemyFurnaceScreen::new);
     }
 }

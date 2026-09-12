@@ -29,6 +29,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     @Override
     public void generate(){
         dropSelf(BlockRegister.INCUBATOR.get());
+        dropSelf(BlockRegister.ALCHEMY_FURNACE_BLOCK.get());
         add(BlockRegister.ZHU_SHA_ORE.get(),createOreDrops(BlockRegister.ZHU_SHA_ORE.get(), ItemRegister.ZHU_SHA.get(),1.0f,4.0f));
         add(BlockRegister.DEEP_ZHU_SHA_ORE.get(),createOreDrops(BlockRegister.DEEP_ZHU_SHA_ORE.get(), ItemRegister.ZHU_SHA.get(),1.0f,4.0f));
         add(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("yun_mu_ore").get(), ItemRegister.SIMPLE_ITEMS.get("yun_mu").get(), 2.0f,4.0f));
@@ -40,7 +41,6 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         add(BlockRegister.SIMPLE_BLOCKS.get("deep_qian_ore").get(),createOreDrops(BlockRegister.SIMPLE_BLOCKS.get("deep_qian_ore").get(),ItemRegister.SIMPLE_ITEMS.get("qian_pian").get(), 2.0f,4.0f));
 
     }
-
 
     //矿石战利品列表，来自BlockLootSubProvider类，修改得到此函数
     protected LootTable.Builder createOreDrops(Block block,Item item,float min,float max) {

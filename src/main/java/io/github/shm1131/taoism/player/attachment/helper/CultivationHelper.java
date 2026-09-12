@@ -39,9 +39,7 @@ public class CultivationHelper {
 
 
   public static void addSp(Player player, int amount) {
-    if (player.getData(TaoismAttachments.TAOISM_DATA).isInRealm()) {
-      return;
-    }
+
     if (amount <= 0) return;
 
     ICultivationData oldData = getData(player);

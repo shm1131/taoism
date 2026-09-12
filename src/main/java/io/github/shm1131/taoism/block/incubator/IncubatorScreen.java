@@ -1,7 +1,6 @@
 package io.github.shm1131.taoism.block.incubator;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.block.incubator.recipe.IncubatorMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
