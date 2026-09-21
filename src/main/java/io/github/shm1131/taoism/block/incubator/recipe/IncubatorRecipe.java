@@ -3,8 +3,8 @@ package io.github.shm1131.taoism.block.incubator.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.shm1131.taoism.init.ModRecipeTypes;
-import io.github.shm1131.taoism.init.ModRecipeSerializers;
+import io.github.shm1131.taoism.init.RecipeTypesRegister;
+import io.github.shm1131.taoism.init.RecipeSerializersRegister;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -32,12 +32,12 @@ public class IncubatorRecipe extends SingleItemRecipe {
 
     @Override
     public RecipeSerializer<? extends SingleItemRecipe> getSerializer() {
-        return ModRecipeSerializers.INCUBATOR_SERIALIZER.get();
+        return RecipeSerializersRegister.INCUBATOR_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<? extends SingleItemRecipe> getType() {
-        return ModRecipeTypes.INCUBATOR_TYPE.get();
+        return RecipeTypesRegister.INCUBATOR_TYPE.get();
     }
 
     @Override

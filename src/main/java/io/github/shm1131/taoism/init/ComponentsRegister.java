@@ -1,8 +1,9 @@
 //ADDED:新建类ModDataComponents
 
-package io.github.shm1131.taoism.item.herb.base;
+package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
+import io.github.shm1131.taoism.item.herb.base.HerbProperties;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;
@@ -10,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModDataComponents {
+public class ComponentsRegister {
     public static final DeferredRegister.DataComponents COMPONENTS =
         DeferredRegister.createDataComponents(
             Registries.DATA_COMPONENT_TYPE,

@@ -1,7 +1,7 @@
 package io.github.shm1131.taoism.block.incubator;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.init.ModBlockEntities;
+import io.github.shm1131.taoism.init.BlockEntitiesRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -47,7 +47,7 @@ public class Incubator extends BaseEntityBlock {
         if (level.isClientSide()) {
             return null;
         }
-        return createTickerHelper(type, ModBlockEntities.INCUBATOR.get(), IncubatorBlockEntity::serverTick);
+        return createTickerHelper(type, BlockEntitiesRegister.INCUBATOR.get(), IncubatorBlockEntity::serverTick);
     }
 
     @Override

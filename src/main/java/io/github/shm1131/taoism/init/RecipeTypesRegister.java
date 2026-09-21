@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModRecipeTypes {
+public class RecipeTypesRegister {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
         DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, TaoismMain.MODID);
 

@@ -22,7 +22,7 @@ public class AlchemyFurnaceScreen extends AbstractContainerScreen<AlchemyFurnace
     public AlchemyFurnaceScreen(AlchemyFurnaceMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, IMAGE_WIDTH, IMAGE_HEIGHT);
         this.titleLabelY = 8;
-        this.inventoryLabelY = 129; // 根据实际背景高度调整
+        this.inventoryLabelY = 129;
     }
 
     @Override

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModRecipeSerializers {
+public class RecipeSerializersRegister {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
         DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, TaoismMain.MODID);
 

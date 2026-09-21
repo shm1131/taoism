@@ -1,8 +1,8 @@
 package io.github.shm1131.taoism.block.incubator;
 
 import io.github.shm1131.taoism.block.incubator.recipe.IncubatorRecipe;
-import io.github.shm1131.taoism.init.ModBlockEntities;
-import io.github.shm1131.taoism.init.ModRecipeTypes;
+import io.github.shm1131.taoism.init.BlockEntitiesRegister;
+import io.github.shm1131.taoism.init.RecipeTypesRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -75,7 +75,7 @@ public class IncubatorBlockEntity extends BlockEntity implements MenuProvider, C
     };
 
     public IncubatorBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.INCUBATOR.get(), pos, state);
+        super(BlockEntitiesRegister.INCUBATOR.get(), pos, state);
         for (int i = 0; i < NUM_SLOTS; i++) {
             items[i] = ItemStack.EMPTY;
         }
@@ -226,7 +226,7 @@ public class IncubatorBlockEntity extends BlockEntity implements MenuProvider, C
 
     private static Optional<RecipeHolder<IncubatorRecipe>> findRecipe(ServerLevel level, ItemStack input) {
         return level.recipeAccess().getRecipeFor(
-            ModRecipeTypes.INCUBATOR_TYPE.get(),
+            RecipeTypesRegister.INCUBATOR_TYPE.get(),
             new SingleRecipeInput(input),
             level
         );

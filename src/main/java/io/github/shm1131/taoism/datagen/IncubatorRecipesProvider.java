@@ -15,11 +15,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-public class ModRecipesProvider extends RecipeProvider {
+public class IncubatorRecipesProvider extends RecipeProvider {
 
     private static final int DEFAULT_INCUBATION_TIME = 100;
 
-    protected ModRecipesProvider(HolderLookup.Provider registries, RecipeOutput output) {
+    protected IncubatorRecipesProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
     }
 
@@ -65,7 +65,7 @@ public class ModRecipesProvider extends RecipeProvider {
 
         @Override
         protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-            return new ModRecipesProvider(registries, output);
+            return new IncubatorRecipesProvider(registries, output);
         }
 
         @Override

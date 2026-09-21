@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModMenuTypes {
+public class MenuTypesRegister {
     public static final DeferredRegister<MenuType<?>> MENUS =
         DeferredRegister.create(BuiltInRegistries.MENU, TaoismMain.MODID);
 

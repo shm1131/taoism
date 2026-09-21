@@ -2,8 +2,8 @@ package io.github.shm1131.taoism.block.alchemy;
 
 import io.github.shm1131.taoism.block.alchemy.recipe.AlchemyFurnaceInput;
 import io.github.shm1131.taoism.block.alchemy.recipe.AlchemyFurnaceRecipe;
-import io.github.shm1131.taoism.init.ModBlockEntities;
-import io.github.shm1131.taoism.init.ModRecipeTypes;
+import io.github.shm1131.taoism.init.BlockEntitiesRegister;
+import io.github.shm1131.taoism.init.RecipeTypesRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -39,8 +39,6 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
     private int fuelRemaining = 0;
     private int fuelMaxTime = 0;
 
-    @Nullable private RecipeHolder<AlchemyFurnaceRecipe> currentRecipe = null;
-
     private final ContainerData dataAccess = new ContainerData() {
         @Override public int get(int i) { return switch(i) {
             case 0 -> progress; case 1 -> totalBurnTime;
@@ -56,25 +54,24 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
     }
 
     public AlchemyFurnaceBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.ALCHEMY_FURNACE.get(), pos, state);
+        super(BlockEntitiesRegister.ALCHEMY_FURNACE.get(), pos, state);
         for (int i = 0; i < NUM_SLOTS; i++) items[i] = ItemStack.EMPTY;
     }
 
-    // ==================== Tick 逻辑 ====================
-
     public static void serverTick(Level level, BlockPos pos, BlockState state, AlchemyFurnaceBlockEntity be) {
         if (!(level instanceof ServerLevel sl)) return;
-        boolean changed = false;
 
-        // 1. 燃料消耗
-        if (be.fuelRemaining > 0) {
+        boolean changed = false;
+        boolean isBurning = be.fuelRemaining > 0;
+
+        if (isBurning) {
             be.fuelRemaining--;
             changed = true;
         }
 
         AlchemyFurnaceInput recipeInput = be.createRecipeInput();
         Optional<RecipeHolder<AlchemyFurnaceRecipe>> opt = sl.recipeAccess()
-            .getRecipeFor(ModRecipeTypes.ALCHEMY_FURNACE_TYPE.get(), recipeInput, sl);
+            .getRecipeFor(RecipeTypesRegister.ALCHEMY_FURNACE_TYPE.get(), recipeInput, sl);
 
         if (opt.isPresent()) {
             RecipeHolder<AlchemyFurnaceRecipe> recipeHolder = opt.get();
@@ -82,15 +79,15 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
 
             if (canOutput(be, recipeHolder)) {
                 if (be.fuelRemaining <= 0) {
-                    int burnTime = getFuelBurnTime(be.items[SLOT_FUEL]);
+                    int burnTime = getFuelBurnTime(sl,be.items[SLOT_FUEL]);
                     if (burnTime > 0) {
                         be.fuelRemaining = burnTime;
                         be.fuelMaxTime = burnTime;
                         be.items[SLOT_FUEL].shrink(1);
+                        isBurning = true;
                         changed = true;
                     }
                 }
-
                 if (be.fuelRemaining > 0) {
                     be.totalBurnTime = recipe.burnTime();
                     be.progress++;
@@ -101,7 +98,10 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
                     changed = true;
                 }
             } else {
-                changed = true;
+                if (be.progress != 0) {
+                    be.progress = 0;
+                    changed = true;
+                }
             }
         } else {
             if (be.progress != 0) {
@@ -110,13 +110,17 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
             }
         }
 
+        boolean shouldBeLit = be.fuelRemaining > 0;
+        if (isBurning != shouldBeLit) {
+            changed = true;
+            level.setBlock(pos, state.setValue(AlchemyFurnaceBlock.LIT, shouldBeLit), 3);
+        }
+
         if (changed) {
             be.setChanged();
-            sl.getChunkSource().blockChanged(pos);
         }
     }
 
-    // ==================== 辅助方法 (已修复) ====================
 
     private AlchemyFurnaceInput createRecipeInput() {
         List<ItemStack> inputs = List.of(
@@ -127,17 +131,18 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         return new AlchemyFurnaceInput(items[SLOT_FUEL], inputs);
     }
 
-    private static int getFuelBurnTime(ItemStack fuel) {
+    private static int getFuelBurnTime(Level level, ItemStack fuel) {
         if (fuel.isEmpty()) return 0;
-        // 建议替换为: return net.neoforged.neoforge.common.FurnaceFuelRegistry.getBurnTime(fuel, null);
-        if (fuel.is(net.minecraft.tags.ItemTags.COALS)) return 1600;
-        if (fuel.is(net.minecraft.world.item.Items.BLAZE_ROD)) return 2400;
-        return 0;
+        var fuelValues = level.fuelValues();
+        if (fuelValues == null) return 0; // 安全兜底
+        return fuelValues.burnDuration(fuel);
     }
 
     private static boolean canOutput(AlchemyFurnaceBlockEntity be, RecipeHolder<AlchemyFurnaceRecipe> recipe) {
         AlchemyFurnaceInput input = be.createRecipeInput();
         ItemStack result = recipe.value().assemble(input);
+
+        if (result == null || result.isEmpty()) return false;
 
         ItemStack output = be.getItem(SLOT_OUTPUT);
         if (output.isEmpty()) return true;
@@ -148,6 +153,7 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
 
     private void completeRecipe(AlchemyFurnaceRecipe recipe, AlchemyFurnaceInput input) {
         ItemStack result = recipe.assemble(input);
+        if (result == null || result.isEmpty()) return; // 防御性检查
 
         if (items[SLOT_OUTPUT].isEmpty()) {
             items[SLOT_OUTPUT] = result.copy();
@@ -160,7 +166,6 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         items[SLOT_INPUT_3].shrink(1);
     }
 
-    // ==================== MenuProvider (已修复) ====================
     @Override
     public Component getDisplayName() {
         return Component.translatable("container.taoism.alchemy_furnace");
@@ -173,37 +178,40 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         return new AlchemyFurnaceMenu(id, inv, this);
     }
 
-    // ==================== 辅助方法 ====================
-
-    private void completeRecipe(AlchemyFurnaceRecipe recipe) {
-        ItemStack result = recipe.resultTemplate().create();
-        if (items[SLOT_OUTPUT].isEmpty()) {
-            items[SLOT_OUTPUT] = result;
-        } else {
-            items[SLOT_OUTPUT].grow(result.getCount());
-        }
-        // 消耗3个原料各1个
-        items[SLOT_INPUT_1].shrink(1);
-        items[SLOT_INPUT_2].shrink(1);
-        items[SLOT_INPUT_3].shrink(1);
-    }
-
-    // ==================== Container 接口实现 ====================
-
     @Override public int getContainerSize() { return NUM_SLOTS; }
     @Override public boolean isEmpty() { for(var s:items) if(!s.isEmpty()) return false; return true; }
     @Override public ItemStack getItem(int slot) { return (slot>=0&&slot<NUM_SLOTS)?items[slot]:ItemStack.EMPTY; }
+
     @Override public ItemStack removeItem(int slot, int amount) {
-        if(slot>=0&&slot<NUM_SLOTS&&!items[slot].isEmpty()){var r=items[slot].split(amount);setChanged();return r;}return ItemStack.EMPTY;}
+        if(slot>=0&&slot<NUM_SLOTS&&!items[slot].isEmpty()){
+            var r = items[slot].split(amount);
+            setChanged();
+            return r;
+        }
+        return ItemStack.EMPTY;
+    }
+
     @Override public ItemStack removeItemNoUpdate(int slot) {
-        if(slot>=0&&slot<NUM_SLOTS){var s=items[slot];items[slot]=ItemStack.EMPTY;return s;}return ItemStack.EMPTY;}
+        if(slot>=0&&slot<NUM_SLOTS){
+            var s = items[slot];
+            items[slot] = ItemStack.EMPTY;
+            return s;
+        }
+        return ItemStack.EMPTY;
+    }
+
     @Override public void setItem(int slot, ItemStack stack) {
-        if(slot>=0&&slot<NUM_SLOTS){items[slot]=stack;if(!stack.isEmpty()&&stack.getCount()>getMaxStackSize(stack))stack.setCount(getMaxStackSize(stack));setChanged();}}
+        if(slot>=0&&slot<NUM_SLOTS){
+            items[slot] = stack;
+            if(!stack.isEmpty()&&stack.getCount()>getMaxStackSize(stack)) stack.setCount(getMaxStackSize(stack));
+            setChanged();
+        }
+    }
+
     @Override public int getMaxStackSize(ItemStack s){return s.getMaxStackSize();}
     @Override public boolean stillValid(Player p){return Container.stillValidBlockEntity(this,p);}
-    @Override public void clearContent(){for(int i=0;i<NUM_SLOTS;i++)items[i]=ItemStack.EMPTY;setChanged();}
+    @Override public void clearContent(){for(int i=0;i<NUM_SLOTS;i++) items[i]=ItemStack.EMPTY; setChanged();}
 
-    // ==================== NBT & MenuProvider ====================
     @Override protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput output) {
         super.saveAdditional(output);
         var list = output.list("Items", ItemStack.CODEC);
@@ -217,8 +225,10 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
     @Override protected void loadAdditional(net.minecraft.world.level.storage.ValueInput input) {
         super.loadAdditional(input);
         var list = input.listOrEmpty("Items", ItemStack.CODEC);
-        int idx = 0; for (var s : list) { if(idx<NUM_SLOTS) items[idx++]=s; }
+        int idx = 0;
+        for (var s : list) { if(idx<NUM_SLOTS) items[idx++]=s; }
         while(idx<NUM_SLOTS) items[idx++]=ItemStack.EMPTY;
+
         progress = input.getIntOr("Progress",0);
         totalBurnTime = input.getIntOr("TotalBurnTime",0);
         fuelRemaining = input.getIntOr("FuelRemaining",0);

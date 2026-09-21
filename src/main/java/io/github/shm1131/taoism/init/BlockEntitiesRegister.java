@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModBlockEntities {
+public class BlockEntitiesRegister {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
         DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, TaoismMain.MODID);
 

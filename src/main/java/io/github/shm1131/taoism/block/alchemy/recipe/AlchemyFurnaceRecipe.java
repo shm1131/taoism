@@ -3,8 +3,12 @@ package io.github.shm1131.taoism.block.alchemy.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.shm1131.taoism.init.ModRecipeSerializers;
-import io.github.shm1131.taoism.init.ModRecipeTypes;
+import io.github.shm1131.taoism.init.RecipeSerializersRegister;
+import io.github.shm1131.taoism.init.RecipeTypesRegister;
+import io.github.shm1131.taoism.item.herb.PropertiesHelper;
+import io.github.shm1131.taoism.item.herb.base.Flavor;
+import io.github.shm1131.taoism.item.herb.base.HerbProperties;
+import io.github.shm1131.taoism.item.herb.base.Nature;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -20,7 +24,6 @@ public record AlchemyFurnaceRecipe(CommonInfo commonInfo, Ingredient fuelIngredi
                                    ItemStackTemplate resultTemplate, int burnTime,
                                    float experience) implements Recipe<AlchemyFurnaceInput> {
 
-    // ==================== Recipe 接口实现 ====================
 
     @Override
     public boolean matches(AlchemyFurnaceInput input, Level level) {
@@ -33,7 +36,31 @@ public record AlchemyFurnaceRecipe(CommonInfo commonInfo, Ingredient fuelIngredi
 
     @Override
     public ItemStack assemble(AlchemyFurnaceInput input) {
-        return null;
+        HerbProperties p1 = PropertiesHelper.getProperties(input.inputs().get(0));
+        HerbProperties p2 = PropertiesHelper.getProperties(input.inputs().get(1));
+        HerbProperties p3 = PropertiesHelper.getProperties(input.inputs().get(2));
+
+        Flavor dominantFlavor = getDominant(p1.flavor(), p2.flavor(), p3.flavor());
+        Nature dominantNature = getDominant(p1.nature(), p2.nature(), p3.nature());
+        float avgToxicity = Math.round((p1.toxicity() + p2.toxicity() + p3.toxicity()) / 3f * 10f) / 10f;
+        float avgPotency  = Math.round((p1.potency()  + p2.potency()  + p3.potency())  / 3f * 10f) / 10f;
+
+        HerbProperties resultProps = new HerbProperties(dominantFlavor, dominantNature, avgToxicity, avgPotency);
+
+        ItemStack result = this.resultTemplate.create().copy();
+        PropertiesHelper.setProperties(result, resultProps);
+        return result;
+    }
+
+    private static <T> T getDominant(T a, T b, T c) {
+        if (a == b || a == c) return a;
+        if (b == c) return b;
+        return a;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
@@ -43,17 +70,12 @@ public record AlchemyFurnaceRecipe(CommonInfo commonInfo, Ingredient fuelIngredi
 
     @Override
     public String group() {
-        return null;
-    }
-
-    @Override
-    public PlacementInfo placementInfo() {
-        return null;
+        return "";
     }
 
     @Override
     public RecipeBookCategory recipeBookCategory() {
-        return null;
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     public ItemStackTemplate getResultTemplate() {
@@ -62,23 +84,20 @@ public record AlchemyFurnaceRecipe(CommonInfo commonInfo, Ingredient fuelIngredi
 
     @Override
     public RecipeSerializer<? extends Recipe<AlchemyFurnaceInput>> getSerializer() {
-        return ModRecipeSerializers.ALCHEMY_FURNACE.get();
+        return RecipeSerializersRegister.ALCHEMY_FURNACE.get();
     }
 
     @Override
     public RecipeType<? extends Recipe<AlchemyFurnaceInput>> getType() {
-        return ModRecipeTypes.ALCHEMY_FURNACE_TYPE.get();
+        return RecipeTypesRegister.ALCHEMY_FURNACE_TYPE.get();
     }
 
-    // ==================== Codec (完全对齐 IncubatorRecipe 模式) ====================
 
     public static final MapCodec<AlchemyFurnaceRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
         instance.group(
-            // ⭐ 与 IncubatorRecipe 完全一致的 CommonInfo 写法
             CommonInfo.MAP_CODEC.forGetter(AlchemyFurnaceRecipe::commonInfo),
             Ingredient.CODEC.fieldOf("fuel").forGetter(AlchemyFurnaceRecipe::fuelIngredient),
             Ingredient.CODEC.listOf(3, 3).fieldOf("ingredients").forGetter(AlchemyFurnaceRecipe::inputs),
-            // ⭐ 使用 ItemStackTemplate.CODEC 而非 ItemStack.CODEC
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(AlchemyFurnaceRecipe::resultTemplate),
             Codec.INT.fieldOf("burn_time").forGetter(AlchemyFurnaceRecipe::burnTime),
             Codec.FLOAT.optionalFieldOf("experience", 0f).forGetter(AlchemyFurnaceRecipe::experience)

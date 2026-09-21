@@ -1,7 +1,7 @@
 package io.github.shm1131.taoism.block.alchemy;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.init.ModBlockEntities;
+import io.github.shm1131.taoism.init.BlockEntitiesRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -37,15 +37,11 @@ public class AlchemyFurnaceBlock extends BaseEntityBlock {
         return CODEC;
     }
 
-    // ==================== 方块状态处理 ====================
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(LIT);
     }
 
-
-    // ==================== 方块实体与 Tick ====================
 
     @Nullable
     @Override
@@ -57,15 +53,13 @@ public class AlchemyFurnaceBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide()) return null;
-        return createTickerHelper(type, ModBlockEntities.ALCHEMY_FURNACE.get(), AlchemyFurnaceBlockEntity::serverTick);
+        return createTickerHelper(type, BlockEntitiesRegister.ALCHEMY_FURNACE.get(), AlchemyFurnaceBlockEntity::serverTick);
     }
 
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
-
-    // ==================== 交互与破坏逻辑 ====================
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {

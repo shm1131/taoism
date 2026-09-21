@@ -32,7 +32,8 @@ public class TaoismModDataGenerator {
             )),lookupProvider)));
 
         //合成表
-        event.createProvider(ModRecipesProvider.Runner::new);
+        event.createProvider(IncubatorRecipesProvider.Runner::new);
+        event.createProvider(AlchemyFurnaceRecipeProvider.Runner::new);
 
         //标签
         event.createProvider(ModBlockTagsProvider::new);

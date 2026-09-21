@@ -1,13 +1,13 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.init.ModBlockEntities;
-import io.github.shm1131.taoism.init.ModRecipeTypes;
-import io.github.shm1131.taoism.init.ModMenuTypes;
-import io.github.shm1131.taoism.init.ModRecipeSerializers;
+import io.github.shm1131.taoism.init.BlockEntitiesRegister;
+import io.github.shm1131.taoism.init.RecipeTypesRegister;
+import io.github.shm1131.taoism.init.MenuTypesRegister;
+import io.github.shm1131.taoism.init.RecipeSerializersRegister;
 import io.github.shm1131.taoism.entity.text.EntityRegister;
 import io.github.shm1131.taoism.entity.text.TextEntity;
-import io.github.shm1131.taoism.item.herb.base.ModDataComponents;
+import io.github.shm1131.taoism.init.ComponentsRegister;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
 import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
 import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
@@ -49,16 +49,16 @@ public class TaoismMain {
         ItemRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
-        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
-        ModRecipeTypes.RECIPE_TYPES.register(modEventBus);
-        ModMenuTypes.MENUS.register(modEventBus);
-        ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        BlockEntitiesRegister.BLOCK_ENTITIES.register(modEventBus);
+        RecipeTypesRegister.RECIPE_TYPES.register(modEventBus);
+        MenuTypesRegister.MENUS.register(modEventBus);
+        RecipeSerializersRegister.RECIPE_SERIALIZERS.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
 
         GLM_SERIALIZERS.register(modEventBus);
-        ModDataComponents.COMPONENTS.register(modEventBus);   //ADDED:注册component
+        ComponentsRegister.COMPONENTS.register(modEventBus);   //ADDED:注册component
 
         modEventBus.addListener(this::registerPayloads);
         modEventBus.addListener(this::createDefaultAttributes);

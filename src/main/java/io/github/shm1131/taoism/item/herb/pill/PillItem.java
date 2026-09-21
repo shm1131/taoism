@@ -3,8 +3,11 @@
 package io.github.shm1131.taoism.item.herb.pill;
 
 import io.github.shm1131.taoism.client.input.ClientInputTracker;
+import io.github.shm1131.taoism.init.ComponentsRegister;
+import io.github.shm1131.taoism.item.herb.base.Flavor;
 import io.github.shm1131.taoism.item.herb.base.HerbProperties;
 import io.github.shm1131.taoism.item.herb.PropertiesHelper;
+import io.github.shm1131.taoism.item.herb.base.Nature;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -16,10 +19,11 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import java.util.function.Consumer;
 
 public class PillItem extends Item {
-
     public PillItem(Properties properties) {
-        super(properties);
+        super(properties.component(ComponentsRegister.PILL_PROPERTIES.get(),
+            new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0f, 0f)));
     }
+
 
     @Override
     public void appendHoverText(

@@ -31,7 +31,6 @@ public class CreativeTabRegister {
                             .stream()
                             .map(DeferredHolder::get)
                             .forEach(output::accept);
-
                     })
                     .build()
             );
