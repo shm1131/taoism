@@ -44,7 +44,7 @@ public record AlchemyFurnaceRecipe(CommonInfo commonInfo, Ingredient fuelIngredi
         Nature dominantNature = getDominant(p1.nature(), p2.nature(), p3.nature());
         float avgToxicity = Math.round((p1.toxicity() + p2.toxicity() + p3.toxicity()) / 3f * 10f) / 10f;
         float avgPotency  = Math.round((p1.potency()  + p2.potency()  + p3.potency())  / 3f * 10f) / 10f;
-
+//TODO:毒性为什么一直是0，其他的数据都对
         HerbProperties resultProps = new HerbProperties(dominantFlavor, dominantNature, avgToxicity, avgPotency);
 
         ItemStack result = this.resultTemplate.create().copy();
