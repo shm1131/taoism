@@ -3,15 +3,25 @@ package io.github.shm1131.taoism.init;
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.item.IconItem;
 import io.github.shm1131.taoism.item.bar.ZhuSha;
+import io.github.shm1131.taoism.item.herb.PropertiesHelper;
 import io.github.shm1131.taoism.item.herb.base.BaseHerbItem;
 import io.github.shm1131.taoism.item.herb.base.Flavor;
 import io.github.shm1131.taoism.item.herb.base.HerbProperties;
 import io.github.shm1131.taoism.item.herb.base.Nature;
+import io.github.shm1131.taoism.item.herb.pill.PillConsumeEffect;
+import io.github.shm1131.taoism.item.herb.pill.PillEffectType;
 import io.github.shm1131.taoism.item.herb.pill.PillItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.Consumables;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -132,9 +142,14 @@ public class ItemRegister {
     }
 
     // ==================== 独立注册物品 ====================
-    public static final DeferredHolder<Item, PillItem> PILL = ITEMS.register("pill",
-        () -> new PillItem(props("pill"))
-    );
+    public static final DeferredHolder<Item, PillItem> PILL =
+        ITEMS.register("pill", () -> {
+            Item.Properties props = props("pill")  // ← 使用 props() 方法，自动设置 ID
+                .component(ComponentsRegister.PILL_PROPERTIES.get(),
+                    new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0f, 0f))
+                .stacksTo(16);
+            return new PillItem(props);
+        });
 
     public static final DeferredHolder<Item, IconItem> ICON_ITEM = ITEMS.register("icon_item",
         () -> new IconItem(props("icon_item"))

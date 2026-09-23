@@ -8,12 +8,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class AlchemyFurnaceMenu extends AbstractContainerMenu {
 
-    // ⭐ 槽位索引常量（保持不变，确保与 BlockEntity/Recipe 兼容）
     public static final int FUEL_SLOT = 0;
     public static final int INPUT_SLOT_1 = 1; // 上方原料
     public static final int INPUT_SLOT_2 = 2; // 左侧原料

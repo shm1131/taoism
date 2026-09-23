@@ -1,11 +1,12 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
+import io.github.shm1131.taoism.entity.ghost.TextGuiEntity;
 import io.github.shm1131.taoism.init.BlockEntitiesRegister;
 import io.github.shm1131.taoism.init.RecipeTypesRegister;
 import io.github.shm1131.taoism.init.MenuTypesRegister;
 import io.github.shm1131.taoism.init.RecipeSerializersRegister;
-import io.github.shm1131.taoism.entity.text.EntityRegister;
+import io.github.shm1131.taoism.entity.EntityRegister;
 import io.github.shm1131.taoism.entity.text.TextEntity;
 import io.github.shm1131.taoism.init.ComponentsRegister;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
@@ -54,11 +55,12 @@ public class TaoismMain {
         MenuTypesRegister.MENUS.register(modEventBus);
         RecipeSerializersRegister.RECIPE_SERIALIZERS.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
+        TaoismConsumeEffects.CONSUME_EFFECTS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
 
         GLM_SERIALIZERS.register(modEventBus);
-        ComponentsRegister.COMPONENTS.register(modEventBus);   //ADDED:注册component
+        ComponentsRegister.COMPONENTS.register(modEventBus);
 
         modEventBus.addListener(this::registerPayloads);
         modEventBus.addListener(this::createDefaultAttributes);
@@ -90,6 +92,11 @@ public class TaoismMain {
         event.put(
             EntityRegister.TEXT_ENTITY.get(),
             TextEntity.createAttributes().build()
+        );
+
+        event.put(
+            EntityRegister.TEXT_GUI_ENTITY.get(),
+            TextGuiEntity.createAttributes().build()
         );
     }
 }

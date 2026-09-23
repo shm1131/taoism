@@ -1,29 +1,42 @@
-//ADDED:新建类BasePillItem
-
 package io.github.shm1131.taoism.item.herb.pill;
 
 import io.github.shm1131.taoism.client.input.ClientInputTracker;
 import io.github.shm1131.taoism.init.ComponentsRegister;
+import io.github.shm1131.taoism.init.ItemRegister;
+import io.github.shm1131.taoism.item.herb.PropertiesHelper;
 import io.github.shm1131.taoism.item.herb.base.Flavor;
 import io.github.shm1131.taoism.item.herb.base.HerbProperties;
-import io.github.shm1131.taoism.item.herb.PropertiesHelper;
 import io.github.shm1131.taoism.item.herb.base.Nature;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
 public class PillItem extends Item {
+
     public PillItem(Properties properties) {
-        super(properties.component(ComponentsRegister.PILL_PROPERTIES.get(),
-            new HerbProperties(Flavor.SWEET, Nature.NEUTRAL, 0f, 0f)));
+        super(properties);
     }
 
+    public static ItemStack createPill(HerbProperties properties) {
+        ItemStack stack = new ItemStack(ItemRegister.PILL.get());
+        stack.set(ComponentsRegister.PILL_PROPERTIES.get(), properties);
+
+        var consumable = Consumable.builder()
+            .consumeSeconds(1.6f)
+            .onConsume(new PillConsumeEffect(properties))
+            .build();
+        stack.set(DataComponents.CONSUMABLE, consumable);
+
+        return stack;
+    }
 
     @Override
     public void appendHoverText(
@@ -33,8 +46,7 @@ public class PillItem extends Item {
         Consumer<Component> builder,
         TooltipFlag flag
     ) {
-        HerbProperties props =
-            PropertiesHelper.getProperties(stack);
+        HerbProperties props = PropertiesHelper.getProperties(stack);
 
         builder.accept(Component.translatable("tooltip.taoism.pill.flavor",
             Component.translatable(props.flavor().translationKey())));

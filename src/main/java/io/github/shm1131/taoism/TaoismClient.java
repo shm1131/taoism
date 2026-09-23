@@ -2,10 +2,12 @@ package io.github.shm1131.taoism;
 
 import io.github.shm1131.taoism.block.alchemy.AlchemyFurnaceScreen;
 import io.github.shm1131.taoism.block.incubator.IncubatorScreen;
+import io.github.shm1131.taoism.entity.ghost.TextGuiEntityModel;
+import io.github.shm1131.taoism.entity.ghost.TextGuiEntityRenderer;
 import io.github.shm1131.taoism.init.MenuTypesRegister;
 import io.github.shm1131.taoism.entity.text.TextEntityModel;
 import io.github.shm1131.taoism.entity.text.TextEntityRenderer;
-import io.github.shm1131.taoism.entity.text.EntityRegister;
+import io.github.shm1131.taoism.entity.EntityRegister;
 import io.github.shm1131.taoism.client.screen.AttachmentScreen;
 import io.github.shm1131.taoism.client.screen.JingLiHudRenderer;
 import net.minecraft.resources.Identifier;
@@ -48,11 +50,13 @@ public class TaoismClient {
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegister.TEXT_ENTITY.get(), TextEntityRenderer::new);
+        event.registerEntityRenderer(EntityRegister.TEXT_GUI_ENTITY.get(), TextGuiEntityRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(TextEntityModel.LAYER_LOCATION, TextEntityModel::createBodyLayer);
+        event.registerLayerDefinition(TextGuiEntityModel.LAYER_LOCATION, TextGuiEntityModel::createBodyLayer);
     }
 
     @SubscribeEvent

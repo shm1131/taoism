@@ -9,6 +9,7 @@ import io.github.shm1131.taoism.item.herb.PropertiesHelper;
 import io.github.shm1131.taoism.item.herb.base.Flavor;
 import io.github.shm1131.taoism.item.herb.base.HerbProperties;
 import io.github.shm1131.taoism.item.herb.base.Nature;
+import io.github.shm1131.taoism.item.herb.pill.PillItem;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -33,29 +34,41 @@ public record AlchemyFurnaceRecipe(CommonInfo commonInfo, Ingredient fuelIngredi
         }
         return true;
     }
-
+//TODO:没法匹配配方。我做了一个自由配方，根据三种任意药材的Flavor和Nature来决定丹药效果（见io.github.shm1131.taoism.item.herb.pill）
     @Override
     public ItemStack assemble(AlchemyFurnaceInput input) {
         HerbProperties p1 = PropertiesHelper.getProperties(input.inputs().get(0));
         HerbProperties p2 = PropertiesHelper.getProperties(input.inputs().get(1));
         HerbProperties p3 = PropertiesHelper.getProperties(input.inputs().get(2));
 
-        Flavor dominantFlavor = getDominant(p1.flavor(), p2.flavor(), p3.flavor());
-        Nature dominantNature = getDominant(p1.nature(), p2.nature(), p3.nature());
-        float avgToxicity = Math.round((p1.toxicity() + p2.toxicity() + p3.toxicity()) / 3f * 10f) / 10f;
-        float avgPotency  = Math.round((p1.potency()  + p2.potency()  + p3.potency())  / 3f * 10f) / 10f;
-//TODO:毒性为什么一直是0，其他的数据都对
-        HerbProperties resultProps = new HerbProperties(dominantFlavor, dominantNature, avgToxicity, avgPotency);
+        Flavor dominantFlavor = getDominantFlavor(p1.flavor(), p2.flavor(), p3.flavor());
+        Nature dominantNature = getDominantNature(p1.nature(), p2.nature(), p3.nature());
+        float avgToxicity = Math.round((p1.toxicity() * 0.5f + p2.toxicity() * 0.3f + p3.toxicity() * 0.2f) * 10f) / 10f;
+        float avgPotency  = Math.round((p1.potency()  * 0.5f + p2.potency()  * 0.3f + p3.potency()  * 0.2f) * 10f) / 10f;
 
-        ItemStack result = this.resultTemplate.create().copy();
-        PropertiesHelper.setProperties(result, resultProps);
-        return result;
+        HerbProperties resultProps = new HerbProperties(dominantFlavor, dominantNature, avgToxicity, avgPotency);
+        return PillItem.createPill(resultProps);
     }
 
-    private static <T> T getDominant(T a, T b, T c) {
+    private static Flavor getDominantFlavor(Flavor a, Flavor b, Flavor c) {
         if (a == b || a == c) return a;
         if (b == c) return b;
         return a;
+    }
+
+    private static Nature getDominantNature(Nature a, Nature b, Nature c) {
+        float value = natureToValue(a) * 0.5f + natureToValue(b) * 0.3f + natureToValue(c) * 0.2f;
+        if (value > 0.3f) return Nature.WARM;
+        if (value < -0.3f) return Nature.COLD;
+        return Nature.NEUTRAL;
+    }
+
+    private static float natureToValue(Nature n) {
+        return switch (n) {
+            case WARM -> 1.0f;
+            case NEUTRAL -> 0.0f;
+            case COLD -> -1.0f;
+        };
     }
 
     @Override
