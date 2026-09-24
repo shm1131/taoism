@@ -1,7 +1,7 @@
 package io.github.shm1131.taoism.network;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.player.attachment.cultivation.ICultivationData;
+import io.github.shm1131.taoism.player.attachment.api.ICultivationData;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

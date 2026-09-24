@@ -1,8 +1,10 @@
 package io.github.shm1131.taoism.init;
 
 import io.github.shm1131.taoism.TaoismMain;
-import io.github.shm1131.taoism.player.attachment.api.ITaoismData;
+import io.github.shm1131.taoism.player.attachment.api.*;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.attachment.IAttachmentSerializer;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
@@ -20,5 +22,31 @@ public class TaoismAttachments {
           .build()
       );
 
+    public static final Supplier<AttachmentType<ICultivationData>> CULTIVATION_DATA =
+        ATTACHMENT_TYPES.register("cultivation_data", () -> AttachmentType.builder(() -> ICultivationData.EMPTY)
+            .serialize(ICultivationData.MAP_CODEC)
+            .copyOnDeath()
+            .sync(ICultivationData.STREAM_CODEC)
+            .build()
+        );
 
+    public static final Supplier<AttachmentType<IJingLiData>> JINGLI_DATA =
+        ATTACHMENT_TYPES.register("jing_li_data", () -> AttachmentType.builder(() -> IJingLiData.EMPTY)
+            .serialize(IJingLiData.MAP_CODEC)
+            .copyOnDeath()
+            .sync(IJingLiData.STREAM_CODEC)
+            .build()
+        );
+
+    public static final Supplier<AttachmentType<ISleepData>> SLEEP_DATA =
+        ATTACHMENT_TYPES.register("sleep_data", () -> AttachmentType.builder(() -> ISleepData.EMPTY)
+            .serialize(ISleepData.MAP_CODEC)
+            .build()
+        );
+
+    public static final Supplier<AttachmentType<ICoolDownData>> COOL_DOWN_DATA =
+        ATTACHMENT_TYPES.register("drop_cool_down",() -> AttachmentType.builder(() -> ICoolDownData.EMPTY)
+            .serialize(ICoolDownData.MAP_CODEC)
+            .build()
+        );
 }
