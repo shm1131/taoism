@@ -3,6 +3,8 @@ package io.github.shm1131.taoism.init;
 import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.player.attachment.api.*;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.attachment.IAttachmentSerializer;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 

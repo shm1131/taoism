@@ -30,6 +30,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> {
 
     @Override
     public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        TaoismMain.LOGGER.info("=== IncubatorScreen.extractContents CALLED ===");
         graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE,
             this.leftPos, this.topPos,
             0.0F, 0.0F,
@@ -37,7 +38,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> {
             TEXTURE_WIDTH, TEXTURE_HEIGHT
         );
 
-        int totalTime = this.menu.getTotalIncubationTime();
+        int totalTime = this.menu.getMaxProgress();
         if (totalTime > 0) {
             int progress = this.menu.getProgress();
             int barWidth = (int) (PROGRESS_WIDTH * ((float) progress / totalTime));
@@ -49,7 +50,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> {
             );
         }
 
-        if (!this.menu.hasWaterSource()) {
+        if (!this.menu.hasWater()) {
             graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE,
                 this.leftPos + 51, this.topPos + 53,
                 (float) NO_WATER_U, (float) NO_WATER_V,

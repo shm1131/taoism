@@ -13,7 +13,6 @@ public class BlockEntitiesRegister {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
         DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, TaoismMain.MODID);
 
-    @SuppressWarnings("unchecked")
     public static final Supplier<BlockEntityType<IncubatorBlockEntity>> INCUBATOR =
         BLOCK_ENTITIES.register("incubator", () -> new BlockEntityType<>(
             IncubatorBlockEntity::new,
