@@ -1,9 +1,12 @@
 package io.github.shm1131.taoism.block.alchemy;
 
-import io.github.shm1131.taoism.block.alchemy.recipe.AlchemyFurnaceInput;
-import io.github.shm1131.taoism.block.alchemy.recipe.AlchemyFurnaceRecipe;
 import io.github.shm1131.taoism.init.BlockEntitiesRegister;
-import io.github.shm1131.taoism.init.RecipeTypesRegister;
+import io.github.shm1131.taoism.item.herb.PropertiesHelper;
+import io.github.shm1131.taoism.item.herb.base.Flavor;
+import io.github.shm1131.taoism.item.herb.base.HerbProperties;
+import io.github.shm1131.taoism.item.herb.base.IHerbBase;
+import io.github.shm1131.taoism.item.herb.base.Nature;
+import io.github.shm1131.taoism.item.herb.pill.PillItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -14,23 +17,30 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvider, Container {
 
     public static final int SLOT_FUEL = 0;
-    public static final int SLOT_INPUT_1 = 1;
-    public static final int SLOT_INPUT_2 = 2;
-    public static final int SLOT_INPUT_3 = 3;
+    public static final int SLOT_INPUT_1 = 1; // 君药 (Monarch)
+    public static final int SLOT_INPUT_2 = 2; // 臣药 (Minister)
+    public static final int SLOT_INPUT_3 = 3; // 佐药 (Assistant)
     public static final int SLOT_OUTPUT = 4;
     public static final int NUM_SLOTS = 5;
+
+    // 君臣佐权重
+    private static final int WEIGHT_MONARCH = 3;
+    private static final int WEIGHT_MINISTER = 2;
+    private static final int WEIGHT_ASSISTANT = 1;
+
+    // 默认炼丹时间（刻），20刻 = 1秒
+    private static final int DEFAULT_BURN_TIME = 200;
 
     private final ItemStack[] items = new ItemStack[NUM_SLOTS];
 
@@ -62,46 +72,37 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         if (!(level instanceof ServerLevel sl)) return;
 
         boolean changed = false;
-        boolean isBurning = be.fuelRemaining > 0;
+        boolean wasBurning = be.fuelRemaining > 0;
 
-        if (isBurning) {
+        if (wasBurning) {
             be.fuelRemaining--;
             changed = true;
         }
 
-        AlchemyFurnaceInput recipeInput = be.createRecipeInput();
-        Optional<RecipeHolder<AlchemyFurnaceRecipe>> opt = sl.recipeAccess()
-            .getRecipeFor(RecipeTypesRegister.ALCHEMY_FURNACE_TYPE.get(), recipeInput, sl);
+        // 检查是否满足“必须三个药材”的炼丹条件
+        boolean canCraft = be.canCraftPill();
 
-        if (opt.isPresent()) {
-            RecipeHolder<AlchemyFurnaceRecipe> recipeHolder = opt.get();
-            AlchemyFurnaceRecipe recipe = recipeHolder.value();
-
-            if (canOutput(be, recipeHolder)) {
-                if (be.fuelRemaining <= 0) {
-                    int burnTime = getFuelBurnTime(sl,be.items[SLOT_FUEL]);
-                    if (burnTime > 0) {
-                        be.fuelRemaining = burnTime;
-                        be.fuelMaxTime = burnTime;
-                        be.items[SLOT_FUEL].shrink(1);
-                        isBurning = true;
-                        changed = true;
-                    }
-                }
-                if (be.fuelRemaining > 0) {
-                    be.totalBurnTime = recipe.burnTime();
-                    be.progress++;
-                    if (be.progress >= be.totalBurnTime) {
-                        be.completeRecipe(recipe, recipeInput);
-                        be.progress = 0;
-                    }
+        if (canCraft) {
+            if (be.fuelRemaining <= 0) {
+                int burnTime = getFuelBurnTime(sl, be.items[SLOT_FUEL]);
+                if (burnTime > 0) {
+                    be.fuelRemaining = burnTime;
+                    be.fuelMaxTime = burnTime;
+                    be.items[SLOT_FUEL].shrink(1);
+                    wasBurning = true;
                     changed = true;
                 }
-            } else {
-                if (be.progress != 0) {
+            }
+
+            if (be.fuelRemaining > 0) {
+                be.totalBurnTime = DEFAULT_BURN_TIME;
+                be.progress++;
+
+                if (be.progress >= be.totalBurnTime) {
+                    be.craftPill();
                     be.progress = 0;
-                    changed = true;
                 }
+                changed = true;
             }
         } else {
             if (be.progress != 0) {
@@ -111,7 +112,7 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         }
 
         boolean shouldBeLit = be.fuelRemaining > 0;
-        if (isBurning != shouldBeLit) {
+        if (wasBurning != shouldBeLit) {
             changed = true;
             level.setBlock(pos, state.setValue(AlchemyFurnaceBlock.LIT, shouldBeLit), 3);
         }
@@ -121,49 +122,145 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         }
     }
 
+    // ==================== 自定义炼丹逻辑 ====================
 
-    private AlchemyFurnaceInput createRecipeInput() {
-        List<ItemStack> inputs = List.of(
-            items[SLOT_INPUT_1],
-            items[SLOT_INPUT_2],
-            items[SLOT_INPUT_3]
-        );
-        return new AlchemyFurnaceInput(items[SLOT_FUEL], inputs);
+    /**
+     * 检查是否可以炼丹：
+     * 1. 必须放满三个输入槽
+     * 2. 三个槽位必须全部都是有效药材
+     * 3. 输出槽能容纳丹药
+     */
+    private boolean canCraftPill() {
+        // 1. 必须三个槽都有物品
+        if (items[SLOT_INPUT_1].isEmpty() || items[SLOT_INPUT_2].isEmpty() || items[SLOT_INPUT_3].isEmpty()) {
+            return false;
+        }
+
+        // 2. 必须全是药材 (不能混入非药材物品)
+        if (!isHerb(items[SLOT_INPUT_1]) || !isHerb(items[SLOT_INPUT_2]) || !isHerb(items[SLOT_INPUT_3])) {
+            return false;
+        }
+
+        // 3. 检查输出槽
+        ItemStack output = items[SLOT_OUTPUT];
+        if (!output.isEmpty()) {
+            if (!(output.getItem() instanceof PillItem)) return false;
+            if (output.getCount() >= output.getMaxStackSize()) return false;
+        }
+        return true;
     }
+
+    private boolean isHerb(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        // 只要不是返回默认空属性，或者实现了 IHerbBase 接口，就认为是药材
+        HerbProperties p = PropertiesHelper.getProperties(stack);
+        return p != PropertiesHelper.DEFAULT_PROPS || stack.getItem() instanceof IHerbBase;
+    }
+
+    private void craftPill() {
+        HerbProperties monarchProps = PropertiesHelper.getProperties(items[SLOT_INPUT_1]);
+        HerbProperties ministerProps = PropertiesHelper.getProperties(items[SLOT_INPUT_2]);
+        HerbProperties assistantProps = PropertiesHelper.getProperties(items[SLOT_INPUT_3]);
+
+        // 核心算法：君臣佐加权计算
+        HerbProperties pillProps = calculatePillProperties(monarchProps, ministerProps, assistantProps);
+
+        ItemStack pillStack = PillItem.createPill(pillProps);
+
+        if (items[SLOT_OUTPUT].isEmpty()) {
+            items[SLOT_OUTPUT] = pillStack;
+        } else {
+            items[SLOT_OUTPUT].grow(pillStack.getCount());
+        }
+
+        // 消耗三个药材
+        items[SLOT_INPUT_1].shrink(1);
+        items[SLOT_INPUT_2].shrink(1);
+        items[SLOT_INPUT_3].shrink(1);
+    }
+
+    /**
+     * 核心算法：君臣佐加权计算
+     */
+    private HerbProperties calculatePillProperties(HerbProperties monarch, HerbProperties minister, HerbProperties assistant) {
+
+        // 1. 计算 Flavor (味)
+        Flavor finalFlavor = calculateWeightedEnum(
+            monarch.flavor(), minister.flavor(), assistant.flavor(), Flavor.class
+        );
+
+        // 2. 计算 Nature (性)
+        Nature finalNature = calculateWeightedEnum(
+            monarch.nature(), minister.nature(), assistant.nature(), Nature.class
+        );
+
+        // 3. 计算 Toxicity (毒性) - 累加并限制上限
+        float totalToxicity = monarch.toxicity() + minister.toxicity() + assistant.toxicity();
+        float finalToxicity = Math.min(totalToxicity, 1.0f);
+
+        // 4. 计算 Potency (药效) - 加权平均 (凸显君药的重要性)
+        // 公式：(君*3 + 臣*2 + 佐*1) / 6
+        float totalWeight = WEIGHT_MONARCH + WEIGHT_MINISTER + WEIGHT_ASSISTANT;
+        float finalPotency = (monarch.potency() * WEIGHT_MONARCH +
+            minister.potency() * WEIGHT_MINISTER +
+            assistant.potency() * WEIGHT_ASSISTANT) / totalWeight;
+
+        return new HerbProperties(finalFlavor, finalNature, finalToxicity, finalPotency);
+    }
+
+    /**
+     * 通用加权枚举计算器 (支持 Flavor 和 Nature)
+     * 权重：君(3) > 臣(2) > 佐(1)
+     * 平局规则：取佐药(Assistant)的值
+     */
+    private <E extends Enum<E>> E calculateWeightedEnum(E monarch, E minister, E assistant, Class<E> enumClass) {
+        Map<E, Integer> weights = new EnumMap<>(enumClass);
+
+        // 初始化所有枚举值为 0 分
+        for (E e : enumClass.getEnumConstants()) {
+            weights.put(e, 0);
+        }
+
+        // 累加权重
+        weights.put(monarch, weights.get(monarch) + WEIGHT_MONARCH);
+        weights.put(minister, weights.get(minister) + WEIGHT_MINISTER);
+        weights.put(assistant, weights.get(assistant) + WEIGHT_ASSISTANT);
+
+        // 找出最高分
+        int maxScore = 0;
+        for (int score : weights.values()) {
+            if (score > maxScore) maxScore = score;
+        }
+
+        // 检查是否平局 (有多个枚举值等于最高分)
+        int countMax = 0;
+        for (int score : weights.values()) {
+            if (score == maxScore) countMax++;
+        }
+
+        // 如果平局，直接返回佐药(assistant)的属性
+        if (countMax > 1) {
+            return assistant;
+        }
+
+        // 否则返回最高分的枚举值
+        for (Map.Entry<E, Integer> entry : weights.entrySet()) {
+            if (entry.getValue() == maxScore) {
+                return entry.getKey();
+            }
+        }
+
+        // 兜底 (理论上不会走到这里)
+        return assistant;
+    }
+
+    // ==================== 辅助与原版接口实现 (与之前相同) ====================
 
     private static int getFuelBurnTime(Level level, ItemStack fuel) {
         if (fuel.isEmpty()) return 0;
         var fuelValues = level.fuelValues();
-        if (fuelValues == null) return 0; // 安全兜底
+        if (fuelValues == null) return 0;
         return fuelValues.burnDuration(fuel);
-    }
-
-    private static boolean canOutput(AlchemyFurnaceBlockEntity be, RecipeHolder<AlchemyFurnaceRecipe> recipe) {
-        AlchemyFurnaceInput input = be.createRecipeInput();
-        ItemStack result = recipe.value().assemble(input);
-
-        if (result == null || result.isEmpty()) return false;
-
-        ItemStack output = be.getItem(SLOT_OUTPUT);
-        if (output.isEmpty()) return true;
-
-        return ItemStack.isSameItemSameComponents(output, result)
-            && output.getCount() + result.getCount() <= output.getMaxStackSize();
-    }
-
-    private void completeRecipe(AlchemyFurnaceRecipe recipe, AlchemyFurnaceInput input) {
-        ItemStack result = recipe.assemble(input);
-        if (result == null || result.isEmpty()) return; // 防御性检查
-
-        if (items[SLOT_OUTPUT].isEmpty()) {
-            items[SLOT_OUTPUT] = result.copy();
-        } else {
-            items[SLOT_OUTPUT].grow(result.getCount());
-        }
-
-        items[SLOT_INPUT_1].shrink(1);
-        items[SLOT_INPUT_2].shrink(1);
-        items[SLOT_INPUT_3].shrink(1);
     }
 
     @Override
