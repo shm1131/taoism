@@ -1,12 +1,11 @@
 {
-    "type": "minecraft:smelting",
+    "type": "minecraft:blasting",
     "category": "misc",
-    "ingredient": {
-        "item": "taoism:cu_yin"
-    },
+    "cookingtime": 100,
+    "experience": 0.7,
+    "group": "silver",
+    "ingredient": "taoism:cu_yin",
     "result": {
         "id": "taoism:yin_ding"
-    },
-    "experience": 0.7,
-    "cookingtime": 200
+    }
 }
