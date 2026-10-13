@@ -8,8 +8,8 @@ import net.minecraft.network.codec.StreamCodec;
 
 public interface IJingLiData {
 
-    float MAX_JING_LI_EAT = 10;
-    float MAX_JING_LI_SLEEP = 10;
+    float MAX_JING_LI_EAT = 20;
+    float MAX_JING_LI_SLEEP = 20;
     float TOTAL_JING_LI = MAX_JING_LI_EAT + MAX_JING_LI_SLEEP;
     float EXHAUSTION_THRESHOLD = 2.0f;
 

@@ -148,4 +148,5 @@ public class ItemRegister {
     public static final DeferredHolder<Item, ZhuSha> ZHU_SHA = ITEMS.register("zhu_sha",
         () -> new ZhuSha(props("zhu_sha"))
     );
+
 }

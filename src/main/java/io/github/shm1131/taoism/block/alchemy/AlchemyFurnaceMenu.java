@@ -40,7 +40,7 @@ public class AlchemyFurnaceMenu extends AbstractContainerMenu {
         addDataSlots(this.data);
 
         int centerX = 80;
-        int centerY = 72;
+        int centerY = 56;
         int offset = 18;
 
         this.addSlot(new Slot(blockEntity, FUEL_SLOT, centerX, centerY + offset));

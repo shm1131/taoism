@@ -1,9 +1,9 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
 	"texture_size": [64, 64],
-    "ambientocclusion": false,
-    "textures": {
+	"textures": {
 		"2": "taoism:block/incubator",
 		"particle": "taoism:block/incubator"
 	},
@@ -80,5 +80,35 @@
 				"down": {"uv": [9, 0, 6, 3], "texture": "#2"}
 			}
 		}
-	]
+	],
+	"gui_light": "front",
+    "display": {
+        "thirdperson_righthand": {
+            "scale": [0.42, 0.42, 0.42]
+        },
+        "thirdperson_lefthand": {
+            "scale": [0.42, 0.42, 0.42]
+        },
+        "firstperson_righthand": {
+            "scale": [0.4, 0.4, 0.4]
+        },
+        "firstperson_lefthand": {
+            "scale": [0.4, 0.4, 0.4]
+        },
+        "ground": {
+            "translation": [0, 2.25, 0],
+            "scale": [0.4, 0.4, 0.4]
+        },
+        "gui": {
+            "rotation": [35, 145, 0],
+            "scale": [0.6, 0.6, 0.6]
+        },
+        "head": {
+            "translation": [0, 9.25, 0],
+            "scale": [0.4, 0.4, 0.4]
+        },
+        "on_shelf": {
+            "rotation": [0, 180, 0]
+        }
+    }
 }

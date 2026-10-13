@@ -18,7 +18,6 @@ public class CultivationDebugCommands {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         event.getDispatcher().register(Commands.literal("tao")
-            // 增加灵力
             .then(Commands.literal("addsp")
                 .then(Commands.argument("amount", IntegerArgumentType.integer())
                     .executes(ctx -> {
@@ -26,7 +25,6 @@ public class CultivationDebugCommands {
                         CultivationHelper.addSp(player, IntegerArgumentType.getInteger(ctx, "amount"));
                         return 1;
                     })))
-            // 查看状态
             .then(Commands.literal("info")
                 .executes(ctx -> {
                     ServerPlayer player = ctx.getSource().getPlayerOrException();
@@ -42,7 +40,6 @@ public class CultivationDebugCommands {
                             CultivationHelper.canLevelUp(player))), false);
                     return 1;
                 }))
-            // 突破
             .then(Commands.literal("levelup")
                 .executes(ctx -> {
                     ServerPlayer player = ctx.getSource().getPlayerOrException();

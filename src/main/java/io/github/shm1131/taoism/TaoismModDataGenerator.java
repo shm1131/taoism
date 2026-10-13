@@ -1,6 +1,6 @@
 package io.github.shm1131.taoism;
 
-import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
+import io.github.shm1131.taoism.datagen.ModAdvancementSubProvider;
 import io.github.shm1131.taoism.datagen.*;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -32,7 +32,7 @@ public class TaoismModDataGenerator {
             )),lookupProvider)));
 
         //合成表
-        event.createProvider(IncubatorRecipesProvider.Runner::new);
+        //event.createProvider(IncubatorRecipesProvider.Runner::new);
 
         //标签
         event.createProvider(ModBlockTagsProvider::new);

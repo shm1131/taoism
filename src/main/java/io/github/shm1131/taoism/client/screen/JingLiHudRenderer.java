@@ -13,11 +13,15 @@ import net.minecraft.world.level.GameType;
 public class JingLiHudRenderer {
     private static final String NS = TaoismMain.MODID;
 
-    private static final Identifier FULL  = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/full_energy.png");
-    private static final Identifier HALF  = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/half_energy.png");
-    private static final Identifier EMPTY = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/empty_energy.png");
+    private static final Identifier YANG_ENERGY = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/yang_energy.png");
+    private static final Identifier YIN_ENERGY = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/yin_energy.png");
+
+    private static final Identifier WITHERED_YANG_ENERGY = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/withered_yang_energy.png");
+    private static final Identifier WITHERED_YIN_ENERGY = Identifier.fromNamespaceAndPath(NS, "textures/gui/sprite/hud/withered_yin_energy.png");
 
     private static final int ICON_SIZE = 9;
+    private static final int ICON_SPACING = 10;
+    private static final int TOTAL_SLOTS = 10;
 
     public static void render(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
@@ -28,36 +32,35 @@ public class JingLiHudRenderer {
             : mc.player.gameMode();
         if (gameType == GameType.CREATIVE || gameType == GameType.SPECTATOR) return;
 
-
         IJingLiData data = ClientJingLiCache.get();
-        float totalValue = data.getJingLiEat() + data.getJingLiSleep();
-        float fullCount = totalValue / 2;
-        boolean hasHalf = (totalValue % 2) != 0;
 
         int screenWidth = guiGraphics.guiWidth();
         int screenHeight = guiGraphics.guiHeight();
 
-        int startX = screenWidth / 2 - 91;
+        int startX = (screenWidth / 2) - ((TOTAL_SLOTS * ICON_SPACING) / 2);
         int y = screenHeight - 49;
-        float totalSlots = IJingLiData.TOTAL_JING_LI / 2;
 
-        for (int i = 0; i < totalSlots; i++) {
-            drawIcon(guiGraphics, EMPTY, startX, y, i);
-        }
+        float yinVal = data.getJingLiSleep();
+        float yangVal = data.getJingLiEat();
 
-        int slotIndex = 0;
+        for (int i = 0; i < TOTAL_SLOTS; i++) {
+            int x = startX + i * ICON_SPACING;
+            float slotThreshold = (i + 1) * 2.0f;
 
-        for (int i = 0; i < fullCount && slotIndex < totalSlots; i++, slotIndex++) {
-            drawIcon(guiGraphics, FULL, startX, y, slotIndex);
-        }
+            blitIcon(guiGraphics, WITHERED_YIN_ENERGY, x, y);
+            blitIcon(guiGraphics, WITHERED_YANG_ENERGY, x, y);
 
-        if (hasHalf && slotIndex < totalSlots) {
-            drawIcon(guiGraphics, HALF, startX, y, slotIndex);
+            if (yinVal >= slotThreshold) {
+                blitIcon(guiGraphics, YIN_ENERGY, x, y);
+            }
+
+            if (yangVal >= slotThreshold) {
+                blitIcon(guiGraphics, YANG_ENERGY, x, y);
+            }
         }
     }
 
-    private static void drawIcon(GuiGraphicsExtractor g, Identifier tex, int startX, int y, int slotIndex) {
-        int x = startX + slotIndex * 8;
-        g.blit(RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, ICON_SIZE, ICON_SIZE, 256, 256);
+    private static void blitIcon(GuiGraphicsExtractor g, Identifier tex, int x, int y) {
+        g.blit(RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
     }
 }

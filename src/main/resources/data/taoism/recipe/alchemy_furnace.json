@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+        "CLC",
+        "CFC",
+        "C C"
+    ],
+    "key": {
+        "L": "minecraft:lapis_lazuli",
+        "C": "minecraft:copper_block",
+        "F": "minecraft:furnace"
+    },
+    "result": {
+        "id": "taoism:alchemy_furnace",
+        "count": 1
+    }
+}

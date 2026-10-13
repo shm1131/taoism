@@ -69,5 +69,15 @@
 
     "taoism.nature.neutral": "平",
     "taoism.nature.cold": "寒",
-    "taoism.nature.warm": "温"
+    "taoism.nature.warm": "温",
+
+
+    "advancements.taoism.root.title": "道法自然",
+    "advancements.taoism.root.desc": "踏入此方天地。\n\n§6承负§r：记录你对世界的善恶行为，万物皆有所应。\n§6寿命§r：与承负负相关，积善延年，作恶折寿，终有寿尽之时。",
+
+    "advancements.taoism.herb_discovery.title": "百草识性",
+    "advancements.taoism.herb_discovery.desc": "获得任意一种药材。\n\n按住 §eShift§r 可查看药材的四气五味与毒性。\n承负较低时，山林小动物会主动投喂药材以报恩。",
+
+    "advancements.taoism.alchemy_furnace.title": "炉火纯青",
+    "advancements.taoism.alchemy_furnace.desc": "获得炼丹炉。\n\n§6君药§r（上方槽位）：权重最大，主导丹药核心功效。\n§6臣药§r（左侧槽位）：权重中等，辅助增强君药。\n§6佐药§r（右侧槽位）：权重最低，调和药性或制约毒性。\n\n三味药材经加权运算，方成丹药。"
 }

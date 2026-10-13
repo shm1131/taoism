@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+        "   ",
+        " D ",
+        "BCB"
+    ],
+    "key": {
+        "B": "minecraft:bone_meal",
+        "C": "minecraft:composter",
+        "D": "minecraft:dirt"
+    },
+
+    "result": {
+        "id": "taoism:incubator",
+        "count": 1
+    }
+}

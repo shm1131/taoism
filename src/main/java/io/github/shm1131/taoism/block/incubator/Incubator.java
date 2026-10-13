@@ -1,38 +1,42 @@
 package io.github.shm1131.taoism.block.incubator;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.TaoismMain;
 import io.github.shm1131.taoism.init.BlockEntitiesRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class Incubator extends BaseEntityBlock {
+
+    private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 
     public static final MapCodec<Incubator> CODEC = simpleCodec(Incubator::new);
 
     public Incubator(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override
@@ -54,9 +58,7 @@ public class Incubator extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide()) {
-            return null;
-        }
+        if (level.isClientSide()) return null;
         return createTickerHelper(type, BlockEntitiesRegister.INCUBATOR.get(), IncubatorBlockEntity::serverTick);
     }
 
@@ -64,7 +66,7 @@ public class Incubator extends BaseEntityBlock {
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                           Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.isClientSide()) {
-            return InteractionResult.PASS;
+            return InteractionResult.SUCCESS;
         }
 
         BlockEntity be = level.getBlockEntity(pos);
@@ -73,11 +75,7 @@ public class Incubator extends BaseEntityBlock {
         }
 
         if (stack.is(Items.WATER_BUCKET)) {
-            int simulated = incubator.fillWater(new FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME), true);
-
-            if (simulated > 0) {
-                incubator.fillWater(new FluidStack(Fluids.WATER, simulated), false);
-
+            if (incubator.fillWater(1000)) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                     ItemStack emptyBucket = new ItemStack(Items.BUCKET);
@@ -85,8 +83,6 @@ public class Incubator extends BaseEntityBlock {
                         player.drop(emptyBucket, false);
                     }
                 }
-
-                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             } else {
                 player.sendSystemMessage(Component.translatable("message.taoism.incubator.full"));
@@ -94,19 +90,10 @@ public class Incubator extends BaseEntityBlock {
             }
         }
 
-        return InteractionResult.PASS;
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide()) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof MenuProvider menuProvider && player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.openMenu(menuProvider, buf -> buf.writeBlockPos(pos));
-                TaoismMain.LOGGER.info("Opened incubator menu at {} for {}", pos, serverPlayer.getName().getString());
-            }
-            return InteractionResult.SUCCESS;
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(incubator, buf -> buf.writeBlockPos(pos));
         }
-        return InteractionResult.PASS;
+
+        return InteractionResult.SUCCESS;
     }
 }

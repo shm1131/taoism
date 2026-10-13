@@ -34,12 +34,10 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
     public static final int SLOT_OUTPUT = 4;
     public static final int NUM_SLOTS = 5;
 
-    // 君臣佐权重
     private static final int WEIGHT_MONARCH = 3;
     private static final int WEIGHT_MINISTER = 2;
     private static final int WEIGHT_ASSISTANT = 1;
 
-    // 默认炼丹时间（刻），20刻 = 1秒
     private static final int DEFAULT_BURN_TIME = 200;
 
     private final ItemStack[] items = new ItemStack[NUM_SLOTS];
@@ -79,7 +77,6 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
             changed = true;
         }
 
-        // 检查是否满足“必须三个药材”的炼丹条件
         boolean canCraft = be.canCraftPill();
 
         if (canCraft) {
@@ -122,26 +119,15 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         }
     }
 
-    // ==================== 自定义炼丹逻辑 ====================
-
-    /**
-     * 检查是否可以炼丹：
-     * 1. 必须放满三个输入槽
-     * 2. 三个槽位必须全部都是有效药材
-     * 3. 输出槽能容纳丹药
-     */
     private boolean canCraftPill() {
-        // 1. 必须三个槽都有物品
         if (items[SLOT_INPUT_1].isEmpty() || items[SLOT_INPUT_2].isEmpty() || items[SLOT_INPUT_3].isEmpty()) {
             return false;
         }
 
-        // 2. 必须全是药材 (不能混入非药材物品)
         if (!isHerb(items[SLOT_INPUT_1]) || !isHerb(items[SLOT_INPUT_2]) || !isHerb(items[SLOT_INPUT_3])) {
             return false;
         }
 
-        // 3. 检查输出槽
         ItemStack output = items[SLOT_OUTPUT];
         if (!output.isEmpty()) {
             if (!(output.getItem() instanceof PillItem)) return false;
@@ -152,7 +138,6 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
 
     private boolean isHerb(ItemStack stack) {
         if (stack.isEmpty()) return false;
-        // 只要不是返回默认空属性，或者实现了 IHerbBase 接口，就认为是药材
         HerbProperties p = PropertiesHelper.getProperties(stack);
         return p != PropertiesHelper.DEFAULT_PROPS || stack.getItem() instanceof IHerbBase;
     }
@@ -162,7 +147,6 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         HerbProperties ministerProps = PropertiesHelper.getProperties(items[SLOT_INPUT_2]);
         HerbProperties assistantProps = PropertiesHelper.getProperties(items[SLOT_INPUT_3]);
 
-        // 核心算法：君臣佐加权计算
         HerbProperties pillProps = calculatePillProperties(monarchProps, ministerProps, assistantProps);
 
         ItemStack pillStack = PillItem.createPill(pillProps);
@@ -173,33 +157,24 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
             items[SLOT_OUTPUT].grow(pillStack.getCount());
         }
 
-        // 消耗三个药材
         items[SLOT_INPUT_1].shrink(1);
         items[SLOT_INPUT_2].shrink(1);
         items[SLOT_INPUT_3].shrink(1);
     }
 
-    /**
-     * 核心算法：君臣佐加权计算
-     */
     private HerbProperties calculatePillProperties(HerbProperties monarch, HerbProperties minister, HerbProperties assistant) {
 
-        // 1. 计算 Flavor (味)
         Flavor finalFlavor = calculateWeightedEnum(
             monarch.flavor(), minister.flavor(), assistant.flavor(), Flavor.class
         );
 
-        // 2. 计算 Nature (性)
         Nature finalNature = calculateWeightedEnum(
             monarch.nature(), minister.nature(), assistant.nature(), Nature.class
         );
 
-        // 3. 计算 Toxicity (毒性) - 累加并限制上限
         float totalToxicity = monarch.toxicity() + minister.toxicity() + assistant.toxicity();
         float finalToxicity = Math.min(totalToxicity, 1.0f);
 
-        // 4. 计算 Potency (药效) - 加权平均 (凸显君药的重要性)
-        // 公式：(君*3 + 臣*2 + 佐*1) / 6
         float totalWeight = WEIGHT_MONARCH + WEIGHT_MINISTER + WEIGHT_ASSISTANT;
         float finalPotency = (monarch.potency() * WEIGHT_MONARCH +
             minister.potency() * WEIGHT_MINISTER +
@@ -208,53 +183,39 @@ public class AlchemyFurnaceBlockEntity extends BlockEntity implements MenuProvid
         return new HerbProperties(finalFlavor, finalNature, finalToxicity, finalPotency);
     }
 
-    /**
-     * 通用加权枚举计算器 (支持 Flavor 和 Nature)
-     * 权重：君(3) > 臣(2) > 佐(1)
-     * 平局规则：取佐药(Assistant)的值
-     */
     private <E extends Enum<E>> E calculateWeightedEnum(E monarch, E minister, E assistant, Class<E> enumClass) {
         Map<E, Integer> weights = new EnumMap<>(enumClass);
 
-        // 初始化所有枚举值为 0 分
         for (E e : enumClass.getEnumConstants()) {
             weights.put(e, 0);
         }
 
-        // 累加权重
         weights.put(monarch, weights.get(monarch) + WEIGHT_MONARCH);
         weights.put(minister, weights.get(minister) + WEIGHT_MINISTER);
         weights.put(assistant, weights.get(assistant) + WEIGHT_ASSISTANT);
 
-        // 找出最高分
         int maxScore = 0;
         for (int score : weights.values()) {
             if (score > maxScore) maxScore = score;
         }
 
-        // 检查是否平局 (有多个枚举值等于最高分)
         int countMax = 0;
         for (int score : weights.values()) {
             if (score == maxScore) countMax++;
         }
 
-        // 如果平局，直接返回佐药(assistant)的属性
         if (countMax > 1) {
             return assistant;
         }
 
-        // 否则返回最高分的枚举值
         for (Map.Entry<E, Integer> entry : weights.entrySet()) {
             if (entry.getValue() == maxScore) {
                 return entry.getKey();
             }
         }
 
-        // 兜底 (理论上不会走到这里)
         return assistant;
     }
-
-    // ==================== 辅助与原版接口实现 (与之前相同) ====================
 
     private static int getFuelBurnTime(Level level, ItemStack fuel) {
         if (fuel.isEmpty()) return 0;
