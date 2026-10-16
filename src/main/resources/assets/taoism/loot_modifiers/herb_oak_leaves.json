@@ -1,9 +1,0 @@
-{
-  "type": "taoism:herb_drop",
-  "conditions": [
-    { "condition": "minecraft:block_state_property", "block": "minecraft:oak_leaves" },
-    { "condition": "minecraft:random_chance", "chance": 1 }
-  ],
-  "herb": "taoism:da_zao",
-  "count": 1
-}

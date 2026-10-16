@@ -1,9 +1,0 @@
-{
-  "type": "taoism:herb_drop",
-  "conditions": [
-    { "condition": "minecraft:block_state_property", "block": "minecraft:jungle_leaves" },
-    { "condition": "minecraft:random_chance", "chance": 0.05 }
-  ],
-  "herb": "taoism:gou_qi",
-  "count": 1
-}

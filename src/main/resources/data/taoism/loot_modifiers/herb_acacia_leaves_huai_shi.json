@@ -1,0 +1,9 @@
+{
+    "type": "taoism:herb_drop",
+    "conditions": [
+        { "condition": "minecraft:block_state_property", "block": "minecraft:acacia_leaves" },
+        { "condition": "minecraft:random_chance", "chance": 0.06 }
+    ],
+    "herb": "taoism:huai_shi",
+    "count": 1
+}

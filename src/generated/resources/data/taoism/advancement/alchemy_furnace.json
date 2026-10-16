@@ -1,0 +1,33 @@
+{
+  "parent": "taoism:herb_discovery",
+  "criteria": {
+    "has_alchemy_furnace": {
+      "conditions": {
+        "items": [
+          {
+            "items": "taoism:alchemy_furnace"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.taoism.alchemy_furnace.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "taoism:alchemy_furnace"
+    },
+    "title": {
+      "translate": "advancements.taoism.alchemy_furnace.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_alchemy_furnace"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

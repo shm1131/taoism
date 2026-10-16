@@ -1,28 +1,32 @@
 package io.github.shm1131.taoism;
 
 import com.mojang.serialization.MapCodec;
-import io.github.shm1131.taoism.advancement.ModAdvancementSubProvider;
-import io.github.shm1131.taoism.init.HerbItemRegister;
+import io.github.shm1131.taoism.entity.ghost.TextGuiEntity;
+import io.github.shm1131.taoism.init.BlockEntitiesRegister;
+import io.github.shm1131.taoism.init.RecipeTypesRegister;
+import io.github.shm1131.taoism.init.MenuTypesRegister;
+import io.github.shm1131.taoism.init.RecipeSerializersRegister;
+import io.github.shm1131.taoism.entity.EntityRegister;
+import io.github.shm1131.taoism.entity.text.TextEntity;
+import io.github.shm1131.taoism.init.ComponentsRegister;
 import io.github.shm1131.taoism.loot.HerbDropModifier;
-import net.minecraft.data.advancements.AdvancementProvider;
+import io.github.shm1131.taoism.network.SyncJingLiDataPayload;
+import io.github.shm1131.taoism.network.handler.NetworkHandlerClient;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import io.github.shm1131.taoism.datagen.biomes.BiomeSourceRegister;
 import io.github.shm1131.taoism.init.*;
 import io.github.shm1131.taoism.network.SyncCultivationDataPayload;
 import io.github.shm1131.taoism.network.SyncTaoismDataPayload;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
-import io.github.shm1131.taoism.datagen.DataGenProvider;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 @Mod(TaoismMain.MODID)
@@ -43,47 +47,56 @@ public class TaoismMain {
 
         BlockRegister.BLOCKS.register(modEventBus);
         BlockRegister.ITEMS.register(modEventBus);
+        ItemRegister.ITEMS.register(modEventBus);
         EffectRegister.EFFECTS.register(modEventBus);
-        HerbItemRegister.ITEMS.register(modEventBus);
         EntityRegister.ENTITIES.register(modEventBus);
-        BiomeSourceRegister.BIOME_SOURCES.register(modEventBus);
+        BlockEntitiesRegister.BLOCK_ENTITIES.register(modEventBus);
+        RecipeTypesRegister.RECIPE_TYPES.register(modEventBus);
+        MenuTypesRegister.MENUS.register(modEventBus);
+        RecipeSerializersRegister.RECIPE_SERIALIZERS.register(modEventBus);
         CreativeTabRegister.TABS.register(modEventBus);
+        TaoismConsumeEffects.CONSUME_EFFECTS.register(modEventBus);
 
         TaoismAttachments.ATTACHMENT_TYPES.register(modEventBus);
-        CultivationAttachment.ATTACHMENT_TYPES.register(modEventBus);
 
         GLM_SERIALIZERS.register(modEventBus);
+        ComponentsRegister.COMPONENTS.register(modEventBus);
 
         modEventBus.addListener(this::registerPayloads);
-        modEventBus.addListener(this::onGatherData);
+        modEventBus.addListener(this::createDefaultAttributes);
+
     }
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar(MODID);
         registrar.playToClient(
             SyncTaoismDataPayload.TYPE,
-            SyncTaoismDataPayload.STREAM_CODEC
+            SyncTaoismDataPayload.STREAM_CODEC,
+            NetworkHandlerClient::handle
         );
 
         registrar.playToClient(
             SyncCultivationDataPayload.TYPE,
-            SyncCultivationDataPayload.STREAM_CODEC
+            SyncCultivationDataPayload.STREAM_CODEC,
+            NetworkHandlerClient::handle
+        );
+
+        registrar.playToClient(
+            SyncJingLiDataPayload.TYPE,
+            SyncJingLiDataPayload.STREAM_CODEC,
+            NetworkHandlerClient::handle
         );
     }
 
-    public void onGatherData(GatherDataEvent.Client event) {
-        if (event instanceof GatherDataEvent.Client) {
-            event.createDatapackRegistryObjects(DataGenProvider.BUILDER);
-        }
-        event.createProvider((output, lookupProvider) ->
-                new AdvancementProvider(
-                        output,
-                        lookupProvider,
-                        List.of(new ModAdvancementSubProvider())
-                )
+    public void createDefaultAttributes(EntityAttributeCreationEvent event) {
+        event.put(
+            EntityRegister.TEXT_ENTITY.get(),
+            TextEntity.createAttributes().build()
+        );
+
+        event.put(
+            EntityRegister.TEXT_GUI_ENTITY.get(),
+            TextGuiEntity.createAttributes().build()
         );
     }
-
-
-
 }

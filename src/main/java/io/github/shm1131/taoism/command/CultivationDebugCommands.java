@@ -1,9 +1,8 @@
 package io.github.shm1131.taoism.command;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationAttachment;
-import io.github.shm1131.taoism.player.attachment.cultivation.CultivationHelper;
-import io.github.shm1131.taoism.player.attachment.cultivation.ICultivationData;
+import io.github.shm1131.taoism.player.attachment.helper.CultivationHelper;
+import io.github.shm1131.taoism.player.attachment.api.ICultivationData;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,13 +10,14 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
+import static io.github.shm1131.taoism.init.TaoismAttachments.CULTIVATION_DATA;
+
 @EventBusSubscriber
 public class CultivationDebugCommands {
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         event.getDispatcher().register(Commands.literal("tao")
-            // 增加灵力
             .then(Commands.literal("addsp")
                 .then(Commands.argument("amount", IntegerArgumentType.integer())
                     .executes(ctx -> {
@@ -25,11 +25,10 @@ public class CultivationDebugCommands {
                         CultivationHelper.addSp(player, IntegerArgumentType.getInteger(ctx, "amount"));
                         return 1;
                     })))
-            // 查看状态
             .then(Commands.literal("info")
                 .executes(ctx -> {
                     ServerPlayer player = ctx.getSource().getPlayerOrException();
-                    ICultivationData data = player.getData(CultivationAttachment.TAOISM_DATA);
+                    ICultivationData data = player.getData(CULTIVATION_DATA);
                     if (data == null) data = ICultivationData.EMPTY;
 
                     ICultivationData finalData = data;
@@ -41,7 +40,6 @@ public class CultivationDebugCommands {
                             CultivationHelper.canLevelUp(player))), false);
                     return 1;
                 }))
-            // 突破
             .then(Commands.literal("levelup")
                 .executes(ctx -> {
                     ServerPlayer player = ctx.getSource().getPlayerOrException();

@@ -1,0 +1,25 @@
+{
+  "parent": "taoism:root",
+  "criteria": {
+    "entered_world": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.taoism.herb_discovery.desc"
+    },
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancements.taoism.herb_discovery.title"
+    }
+  },
+  "requirements": [
+    [
+      "entered_world"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

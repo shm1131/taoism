@@ -1,0 +1,9 @@
+{
+    "type": "taoism:herb_drop",
+    "conditions": [
+        { "condition": "minecraft:block_state_property", "block": "minecraft:clay" },
+        { "condition": "minecraft:random_chance", "chance": 0.05 }
+    ],
+    "herb": "taoism:chang_pu",
+    "count": 1
+}
